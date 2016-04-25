@@ -17,8 +17,8 @@
 	        preload: [
 	                 ],//预先加载
 	        //map,批量更新时间戳，用于更新缓存
-	        //map: [[/^(.*\.(?:css|js|tpl|html))(.*)$/i, '$1?v=1.1.9']], 
-	        map: [[/^(.*\.(?:css|js|tpl|html))(.*)$/i, '$1?v='+Math.random()]],  
+	        map: [[/^(.*\.(?:css|js|tpl|html))(.*)$/i, '$1?v=1.2.3']], 
+	        //map: [[/^(.*\.(?:css|js|tpl|html))(.*)$/i, '$1?v='+Math.random()]],  
 	        charset: 'utf-8', // 文件编码
 	        debug:true
 	    });
