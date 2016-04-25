@@ -32,9 +32,17 @@ var CSS_SRC="";
 gulp.task( 'build:cmd-moudle', function(){
     return gulp.src(jsModules ,{base:'webapp'})
         .pipe( cmdPack({
-            mainId : 'app',
+           
             base : 'webapp/js/',
             tmpExtNames : ['.html'], //提供模板文件的后缀名用来区分模板
+            alias: { 
+                'jquery':'jquery/2.1.1/jquery-2.1.1.min.js',
+                'jquery-mobile':'jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js',
+                'zepto': 'zepto/zepto.min.js',
+                'dot':'doT/doT.min.js',
+                'iscroll':'iscroll/iscroll-4.2.js',
+                'jweixin':'weixin/jweixin-1.1.0.js'
+            },
             ignore :[
                 'jquery',
                 'jquery-mobile',
@@ -44,9 +52,6 @@ gulp.task( 'build:cmd-moudle', function(){
                 'jweixin'
             ],
         }))
-       /* .pipe(tap(function(file,t){
-            debugger;
-        }))*/
         .pipe(rename({ suffix: '.all' }))
         .pipe(gulp.dest('webapp'))
         .pipe(rename({ suffix: '.min' }))
@@ -54,7 +59,7 @@ gulp.task( 'build:cmd-moudle', function(){
         .pipe( gulp.dest("webapp"));
 });
 gulp.task("build:css",function(){
-    return gulp.src("webapp/css/module/**/*.css",{base:'webapp'})
+    return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp'})
     .pipe(cssbeautify())
     .pipe(csscomb())
     .pipe(postcss([autoprefixer]))
@@ -121,29 +126,26 @@ gulp.task("build:seajs-config",function(){
 
 gulp.task("build:seajs",['build:seajs-config'],function(){
     return gulp.src(["webapp/js/seajs/*.js",'!webapp/js/seajs/sea-all*.js'],{base:'webapp'}) 
-    .pipe(tap(function (file){
-            debugger;
+  /*  .pipe(tap(function (file){
             var filename = path.basename(file.path);
             if(filename === "seajs-config-debug.js"){
-                debugger;
                 var contents = file.contents.toString();
                 //开启生产环境配置
                 contents = contents.replace(/\/\/map:/g,"map:");
                 //注释掉开发环境配置
                 contents = contents.replace(/map.+\+Math\.random/g,function(m){
-                            debugger;
                             return "//"+m;
                 });
                 
                 file.contents = new Buffer(contents); 
             }
             
-     }))
+     }))*/
     .pipe(concat('sea-all.js'))
-    .pipe(gulp.dest('webapp'))
+    .pipe(gulp.dest('webapp/js/seajs'))
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
-    .pipe(gulp.dest('webapp'));
+    .pipe(gulp.dest('webapp/js/seajs'));
 });
 gulp.task("demo",function(){
     return gulp.src("./js/build/define_demo.js") 
@@ -153,5 +155,4 @@ gulp.task("demo",function(){
 });
 
 
-//gulp.task( 'default', ['build:cmd-moudle'] );
-gulp.task( 'default', ['build:jsp'] );
+gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs'] );
