@@ -1,0 +1,67 @@
+{{~it.page.list:value:index}}
+<li class="line" data-order-id={{=value.orderId}} data-bid-id={{=value.bidId}} data-order-status={{=value.orderStatus}}>
+ 	   {{?value.shippingStatus==1}}
+       <div class="dealing"style="float:right;">
+         <label class="lab">待发货</label>
+       </div>
+       {{?}}
+       {{?value.shippingStatus==2}}
+       <div class="complete" style="float:right;">
+         <label class="lab">签收中</label>
+       </div>
+       {{?}}
+       {{?value.shippingStatus==3}}
+       <div class="cancellation"style="float:right;">
+         <label class="lab">已完成</label>
+       </div>
+       {{?}}
+       <div class="txt-line">
+         <label class="lab">订单编号：</label>
+         <div class="txt">
+            <span>{{=value.orderCode}}</span>
+         </div>      
+       </div>
+       <div class="txt-line">
+         <label class="lab">收货地址：</label>
+         <div class="txt">
+            <span>{{=value.orderDetails[0].shippingAddress}}</span>
+         </div>      
+       </div>
+       <div class="txt-line">
+         <label class="lab">到场日期：</label>
+         <div class="txt">
+            <span >{{=new Date(value.orderDetails[0].arrivalDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+         </div>
+       </div>
+       <div class="txt-line">
+         <label class="lab">总需求：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalWeight}}吨</span>
+         </div>
+       </div>
+       <div class="txt-line">
+         <label class="lab">总金额：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalMoney}}元</span>
+         </div>
+       </div>
+       <div class="txt-line">
+         <label class="lab">已发送：</label>
+         <div class="txt">
+            <span >{{=value.totalShippedWeight}}吨</span>
+         </div>
+       </div>
+       <div class="txt-line">
+         <label class="lab">已签收：</label>
+         <div class="txt">
+            <span >{{=value.totalSignedWeight}}吨</span>
+         </div>
+       </div>
+       {{?value.shippingStatus!=1}}
+       <a href="javascript:void(0)" class="detail-shipping-btn weui_btn weui_btn_mini weui_btn_primary" >发货详情</a>
+       {{?}}
+       {{?value.orderStatus==2}}
+       <a href="javascript:void(0)" class="order-shipping-btn weui_btn weui_btn_mini weui_btn_primary" >发货</a>
+       {{?}}
+    </li>
+{{~}}

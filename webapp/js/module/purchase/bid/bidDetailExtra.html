@@ -1,0 +1,69 @@
+            <div class="g-header">
+                    <a href="bidDetailPage?bidId={{=it.bid.bidId}}" class="u-back-left" ></a>
+                    <h3 class="u-title">竞价单[{{=it.bid.bidCode}}]</h3>
+            </div> 
+            <div id="g-content" class="g-content" >
+					                
+					<div class="m-bid-extra" >
+					       <div class="txt-line">
+					         <label class="lab">交货方式：</label>
+					         <span>{{=it.bid.deliveryTypeName}}</span>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">结算方式：</label>
+					         <span>{{=it.bid.settleTypeName}}</span>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">付款方式：</label>
+					         <span> {{=it.bid.payMoneyTypeName}}</span> 
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">开票方式：</label>
+					         <span> {{=it.bid.invoiceTypeName}}</span> 
+					         <label class="lab">贴息率：</label>               
+					         <span>
+					               {{=it.bid.discountRate}}%
+					          </span>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">产地要求：</label>
+					         <span>{{=it.placeSteels}}</span>
+					       </div>
+					        <div class="txt-line f-red1">
+					         <label>上次报价排名：</label>
+					         <span>{{=it.rankStr}}</span>
+					       </div>
+					       <table class="m-bid-contract-term">
+					            <caption>合同条款信息</caption>
+					            <thead>
+					                <tr>
+					                    <th>合同条款</th>
+					                    <th>条款明细</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.contractTermList : ct}}
+					                <tr>
+					                    <td>
+					                       {{=ct.contractTerm}}                             
+					                    </td>
+					                    <td>
+					                        {{=ct.contractTermDetail}}     
+					                    </td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					</div> 
+	   				<!-- end m-bid-extra  -->
+            </div>
+            <div id="g-footer" class="g-footer" >
+				<div class="m-bid-footer" >
+				      {{?it.quoteSn>0}}
+				      <a href="../quote/toQuoteDetail?bidId={{=it.bid.bidId}}&quoteSn={{=it.quoteSn}}" class="weui_btn weui_btn_mini weui_btn_primary" >查看报价</a>
+				      {{?}}
+				      {{?it.canQuote}}
+				      <a href="../quote/toQuote?bidId={{=it.bid.bidId}}" class="weui_btn weui_btn_mini weui_btn_primary" >参与报价</a>
+				      {{?}}
+				</div>
+            </div>

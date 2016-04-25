@@ -1,0 +1,60 @@
+<div class="g-header">
+        <a href="../../central/quote/{{=it.linkFrom}}?bidId={{=it.quote.bidId}}&quoteSn={{=it.quoteSn}}" class="u-back-left" ></a>
+        <h3 class="u-title">报价单{{=it.quote.quoteCode?('['+it.quote.quoteCode+']'):''}}</h3>
+</div> 
+<div id="g-content" class="g-content" >	    
+	<div class="m-quote" >
+	       <div class="txt-line">
+	         <label class="lab">交货方式：</label>
+	         <span class="txt">{{=it.quote.deliveryTypeName}}</span>
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab">结算方式：</label>
+	         <span class="txt">{{=it.quote.settleTypeName}}</span>
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab">付款方式：</label>
+	         <span class="txt"> {{=it.quote.payMoneyTypeName}}</span> 
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab">开票方式：</label>
+	         <span class="txt"> {{=it.quote.invoiceTypeName}}</span> 
+	         <label class="lab">贴息率：</label>               
+	         <span class="txt">
+	               {{=it.quote.discountRate}}%
+	          </span>
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab">产地要求：</label>
+	         <span class="txt">{{=it.placeSteels}}</span>
+	       </div>
+	        <div class="txt-line f-red1">
+	         <label class="lab">上次报价排名：</label>
+	         <span class="txt">{{=it.rankStr}}</span>
+	       </div>
+	       
+	       <div class="quote-sn">第<span id="quote-sn">0</span>次报价</div> 
+	       
+	       <table class="m-quote-contract-term">
+	            <caption>合同条款信息</caption>
+	            <thead>
+	                <tr>
+	                    <th>合同条款</th>
+	                    <th>条款明细</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	              {{~it.contractTermList : ct}}
+	                <tr>
+	                    <td>
+	                       {{=ct.contractTerm}}                             
+	                    </td>
+	                    <td>
+	                        {{=ct.contractTermDetail}}     
+	                    </td>
+	                </tr>
+	               {{~}} 
+	            </tbody>
+	       </table>
+	</div>
+</div>

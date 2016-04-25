@@ -1,0 +1,102 @@
+            <div class="g-header">
+                    <a href="../order/center" class="u-back-left" ></a>
+                    <h3 class="u-title">发货单</h3>
+            </div> 
+            <div id="g-content" class="g-content">
+					                
+					<div class="m-order" >
+					    <div class="txt-line">
+	         				<label class="lab">收货地址：</label>
+	         				<div class="txt">
+	            			<span>{{=it.orderDetails[0].shippingAddress}}</span>
+	         				</div>      
+       					</div>
+					       <div class="txt-line">
+					         <label class="lab">交货方式</label>
+					         <div class="txt">
+					            <span >{{=it.order.deliveryType==1?'自提':'配送'}}</span>
+					         </div>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">到场日期：</label>
+					         <div class="txt">
+					            <span >{{=new Date(it.orderDetails[0].arrivalDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">发货地址：</label>
+					         <div class="txt">
+					            <input style="width: 85%;" name="consignorAddress"id="consignorAddress"value=""placeholder="发货地址">
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">发货人：</label>
+					         <div class="txt">
+					            <input style="width: 85%;" name="consignor"value=""id="consignor"placeholder="发货人姓名">
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">发货人电话：</label>
+					         <div class="txt">
+					           <input style="width: 85%;" name="consignorTel"value=""id="consignorTel"placeholder="发货人电话">
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">发货车牌号：</label>
+					         <div class="txt">
+					            <input style="width: 85%;" name="consignorCarNumber"value=""id="consignorCarNumber"placeholder="发货车牌号">
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">收货人：</label>
+					         <div class="txt">
+					            <input style="width: 85%;" name="shippingUserName"value="{{=it.orderDetails[0].shippingUserName}}"id="shippingUserName"placeholder="收货人姓名">
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">收货人电话：</label>
+					         <div class="txt">
+					            <input style="width: 85%;" name="shippingUserTel"value="{{=it.orderDetails[0].shippingUserTel}}"id="shippingUserTel"placeholder="收货人电话">
+					         </div>
+					       </div>
+					       <table class="m-order-detail">
+					            <thead>
+					                <tr>
+					                    <th>商品信息</th>
+					                    <th style="width: 50px;">验货方式</th>
+					                    <th>订单量（吨）</th>
+					                    <th style="text-align: center;">发货量（吨）</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.orderDetails : od}}
+					                <tr>
+					                    <td>
+					                                                        品名：{{=od.brandName}}<br/>
+					                                                        材质：{{=od.textureName}}<br/>
+					                                                        规格：{{=od.specification}}<br/>
+					                                                        产地：{{=od.placeSteel}}
+					                    </td>
+					                    <td>
+					                        {{='理记'}}     
+					                    </td>
+					                    <td>{{=od.orderWeight.toFixed(2)}}</td>
+					                    <td>本次发货：<input type="number" class="u-ipt-min" name="weight"id="{{=(od.orderDetailId)}}"value="0" style="width: 100%;"><br/>未发：<span name="remainWeight" data-remain-weight="{{=od.remainShipWeight}}">{{=od.remainShipWeight.toFixed(2)}}</span></td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					       
+					       <div class="txt-line" style="margin-top: 10px;">
+					         <label class="lab" style="text-align: right;">总计：</label>
+					         <div class="txt">
+					            <span>订单共<span  id="totalWeight" >{{=it.order.orderTotalWeight }}</span>吨，本次发送<span id="shippingWeight">0</span>吨，剩余未发<span data-remain-ship-weight="{{=it.order.remainShipWeight}}" id="remainShipWeight">{{=it.order.remainShipWeight}}</span>吨</span>
+					         </div>
+					       </div>
+					</div>
+            </div>
+            <div id="g-footer" class="g-footer" >
+				 <div class="m-order-footer" >
+				      <a href="javascript:void(0)" data-order-id={{=it.order.orderId}} class="weui_btn weui_btn_mini weui_btn_primary" >确认发货</a>
+				</div>
+            </div>

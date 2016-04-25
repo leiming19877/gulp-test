@@ -1,0 +1,46 @@
+{{~it.list:r}}
+	<li class="line" data-shipping-id="{{=r.id}}" >
+        <div class="txt-line">
+			<label class="lab">发货单号：</label>
+			<span class="txt" >{{=r.code}}</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">供应商：</label>
+			<span class="txt" >{{=r.supplierMemberName}}</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">订单总量：</label>
+			<span class="txt"><span class="f-red1">{{=r.orderTotalWeight}}</span>吨</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">本次发货量：</label>
+			<span class="txt"><span class="f-red1">{{=r.shippingQuantity}}</span>吨</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">本次收货量：</label>
+			<span class="txt"><span class="f-red1">{{=r.receiptWeight}}</span>吨</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">发货人：</label>
+			<span class="txt">{{=r.consignor}}</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">运输车：</label>
+			<span class="txt">{{=r.consignorCarNumber}}</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">指定到场日期：</label>
+			<span class="txt">{{=new Date(r.arrivalDate).formatDate("yyyy年MM月dd日")}}</span>
+		</div>
+		<div class="txt-line">
+			<label class="lab">收货地址：</label>
+			<span class="txt">{{=r.shippingAddress}}</span>
+		</div>
+		
+		<div class="receipt-sn">第{{=r.shippingSn}}单收货</div>
+		<div class="receipt-status {{=r.signStatus == 0?'':'complete'}}" >{{=r.signStatus == 0?'待签收':'已签收'}}</div>
+		{{?r.signStatus == 0 }}
+		<a data-href="toReceipt?shippingId={{=r.id}}" class="receipt-btn weui_btn weui_btn_mini weui_btn_primary" >收货</a>
+		{{?}}
+	</li>
+{{~}}

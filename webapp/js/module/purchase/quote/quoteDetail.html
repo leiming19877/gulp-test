@@ -1,0 +1,89 @@
+<div class="g-header">
+        <a href="../bidConsole/bidListPage" class="u-back-left" ></a>
+        <h3 class="u-title">报价单[{{=it.quote.quoteCode}}]</h3>
+</div> 
+<div id="g-content" class="g-content" >
+	    
+	<div class="m-quote" >              
+	       <div class="txt-line">
+	         <label class="lab ">可报价次数：</label>
+	         <span class="txt" >{{=it.hasQuoteSn }}</span>
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab">已报次数：</label>
+	         <span class="txt">{{=it.quoteSn}}次</span>
+	       </div>
+	       <div class="txt-line f-red1">
+	         <label class="lab">上轮报价排名：</label>            
+	         <span class="txt">
+	               {{=it.rankStr}}
+	          </span>
+	          <div id="detailNav" class="m-quote-detail-nav"> 
+	          <a href="javascript:void(0)" class="m-quote-detail-up weui_btn weui_btn_primary">←</a>
+	          <a href="javascript:void(0)" class="m-quote-detail-down weui_btn weui_btn_primary">→</a>
+	          </div>
+	       </div>
+	       <div class="txt-line">
+	               <label class="lab">开票方式：</label>
+	               <span class="txt">{{=it.quote.invoiceTypeName}}</span>
+	               <label class="lab">运杂费：</label>
+	               <span class="txt">
+	               <input class="u-ipt-min f-bg1" id="freightMiscellaneous" 
+	               readonly="readonly"
+	               name="freightMiscellaneous" type="number" min="0.0" max="100000.00" 
+	               maxlength="9" value="{{=it.quote.freightMiscellaneous}}" />元/吨</span>
+	       </div>
+	
+	       <div id="quoteSn" data-quote-sn={{=it.quote.quoteSn}} class="quote-sn">第{{=it.quote.quoteSn}}次报价</div>      
+	       
+	       <table class="m-quote-detail">
+	            <thead>
+	                <tr>
+	                    <th style="width: 130px;">商品信息</th>
+	                    <th style="width: 35px;">验货方式</th>
+	                    <th style="width: 60px;">重量信息</th>
+	                    <th >价格信息</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	              {{~it.listQuoteDetail : qd}}
+	                <tr>
+	                    <td>
+	                      <input name="bidDetailId" type="hidden" value="{{=qd.bidDetailId}}" />
+	                                                        品名：{{=qd.brandName}}<br/>
+	                                                        材质：{{=qd.textureName}}<br/>
+	                                                        规格：{{=qd.specification}}<br/>
+	                                                        产地：{{=qd.placeSteel}}                             
+	                    </td>
+	                    <td>
+	                        {{=qd.meteringTypeName}}     
+	                    </td>
+	                    <td>计划量：<br/>{{=qd.planBuyWeight}}吨</td>
+	                    <td>
+	                        <input class="u-ipt-min f-bg1" name="quotePrice" 
+	                        data-plan-buy-weight="{{=qd.planBuyWeight}}" 
+	                        readonly="readonly"
+	                        type="number" min="0.0" max="100000.00" maxlength="9"
+	                         value="{{=qd.quotePrice}}" />元/吨
+	                        <br/>合计：
+	                        <span class="quote-money" >{{=qd.quoteMoney.toString().formatMoney(2)}}</span>元
+	                    </td>
+	                </tr>
+	               {{~}} 
+	            </tbody>
+	       </table>
+	       
+	       <div class="txt-line" style="margin-top: 10px;">
+	         <label class="lab">总计：</label>
+	         <span >计划量共{{=it.quote.bidTotalWeight }}吨</span>,
+	         <label class="lab">总价</label>
+	         <span id="quote-total-money" >{{=it.quote.quoteTotalMoney.toString().formatMoney(2)}}</span>元 
+	       </div>
+	</div>
+
+</div>
+<div id="g-footer" class="g-footer" >
+	<div class="m-quote-footer" >
+	      <a  href="toQuoteDetailExtra?bidId={{=it.quote.bidId}}&quoteSn={{=it.quote.quoteSn}}&linkFrom=toQuoteDetail" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+	</div>
+</div>

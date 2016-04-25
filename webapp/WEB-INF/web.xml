@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="buyer" version="2.5">
+	<display-name>jcbc-web</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:/app_cfg_ctx.xml</param-value>
+	</context-param>
+<!-- 	<context-param>
+		<param-name>spring.profiles.default</param-name>
+		<param-value>runtime</param-value>
+	</context-param> -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.ztds.weixin.startup.XFContextLoadListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<!-- 单点登录对session管理 -->
+	<listener>
+    	<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+  	</listener>
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>com.ztds.weixin.web.EncodeFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- url重写filter -->
+    <filter>
+        <filter-name>RewriteRequestFilter</filter-name>
+        <filter-class>com.ztds.weixin.filter.RewriteRequestFilter</filter-class>
+    </filter>
+   <filter-mapping>
+        <filter-name>RewriteRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping> 
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>ImageFilter</filter-name>
+		<filter-class>com.ztds.weixin.web.ImageFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ImageFilter</filter-name>
+		<url-pattern>/filter/ImageFilter</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ImageFilter</filter-name>
+		<url-pattern>/j_spring_security_check</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CacheFilter</filter-name>
+		<filter-class>com.opensymphony.oscache.web.filter.CacheFilter</filter-class>
+		<init-param>
+			<param-name>time</param-name>
+			<param-value>600</param-value>
+		</init-param>
+		<init-param>
+			<param-name>scope</param-name>
+			<param-value>session</param-value>
+		</init-param>
+	</filter>
+	   
+    <!-- <filter-mapping>
+        <filter-name>CacheFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping> -->
+	
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>com.ztds.weixin.servlet.SpringServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- hession blh调用 -->
+	<servlet>
+		<servlet-name>hessian</servlet-name>
+		<servlet-class>com.caucho.hessian.server.HessianServlet</servlet-class>
+		<init-param>
+			<param-name>service-class</param-name>
+			<param-value>com.ztds.weixin.base.service.DelegateRemoteHiessanService</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>hessian</servlet-name>
+		<url-pattern>/hessian/delegateRemoteHiessanService</url-pattern>
+	</servlet-mapping>
+	<!-- hessian Service 远程调用 -->
+	  <servlet>
+		<servlet-name>hessian-service</servlet-name>
+		<servlet-class>com.caucho.hessian.server.HessianServlet</servlet-class>
+		<init-param>
+			<param-name>service-class</param-name>
+			<param-value>com.ztds.base.service.core.ServiceDelegate</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	   </servlet>
+	   <servlet-mapping>
+		<servlet-name>hessian-service</servlet-name>
+		<url-pattern>/service</url-pattern>
+	</servlet-mapping>
+	
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/jsp/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/jsp/500.jsp</location>
+	</error-page>
+	<welcome-file-list>
+		<welcome-file>/login</welcome-file>
+	</welcome-file-list>
+</web-app>

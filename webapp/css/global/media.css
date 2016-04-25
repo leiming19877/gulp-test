@@ -1,0 +1,18 @@
+﻿/* media */
+/* 横屏 */
+@media screen and (orientation:landscape){
+    
+}
+/* 竖屏 */
+@media screen and (orientation:portrait){
+    
+}
+
+/* windows UI 贴靠 */
+@media screen and (-ms-view-state:snapped){
+    
+}
+/* 打印 */
+@media print{
+    
+}

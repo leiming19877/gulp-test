@@ -1,0 +1,122 @@
+<div class="g-header">
+        <a href="toReceiptList?orderId={{=it.order.orderId}}" class="u-back-left" ></a>
+        <h3 class="u-title">收货单[{{=it.shipping.code}}]</h3>
+</div> 
+<div id="g-content" class="g-content" >
+	<div class="m-receipt" >              
+	     
+	       <div class="txt-line">
+	         <label class="lab">发货人：</label>
+	         <span class="txt">{{=it.shipping.consignor}}</span>
+	       </div> 
+	       <div class="txt-line">
+	         <label class="lab">发货人电话：</label>
+	         <span class="txt">{{=it.shipping.consignorTel}}</span>   
+	       </div>
+	       <div>  	
+	         <label class="lab">发货车牌号：</label>
+	         <span class="txt">{{=it.shipping.consignorCarNumber}}</span>
+	       </div>
+	        <div class="txt-line">
+	          <label class="lab">发货日期：</label>
+	          <span class="txt">{{=it.shipping.shippingDate?(new Date(it.shipping.shippingDate).formatDate("yyyy-MM-dd HH:mm")):''}}</span>
+	       </div> 
+	       <div class="txt-line">
+	         <label class="lab ">发货地址：</label>
+	         <span class="txt" >{{=it.shipping.consignorAddress }}</span>
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab">交货方式：</label>
+	         <span class="txt">
+	         {{
+	         if(it.shipping.deliveryType == 1){
+	         	out+="配送"
+	         }else if(it.shipping.deliveryType == 2){
+	         	out+="自提"
+	         } 
+	         }}
+	         </span>
+	       </div>
+	       <div class="txt-line">
+	         <label class="lab ">收货地址：</label>
+	         <span class="txt" >{{=it.shipping.shippingAddress }}</span>
+	      </div> 
+		  <div class="txt-line">
+	         <label class="lab">收货人：</label>
+	         <span class="txt">
+	         	<input type="text" style="margin-left: 15px;" id="shippingUserName" name="shippingUserName"
+	         	 required="required" value="{{=it.shipping.shippingUserName}}" />
+	         </span>
+	       </div>
+	       <div class="txt-line">
+	       	 <label class="lab">收货电话：</label>
+	         <span class="txt">
+	         	<input type="text" id="shippingUserTel" name="shippingUserTel"
+	         	 required="required" value="{{=it.shipping.shippingUserTel}}" />
+	         </span>
+	       </div>
+	       <div class="receipt-sn">第{{=it.shipping.shippingSn}}单收货</div>      
+	       
+	       <table class="m-receipt-detail">
+	            <thead>
+	                <tr>
+	                    <th style="width: 100px;">商品信息</th>
+	                    <th style="width: 35px;">验货<br/>方式</th>
+	                    <th style="width: 60px;">发货信息</th>
+	                    <th >收货信息</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	              {{~it.shipping.centralBuyShippingDetailVOs : sd}}
+	                <tr>
+	                    <td>
+	                      <input name="shippingDetailId" type="hidden" value="{{=sd.id}}" />
+		                                                        品名：{{=sd.brandName}}<br/>
+		                                                        材质：{{=sd.textureName}}<br/>
+		                                                        规格：{{=sd.specification}}<br/>
+		                                                        产地：{{=sd.placeSteel}}                             
+	                    </td>
+	                    <td>
+	                        {{=sd.meteringTypeName||""}}     
+	                    </td>
+	                    <td>
+	                    	数量：{{=sd.deliveryQuantity}}件<br/>
+	                    	重量：{{=sd.deliveryWeight}}吨<br/>
+	               
+	                    </td>
+	                    <td>
+	                    	签收数量(件):<br/>
+	                        <input name="signQuantity" class="u-ipt-min" 
+	                        type="number"  min="0" max="10000" maxlength="5"
+	                        value="{{=sd.signQuantity}}" />
+	                        <br/>
+	                                                                         签收重量(吨):<br/>
+	                        <input name="signWeight" class="u-ipt-min sign-weight" id="{{=sd.deliveryWeight}}"
+	                        type="number"  min="0" max="10000" maxlength="5"
+	                        value="{{=sd.signWeight}}" />
+	                        
+	                    </td>
+	                </tr>
+	               {{~}} 
+	            </tbody>
+	       </table>
+	       
+	       <div class="txt-line" style="margin-top: 10px;">
+	         <label class="lab">总计：</label>
+	         <span class="txt">
+	         	订单共{{=it.order.orderTotalWeight}}吨,
+	         	本次发货共{{=it.shipping.shippingQuantity}}吨，
+	         	剩余未发{{=it.order.remainShipWeight}}吨，
+	         	本次收货共计：<span id="receiptWeight">0</span>吨
+	         </span>
+	       </div>
+	</div>
+
+</div>
+<div id="g-footer" class="g-footer" >
+	{{?it.shipping.signStatus == 0 }}
+	<div class="m-receipt-footer" >
+	      <a  href="javascript:void(0)" class="receipt-btn weui_btn weui_btn_mini weui_btn_primary" >确认收货</a>
+	</div>
+	{{?}}
+</div>

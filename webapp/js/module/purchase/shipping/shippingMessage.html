@@ -1,0 +1,43 @@
+<div class="m-order" >
+					        <div class="txt-line">
+					         <label class="lab">收货人：</label>
+					         <div class="txt">
+					            <span style="width: 85%;">{{=it.shippingUserName}}</span>
+					         </div>
+					       </div>
+					        <div class="txt-line">
+					         <label class="lab">收货人电话：</label>
+					         <div class="txt">
+					            <span style="width: 85%;">{{=it.shippingUserTel}}</span>
+					         </div>
+					       </div>
+					       <table class="m-order-detail">
+					            <thead>
+					                <tr>
+					                    <th>商品信息</th>
+					                    <th style="width: 50px;">订单量（吨）</th>
+					                    <th style="text-align: left;">发货量（吨）</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.orderDetails : od}}
+					                <tr>
+					                    <td>
+					                                                        品名：{{=od.brandName}}<br/>
+					                                                        材质：{{=od.textureName}}<br/>
+					                                                        规格：{{=od.specification}}
+					                    </td>
+					                    <td>{{=od.orderWeight.toFixed(2)}}</td>
+					                    <td>本次发货：<span style="width: 60px;">{{=od.shippingWeight.toFixed(2)}}</span><br>未发：<span>{{=od.remainWeight.toFixed(2)}}</span></td>
+					                </tr>
+					               {{~}} 
+					            </tbody> 
+					       </table>
+					       
+					       <div class="txt-line" style="margin-top: 10px;">
+					         <label class="lab" style="text-align: right;">总计：</label>
+					         <div class="txt">
+					            <span>订单共<span>{{=it.order.orderTotalWeight }}</span>吨，本次发送<span>{{=it.shippingWeight}}</span>吨，剩余未发<span>{{=it.remainShipWeight}}</span>吨</span>
+					         </div>
+					       </div>
+					</div>

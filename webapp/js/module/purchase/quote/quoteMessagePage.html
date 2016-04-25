@@ -1,0 +1,37 @@
+<div class="m-quote" style="text-align: left;">
+            <div class="txt-line" style="margin-top: 10px;">
+		         <label class="lab">总计：</label>
+		         <span  class="txt" >计划量共{{=it.quote.bidTotalWeight }}吨</span><br>
+		         <label class="lab">总价</label>
+		         <span id="quote-total-money-tip"   >{{=it.quote.quoteTotalMoney.toString().formatMoney(2)}}</span>元 
+		       </div>         
+		       <div class="txt-line">
+		               <label class="lab">运杂费：</label>
+		               <span class="txt" id="freight-miscellanous-tip" >{{=it.quote.freightMiscellaneous}}元/吨</span>
+		       </div>
+		       <table class="m-quote-detail">
+		            <thead>
+		                <tr>
+		                    <th style="width: 130px;">商品信息</th>
+		                    <th >价格信息</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		              {{~it.listQuoteDetail : qd:index}}
+		                <tr>
+		                    <td>
+		                                                         品名：{{=qd.brandName}}<br/>
+		                                                        材质：{{=qd.textureName}}<br/>
+		                                                        规格：{{=qd.specification}}<br/>
+		                                                        产地：<span id="place-steel-{{=index}}-tip">{{=qd.placeSteel}}</span>
+		                    </td>
+		                    <td>
+		                       	<span id="quote-price-{{=index}}-tip" >{{=qd.quotePrice}}</span>元/吨
+		                        <br/>合计：
+		                        <span id="quote-money-{{=index}}-tip"  class="quote-money" >{{=qd.quoteMoney.toString().formatMoney(2)}}</span>元
+		                    </td>
+		                </tr>
+		               {{~}} 
+		            </tbody>
+		       </table>
+		</div>

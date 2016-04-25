@@ -1,0 +1,56 @@
+{{~it.page.list:value:index}}
+<li class="line" data-order-id={{=value.orderId}} data-bid-id={{=value.bidId}} data-order-status={{=value.orderStatus}}>
+	   {{?value.orderStatus==1}}
+       <div class="dealing"style="float:right;">
+         <label class="lab">待确认</label>
+       </div>
+       {{?}}
+       {{?value.orderStatus==2}}
+       <div class="complete" style="float:right;">
+         <label class="lab">已确认</label>
+       </div>
+       {{?}}
+       {{?value.orderStatus==3}}
+       <div class="cancellation"style="float:right;">
+         <label class="lab">已作废</label>
+       </div>
+       {{?}}
+       <div class="txt-line">
+         <label class="lab">订单编号：</label>
+         <div class="txt">
+            <span>{{=value.orderCode}}</span>
+         </div>      
+       </div>
+       <div class="txt-line">
+         <label class="lab">收货地址：</label>
+         <div class="txt">
+            <span>{{=value.orderDetails[0].shippingAddress}}</span>
+         </div>      
+       </div>
+       <div class="txt-line">
+         <label class="lab">到场日期：</label>
+         <div class="txt">
+            <span >{{=new Date(value.orderDetails[0].arrivalDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+         </div>
+       </div>
+       <div class="txt-line">
+         <label class="lab">总需求：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalWeight}}吨</span>
+         </div>
+       </div>
+       <div class="txt-line">
+         <label class="lab">总金额：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalMoney}}元</span>
+         </div>
+       </div>
+       {{?value.orderStatus!=3}}
+       <a href="orderDetaiPage?orderId={{=value.orderId}}&bidId={{=value.bidId}}&orderStatus={{=value.orderStatus}}&action=confirm&_t={{=new Date().getTime()}}" class="join-order-btn weui_btn weui_btn_mini weui_btn_primary" >查看详情</a>
+       {{?}}
+       {{?value.orderStatus==1}}
+       <a href="orderDetaiPage?orderId={{=value.orderId}}&bidId={{=value.bidId}}&orderStatus={{=value.orderStatus}}&action=confirm&_t={{=new Date().getTime()}}" class="history-quote-btn weui_btn weui_btn_mini weui_btn_primary" >确认</a>
+       {{?}}
+    </li>
+{{~}}
+   

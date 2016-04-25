@@ -1,0 +1,72 @@
+            <div class="g-header">
+                    <a href="center" class="u-back-left" ></a>
+                    <h3 class="u-title">订单[{{=it.order.orderCode}}]</h3>
+            </div> 
+            <div id="g-content" class="g-content">
+					                
+					<div class="m-order" >
+					    <div class="txt-line">
+	         				<label class="lab">收货地址：</label>
+	         				<div class="txt">
+	            			<span>{{=it.data[0].shippingAddress}}</span>
+	         				</div>      
+       					</div>
+					       <div class="txt-line">
+					         <label class="lab">交货方式</label>
+					         <div class="txt">
+					            <span >{{=it.order.deliveryType==1?'自提':'配送'}}</span>
+					         </div>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab order-time">到场日期：</label>
+					         <div class="txt">
+					            <span >{{=new Date(it.data[0].arrivalDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+					         </div>
+					       </div>
+					       <table class="m-order-detail">
+					            <thead>
+					                <tr>
+					                    <th>商品信息</th>
+					                    <th style="width: 30px;">验货方式</th>
+					                    <th style="width: 40px;">订单量（吨）</th>
+					                    <th>订单价（元）</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.data : od}}
+					                <tr>
+					                    <td>
+					                                                        品名：{{=od.brandName}}<br/>
+					                                                        材质：{{=od.textureName}}<br/>
+					                                                        规格：{{=od.specification}}<br/>
+					                                                        产地：{{=od.placeSteel}}
+					                    </td>
+					                    <td>
+					                        {{='理记'}}     
+					                    </td>
+					                    <td>{{=od.orderWeight.toFixed(2)}}</td>
+					                    <td>单价：{{=od.orderPrice.toFixed(2)}}<br/>合计：{{=(od.orderPrice*od.orderWeight).toFixed(2)}}</td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					       
+					       <div class="txt-line" style="margin-top: 10px;">
+					         <label class="lab" style="text-align: right;">总计：</label>
+					         <div class="txt">
+					            <span >订单量共{{=it.order.orderTotalWeight }}吨，订单总价{{=it.order.orderTotalMoney}}元</span>
+					         </div>
+					       </div>
+					</div>
+            </div>
+            <div id="g-footer" class="g-footer" >
+				 <div class="m-order-footer" >
+				      <a  href="orderDetailExtraPage?orderId={{=it.order.orderId}}" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+				      {{?it.order.orderStatus==1}}
+				      <a href="#"onclick="confirmOrder({{=it.order.orderId}})" class="weui_btn weui_btn_mini weui_btn_primary" >确认订单</a>
+				      {{?}}
+				      {{?it.order.orderStatus==2&&it.order.shippingStatus!=3}}
+				      <a href="../shipping/toQuote?bidId={{=it.order.bidId}}" class="weui_btn weui_btn_mini weui_btn_primary" >订单发货</a>
+				      {{?}}
+				</div>
+            </div>

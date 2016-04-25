@@ -1,0 +1,72 @@
+            <div class="g-header">
+                    <a href="bidListPage" class="u-back-left" ></a>
+                    <h3 class="u-title">竞价单[{{=it.bid.bidCode}}]</h3>
+            </div> 
+            <div id="g-content" class="g-content">
+					                
+					<div class="m-bid" >
+					       <div class="txt-line">
+					         <label class="lab bid-time">竞价时间：</label>
+					         <div class="txt">
+					            <span >{{=new Date(it.bid.bidBeginTime).formatDate("yyyy-MM-dd HH:mm")}}<br/>至<br/>{{=new Date(it.bid.bidEndTime).formatDate("yyyy-MM-dd HH:mm")}}</span>
+					         </div>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">可报次数：</label>
+					         <div class="txt">
+					            <span>{{=(it.bid.bidTime == 0 ?'不限':it.bid.bidTime) }}次</span>
+					         </div>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">已报次数：</label>
+					         <div class="txt">
+					            <span> {{=it.quoteSn}}次</span>                
+					            <span class="ranking">上轮报价排名：
+					               {{=it.rankStr}}
+					            </span>
+					         </div>
+					       </div>
+					       <table class="m-bid-detail">
+					            <thead>
+					                <tr>
+					                    <th>商品信息</th>
+					                    <th>验货方式</th>
+					                    <th>重量信息</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.bid.listCentralBuyBidDetailVO : bd}}
+					                <tr>
+					                    <td>
+					                                                        品名：{{=bd.brandName}}<br/>
+					                                                        材质：{{=bd.textureName}}<br/>
+					                                                        规格：{{=bd.specification}}
+					                    </td>
+					                    <td>
+					                        {{=bd.meteringTypeName}}     
+					                    </td>
+					                    <td>计划量：{{=bd.planBuyWeight}}吨</td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					       
+					       <div class="txt-line" style="margin-top: 10px;">
+					         <label class="lab" style="text-align: right;">总计：</label>
+					         <div class="txt">
+					            <span >计划量共{{=it.bid.bidTotalWeight }}吨</span>
+					         </div>
+					       </div>
+					</div>
+            </div>
+            <div id="g-footer" class="g-footer" >
+				 <div class="m-bid-footer" >
+				      {{?it.quoteSn>0}}
+				      <a href="../quote/toQuoteDetail?bidId={{=it.bid.bidId}}&quoteSn={{=it.quoteSn}}" class="weui_btn weui_btn_mini weui_btn_primary" >查看报价</a>
+				      {{?}}
+				      <a  href="bidDetailExtraPage?bidId={{=it.bid.bidId}}" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+				      {{?it.canQuote}}
+				      <a href="../quote/toQuote?bidId={{=it.bid.bidId}}" class="weui_btn weui_btn_mini weui_btn_primary" >参与报价</a>
+				      {{?}}
+				</div>
+            </div>

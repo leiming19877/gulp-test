@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+html,body{ height: 100%;background-color: #fbf9fe;}
+
+.g-page{display:-webkit-box; display:flex; -webkit-box-orient:vertical;flex-direction:column ; height: 99.9%;}
+
+.g-header{-webkit-box-flex:0;flex:none; width:100%;height: 40px; line-height:40px;border-bottom:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
+
+.g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
+.g-footer{-webkit-box-flex:0;flex:none; width:100%;height:50px; border-top:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
+
+.u-back-left{float:left; margin:10px 10px 10px 20px; width: 20px;height: 20px;background: url(../../../../images/icons/icon_left.png) no-repeat; background-size:20px 20px;}
+
+.u-title{height: 40px; line-height:40px;font-weight: bold;font-size: 14px;overflow: hidden;}
+
+.u-ipt-min{width: 60px;height: 25px;border: 1px solid #ccc;}
+.f-bg1{background-color: #e9e9e9;}
+.f-red1{color:#EF4F4F;}
+
+/** 竞价基本信息  **/
+.m-quote{position:relative;}
+.m-quote .txt-line{line-height: 30px;}
+.m-quote .lab{padding-left: 10px;font-weight:bold;}
+.m-quote .txt{vertical-align:middle;}
+.m-quote .quote-sn{position:absolute;top:10px;right:10px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
+
+
+/** 报价单名细信息  **/
+.m-quote-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
+.m-quote-detail th{font-weight: bold;}
+.m-quote-detail td,.m-quote-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
+.m-quote-detail-up,.m-quote-detail-down{     padding: 0 .75em;display: inline-block;height: 10px;line-height:0.5;width: 40px;}
+.m-quote-detail-nav{float:right;height: 10px;line-height: 10px;}
+
+
+
+/** 报价合同细条款名细信息  **/
+.m-quote-contract-term{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
+.m-quote-contract-term caption{padding: 5px 5px;border-bottom:1px solid #ddd;background-color: #e9e9e9; }
+.m-quote-contract-term th{font-weight: bold;}
+.m-quote-contract-term td,.m-quote-contract-term th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
+
+.m-quote-footer{height:50px; padding-right:10px; text-align: right;}
+.m-quote-footer .weui_btn{ margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}
