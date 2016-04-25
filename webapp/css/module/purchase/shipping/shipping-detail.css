@@ -15,32 +15,22 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .u-ipt-min{width: 60px;height: 25px;border: 1px solid #ccc;}
 .f-red1{color:#EF4F4F;}
 
-/** 竞价基本信息  **/
-.m-order{}
-.m-order .txt-line{}
-.m-order .lab{float:left;width:90px;margin-right:-90px;font-weight:bold;}
-.m-order .lab.order-time{line-height: 72px;}
-.m-order .txt{margin-left:90px;vertical-align:middle;}
-.m-order .txt *{vertical-align:middle;}
-.m-order .ranking{margin-left:20px; color:#EF4F4F;}
+/** 发货基本信息  **/
+.m-shipping{}
+.m-shipping .txt-line{}
+.m-shipping .lab{float:left;width:90px;margin-right:-90px;font-weight:bold;}
+.m-shipping .lab.shipping-time{line-height: 72px;}
+.m-shipping .txt{margin-left:90px;vertical-align:middle;}
+.m-shipping .txt *{vertical-align:middle;}
 
-/** 竞价单名细信息  **/
-.m-order-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
-.m-order-detail th{font-weight: bold;}
-.m-order-detail td,.m-order-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
+/** 发货单名细信息  **/
+.m-shipping-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
+.m-shipping-detail th{font-weight: bold;}
+.m-shipping-detail td,.m-shipping-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
 
-/** 竞价单扩展信息（买方条款） **/
-.m-order-extra{}
-.m-order-extra .txt-line{margin: 5px 0}
-.m-order-extra .lab{margin:0 5px; font-weight: bold;}
+.shipping-sn{position:absolute;top:130px;right:10px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
+.m-shipping-detail-up,.m-shipping-detail-down{padding: 0 .75em;display: inline-block;height: 10px;line-height:0.5;width: 40px;}
+.m-shipping-detail-nav{float:right;height: 10px;line-height: 10px;}
 
-
-/** 竞价合同细条款名细信息  **/
-.m-order-contract-term{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
-.m-order-contract-term caption{padding: 5px 5px;border-bottom:1px solid #ddd;background-color: #e9e9e9; }
-.m-order-contract-term th{font-weight: bold;}
-.m-order-contract-term td,.m-order-contract-term th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
-
-
-.m-order-footer{height:50px; padding-right:10px; text-align: right;}
-.m-order-footer .weui_btn{ margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}
+.m-shipping-footer{height:50px; padding-right:10px; text-align: right;}
+.m-shipping-footer .weui_btn{ margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}
