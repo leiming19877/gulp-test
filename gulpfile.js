@@ -147,12 +147,4 @@ gulp.task("build:seajs",['build:seajs-config'],function(){
     .pipe(uglify())
     .pipe(gulp.dest('webapp/js/seajs'));
 });
-gulp.task("demo",function(){
-    return gulp.src("./js/build/define_demo.js") 
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
-
-});
-
-
 gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs'] );
