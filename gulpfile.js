@@ -36,13 +36,13 @@ gulp.task( 'build:cmd-moudle', function(){
             base : 'webapp/js/',
             tmpExtNames : ['.html'], //提供模板文件的后缀名用来区分模板
             alias: { 
-                'jquery':'jquery/2.1.1/jquery-2.1.1.min.js',
-                'jquery-mobile':'jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js',
-                'zepto': 'zepto/zepto.min.js',
-                'dot':'doT/doT.min.js',
+                'jquery':'jquery/2.1.1/jquery-2.1.1.js',
+                'jquery-mobile':'jquery.mobile-1.4.5/jquery.mobile-1.4.5.js',
+                'zepto': 'zepto/zepto.js',
+                'dot':'doT/doT.js',
                 'iscroll':'iscroll/iscroll-4.2.js',
                 'jweixin':'weixin/jweixin-1.1.0.js'
-            },
+            }/*,
             ignore :[
                 'jquery',
                 'jquery-mobile',
@@ -50,7 +50,7 @@ gulp.task( 'build:cmd-moudle', function(){
                 'dot',
                 'iscroll',
                 'jweixin'
-            ],
+            ]*/
         }))
         .pipe(rename({ suffix: '.all' }))
         .pipe(gulp.dest('webapp'))
