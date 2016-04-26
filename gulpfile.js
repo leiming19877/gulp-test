@@ -3,8 +3,6 @@ var
     path = require('path'),
     gulp = require( 'gulp' ),
     concat = require('gulp-concat'), // 合并文件
-    //htmlmin = require('gulp-htmlmin'),//html压缩
-    //replace = require('gulp-replace'),//字符串替换
     uglify = require('gulp-uglify'),// js压缩
     tap = require('gulp-tap'),//重命名
     rename = require('gulp-rename'),//重命名
@@ -21,7 +19,9 @@ var jsModules = [];
 var cssModules = [];
 var jspModules =[];
 for(var i=0;i<config.modules.length;i++){
-	console.log(config.modules[i]['main-js']);
+	console.log("对"+config.modules[i]['main-js']+"进行cmd打包。");
+	console.log("对"+config.modules[i]['css']+"进行css打包。");
+	console.log("对"+config.modules[i]['jsp']+"进行jsp复制替换打包。");
 	jsModules.push(config.modules[i]['main-js']);
     cssModules.push(config.modules[i]['css']);
     jspModules.push(config.modules[i]['jsp']);
