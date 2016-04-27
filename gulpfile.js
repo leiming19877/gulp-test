@@ -27,8 +27,8 @@ for(var i=0;i<config.modules.length;i++){
     jspModules.push(config.modules[i]['jsp']);
 }
 
-var CSS_SRC="";
 
+//打包js主模块
 gulp.task( 'build:cmd-moudle', function(){
     return gulp.src(jsModules ,{base:'webapp'})
         .pipe( cmdPack({
@@ -58,6 +58,7 @@ gulp.task( 'build:cmd-moudle', function(){
         .pipe(uglify())
         .pipe( gulp.dest("webapp"));
 });
+//打包样式
 gulp.task("build:css",function(){
     return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp'})
     .pipe(cssbeautify())
@@ -70,13 +71,14 @@ gulp.task("build:css",function(){
     .pipe(gulp.dest("webapp"));
 }
 );
+
 //复制所有jsp文件到jsp2目录下
 gulp.task("build:copy-jsp",function(cb){
     return gulp.src("webapp/WEB-INF/jsp/**/*.jsp",{base:'webapp/WEB-INF/jsp'})
     .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
     //cb(); // 如果 err 不是 null 或 undefined，则会停止执行，且注意，这样代表执行失败了
 });
-
+//对要替换的jsp进行替换
 gulp.task("build:jsp",['build:copy-jsp'],function(){
     return gulp.src(jspModules,{base:'webapp/WEB-INF/jsp'})
     .pipe(tap(function (file){
@@ -100,13 +102,10 @@ gulp.task("build:jsp",['build:copy-jsp'],function(){
      }))
     .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
 });
-
-
-
+//对seajs-config 版本配置+1，以防止出现缓存问题
 gulp.task("build:seajs-config",function(){
     return gulp.src("webapp/js/seajs/seajs-config-debug.js",{base:'webapp'}) 
     .pipe(tap(function (file){
-             debugger;
             var filename = path.basename(file.path);
             if(filename === "seajs-config-debug.js"){
                 var contents = file.contents.toString();
@@ -123,28 +122,14 @@ gulp.task("build:seajs-config",function(){
      }))
     .pipe(gulp.dest('webapp'));
 });
-
+//打包seajs
 gulp.task("build:seajs",['build:seajs-config'],function(){
     return gulp.src(["webapp/js/seajs/*.js",'!webapp/js/seajs/sea-all*.js'],{base:'webapp'}) 
-  /*  .pipe(tap(function (file){
-            var filename = path.basename(file.path);
-            if(filename === "seajs-config-debug.js"){
-                var contents = file.contents.toString();
-                //开启生产环境配置
-                contents = contents.replace(/\/\/map:/g,"map:");
-                //注释掉开发环境配置
-                contents = contents.replace(/map.+\+Math\.random/g,function(m){
-                            return "//"+m;
-                });
-                
-                file.contents = new Buffer(contents); 
-            }
-            
-     }))*/
     .pipe(concat('sea-all.js'))
     .pipe(gulp.dest('webapp/js/seajs'))
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
     .pipe(gulp.dest('webapp/js/seajs'));
 });
+//执行全局打包
 gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs'] );
