@@ -253,7 +253,7 @@ define(function(require, exports, module) {
 		var signStatus = getSelectedSignStatus();
 		$.ajax({
 			dataType:'json',
-			url:'../../central/orderReceipt/getReceiptPageData',
+			url:'../../purchase/orderReceipt/getReceiptPageData',
 			data:{
 				'orderId':orderId,
 				'signStatus':signStatus,
@@ -294,7 +294,7 @@ define(function(require, exports, module) {
 		loadingToast.show("数据加载中");
 		$.ajax({
 			dataType:'json',
-			url:'../../central/orderReceipt/getReceiptPageData',
+			url:'../../purchase/orderReceipt/getReceiptPageData',
 			data:{
 				'orderId':orderId,
 				'signStatus':signStatus,

@@ -14,7 +14,7 @@ define(function(require, exports, module) {
 	var orderId = "";
 	$.ajax({
 		dataType:'json',
-		url:'../../central/orderReceipt/getReceiptDetailData',
+		url:'../../purchase/orderReceipt/getReceiptDetailData',
 		data:{
 			'shippingId':shippingId,
 			'_t':new Date().getTime()
@@ -29,6 +29,7 @@ define(function(require, exports, module) {
 			 //先清空
 			 gPage.empty();
 			 gPage.append(resultHtml);
+			 refreshReceiptWeight();
 			 
 		},
 		error:function(xhr, errorType, error){
@@ -39,16 +40,22 @@ define(function(require, exports, module) {
 	gPage.on("focus",".u-ipt-min",function(e){
 		this.select();
 	});
-	gPage.on("blur",".sign-weight",function(e){
-		refreshReceiptWeight();
+	gPage.on("input",".sign-weight",function(e){
 		var signWeight = $(this).val();
 		var deliveryWeight = this.attributes.id.nodeValue;
-		if(signWeight>1.08*deliveryWeight){
-			window.alert("签收重量远超过了发货重量。");
+		if(signWeight<0){
+			window.alert("签收量不能为负数！");
+			$(this).val($(this).attr("data-delivery-weight"))
 		}
-		if(signWeight<0.92*deliveryWeight){
-			window.alert("签收重量远少于了发货重量。");
-		}
+//		if(signWeight>1.08*deliveryWeight){
+//			window.alert("签收重量远超过了发货重量。");
+//			$(this).val($(this).attr("data-delivery-weight"))
+//		}
+//		if(signWeight<0.92*deliveryWeight){
+//			window.alert("签收重量远少于了发货重量。");
+//			$(this).val($(this).attr("data-delivery-weight"))
+//		}
+		refreshReceiptWeight();
 	});
 	
 	gPage.on("tap",".receipt-btn",function(e){
@@ -57,7 +64,7 @@ define(function(require, exports, module) {
 		$.ajax({
 			type:'post',
 			dataType:'json',
-			url:'../../central/orderReceipt/confirmShipping',
+			url:'../../purchase/orderReceipt/confirmShipping',
 			data:params,
 			success:function(data, status, xhz){
 				loadingToast.hide();

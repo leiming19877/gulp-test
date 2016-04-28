@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 		loadingToast.show("正在查找上一报价单");
 		$.ajax({
 			dataType:'json',
-			url:'../../central/quote/getQuoteDetailData',
+			url:'../../purchase/quote/getQuoteDetailData',
 			data:{
 				'bidId':bidId,
 				'quoteSn':quoteIndex,
@@ -53,7 +53,7 @@ define(function(require, exports, module) {
 		loadingToast.show("正在查找下一报价单");
 		$.ajax({
 			dataType:'json',
-			url:'../../central/quote/getQuoteDetailData',
+			url:'../../purchase/quote/getQuoteDetailData',
 			data:{
 				'bidId':bidId,
 				'quoteSn':quoteIndex,
@@ -76,7 +76,7 @@ define(function(require, exports, module) {
 
 	$.ajax({
 		dataType:'json',
-		url:'../../central/quote/getQuoteDetailData',
+		url:'../../purchase/quote/getQuoteDetailData',
 		data:{
 			'bidId':bidId,
 			'quoteSn':quoteSn,

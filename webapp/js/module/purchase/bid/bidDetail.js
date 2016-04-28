@@ -16,7 +16,7 @@ define(function(require, exports, module) {
 	var bidId = getBidId();
 	$.ajax({
 		dataType:'json',
-		url:'../../central/bidConsole/bidDetailData',
+		url:'../../purchase/bidConsole/bidDetailData',
 		data:{
 			'bidId':bidId,
 			'_t':new Date().getTime()

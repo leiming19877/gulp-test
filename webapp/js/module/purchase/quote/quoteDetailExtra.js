@@ -17,7 +17,7 @@ define(function(require, exports, module) {
 	var linkFrom = urlParams["linkFrom"];
 	$.ajax({
 		dataType:'json',
-		url:'../../central/quote/getQuoteData',
+		url:'../../purchase/quote/getQuoteData',
 		data:{
 			'bidId':bidId,
 			'quoteSn':quoteSn,

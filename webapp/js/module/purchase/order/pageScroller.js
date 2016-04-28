@@ -2,6 +2,7 @@
  * 竞价分页查询模块
  */
 define(function(require, exports, module) {
+	require("../../common/String");
 	//每页多少行
 	var ROW_SIZE = 6;
 	//竞价中
@@ -9,7 +10,7 @@ define(function(require, exports, module) {
 	//待竞价
 	var ORDER_SHIPPING="order_shipping";
 	//当前选择是的那种类型
-	var selectedType = ORDER_CONFIRM;
+	var selectedType = ORDER_SHIPPING;
 	
 	var $ = require("zepto");
 	//数据加载提示
@@ -58,13 +59,13 @@ define(function(require, exports, module) {
 			return ;
 		}else if(target.hasClass("order-shipping-btn")){
 			loadingToast.show("数据加载中");
-			window.location.href="../shippingOrder/shipping?orderId="+orderId+"&_t="+new Date().getTime();
+			window.location.href="../shippingOrder/toShippingOrder?orderId="+orderId+"&_t="+new Date().getTime();
 		}else if(target.hasClass("detail-shipping-btn")){
 			loadingToast.show("数据加载中");
 			window.location.href="../shippingOrder/checkShippingList?orderId="+orderId+"&_t="+new Date().getTime();
 		}else{
 			loadingToast.show("数据加载中");
-			//跳转到竞价详情
+			//跳转到订单详情
 			window.location.href = "orderDetaiPage?orderId="+orderId+"&bidId="+bidId+"&orderStatus="+orderStatus+"&action=confirm&_t="+new Date().getTime();
 		}
 	});
@@ -159,7 +160,7 @@ define(function(require, exports, module) {
 		
 		$.ajax({
 			dataType:'json',
-			url:'../../central/order/loadlistData',
+			url:'../../purchase/order/loadlistData',
 			data:{
 				'queryType':queryType,
 				'pageno':pageNo,
@@ -264,12 +265,13 @@ define(function(require, exports, module) {
 	 * 设置查询类型
 	 */
 	function setSelectedType(queryType){
-		selectedType = queryType;
+		selectedType = "order_shipping";
 	}
 	/**
 	 * 显示对应模块
 	 */
 	function showQueryType(queryType){
+		queryType = "order_shipping";
 		switch(queryType){
 		case ORDER_CONFIRM:
 			order_shipping.hide();

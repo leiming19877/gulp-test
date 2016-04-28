@@ -29,7 +29,6 @@ define(function(require, exports, module) {
 		if(self.prop("name") == "quotePrice"){
 			var planBuyWeight = self.attr("data-plan-buy-weight");
 			var priceMoney = val*planBuyWeight;
-			debugger;
 			priceMoney = priceMoney.toString().formatMoney(2);
 			var tr = self.parent().parent();
 			var index = tr.index();
@@ -62,17 +61,35 @@ define(function(require, exports, module) {
 	});
 	
 	gPage.on("tap",".quote-btn",function(e){
+		var isFirstQuote = $("#g-content").attr("data-first-quote");
+		var stepType = $("#g-content").attr("data-step-type");
+		var discountStep = $("#g-content").attr("data-discount-step");
+		if(isFirstQuote=="false"){
+		var lastQuoteTotalMoney = $("#quote-total-money").attr("data-quote-total");
+		var currentQuoteTotalMoney = $("#quote-total-money").html().removeDotToNumber();
+			if(stepType==1){
+				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)){
+					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"元");
+					return;
+				}
+			}else if(stepType==2){
+				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)/lastQuoteTotalMoney*100){
+					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"%");
+					return;
+				}
+			}
+		}
 		$('#dialog1').show();
 	});
 
 	$.ajax({
 		dataType:'json',
-		url:'../../central/quote/getQuoteData',
+		url:'../../purchase/quote/getQuoteData',
 		data:{
 			'bidId':bidId,
 			'_t':new Date().getTime()
 		},
-		success:function(data, status, xhz){			
+		success:function(data, status, xhz){	
 			 loadingToast.hide();
 			 //设置上一次报价id
 			 quoteId = data.quote.quoteId||'';
@@ -105,7 +122,7 @@ define(function(require, exports, module) {
 		$.ajax({
 			type:'post',
 			dataType:'json',
-			url:'../../central/quote/saveCentralQuote',
+			url:'../../purchase/quote/saveCentralQuote',
 			data:params,
 			success:function(data, status, xhz){
 				loadingToast.hide();

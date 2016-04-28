@@ -14,8 +14,10 @@ define(function(require, exports, module) {
 	var shippingOrderTpl = require("./shippingOrder.html");
 	//发货确认模板
 	var shippingMessageTpl = require("./shippingMessage.html");
-	//发货数量
+	//发货重量
 	var shippingWeights = {};
+	//发货数量
+	var quantitys = {};
 	//剩余发货量
 	var remainWeights = {};
 	gPage.on("focus",".u-ipt-min",function(e){
@@ -29,14 +31,23 @@ define(function(require, exports, module) {
 		}
 	});
 	gPage.on("input",".u-ipt-min",function(e){
+		var target = e.target||e.srcElement;
 		var self = $(this);
+		if($(target).hasClass("quantity")){
+			if(self.val()<0){
+				alert("发货数量不能小于0！");
+				self.val(0);
+			}
+			return;
+		}
 		var val = parseFloat(self.val()).toFixed(2);
 		if(val<0){
 			alert("发货重量不能为负数");
+			self.val(0);
 			return;
 		}
 		self.val(val);
-		var span = self.next().next();
+		var span = self.next().next().next();
 		var data = span.attr("data-remain-weight");
 		var remainWeight = data-self.val();
 		if(remainWeight<0){
@@ -55,6 +66,10 @@ define(function(require, exports, module) {
 			shippingWeight +=weight;
 			remainShipWeight = remainShipWeightTotal - shippingWeight;
 		});
+		$("input[name='quantity']").each(function(index){
+			var quantity = $(this).val();
+			quantitys[index] = quantity;
+		});
 		$("span[name='remainWeight']").each(function(index){
 			var weight = parseFloat($(this).html());
 			remainWeights[index] = weight;
@@ -69,7 +84,7 @@ define(function(require, exports, module) {
 			return ;
 		}
 		var flag = true;
-		var inputs = $(".m-order div input");
+		var inputs = $(".m-shipping div input");
 		for(var i=0;i<inputs.length;i++){
 			var content = $(inputs[i]).val().trim();
 			$(inputs[i]).css("border","1px solid #A9A9A9");
@@ -86,7 +101,7 @@ define(function(require, exports, module) {
 		var params = getParams();
 		$.ajax({
 			dataType:'json',
-			url:'../../central/shippingOrder/loadlistData',
+			url:'../../purchase/shippingOrder/loadlistData',
 			async:false,
 			data:{
 				'orderId':params.orderId,
@@ -171,7 +186,7 @@ define(function(require, exports, module) {
 	var params = getParams();
 	$.ajax({
 		dataType:'json',
-		url:'../../central/shippingOrder/loadlistData',
+		url:'../../purchase/shippingOrder/loadlistData',
 		data:{
 			'orderId':params.orderId,
 			'_t':new Date().getTime()

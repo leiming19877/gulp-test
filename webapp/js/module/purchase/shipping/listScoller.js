@@ -46,14 +46,14 @@ define(function(require, exports, module) {
 		var target = e.target||e.srcElement;
 		target = $(target);
 		//如果是按钮触发
-		if(target.hasClass("join-order-btn") || target.hasClass("history-quote-btn")){
-			return ;
-		}
-//		var self = $(this);
-//		var shippingId = self.attr("data-order-id");
-//		loadingToast.show("数据加载中");
-//		//跳转到发货详情
-//		window.location.href = "detailInfo?shippingId="+shippingId+"&action=check";
+//		if(target.hasClass("join-order-btn") || target.hasClass("history-quote-btn")){
+//			return ;
+//		}
+		var self = $(this);
+		var shippingId = self.attr("data-shipping-id");
+		loadingToast.show("数据加载中");
+		//跳转到发货详情
+		window.location.href = "toShippingDetail?shippingId="+shippingId;
 	});
 	tabContent.on("tap",".weui_btn",function(e){
 		loadingToast.show("数据加载中");
@@ -147,7 +147,7 @@ define(function(require, exports, module) {
 		var orderId = getOrderId();
 		$.ajax({
 			dataType:'json',
-			url:'../../central/shippingOrder/loadlistData',
+			url:'../../purchase/shippingOrder/loadlistData',
 			data:{
 				'orderId':orderId,
 				'pageno':pageNo,

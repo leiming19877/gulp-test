@@ -2,7 +2,7 @@
         <a href="../bidConsole/bidListPage" class="u-back-left" ></a>
         <h3 class="u-title">报价</h3>
 </div> 
-<div id="g-content" class="g-content" >
+<div id="g-content" class="g-content" data-first-quote={{=it.isFirstQuote}} data-step-type={{=it.bid.stepType}} data-discount-step={{=it.bid.discountStep}}>
 		<div class="m-quote" >              
 		       <div class="txt-line">
 		         <label class="lab ">可报价次数：</label>
@@ -73,7 +73,7 @@
 		         <label class="lab">总计：</label>
 		         <span >计划量共{{=it.quote.bidTotalWeight }}吨</span>,
 		         <label class="lab">总价</label>
-		         <span id="quote-total-money"  >{{=it.quote.quoteTotalMoney.toString().formatMoney(2)}}</span>元 
+		         <span id="quote-total-money" data-quote-total={{=it.quote.quoteTotalMoney}}>{{=it.quote.quoteTotalMoney.toString().formatMoney(2)}}</span>元 
 		       </div>
 		</div>
 

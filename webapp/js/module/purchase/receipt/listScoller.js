@@ -120,7 +120,7 @@ define(function(require, exports, module) {
 	}
 	function endReceipt(orderId){
 			$.ajax({
-				url:"/central/orderReceipt/endReceipt",
+				url:"/purchase/orderReceipt/endReceipt",
 				async:false,
 				data:{
 	            	'orderId' : orderId
@@ -174,7 +174,7 @@ define(function(require, exports, module) {
 		
 		$.ajax({
 			dataType:'json',
-			url:'../../central/orderReceipt/loadlistData',
+			url:'../../purchase/orderReceipt/loadlistData',
 			data:{
 				'queryType':queryType,
 				'pageno':pageNo,

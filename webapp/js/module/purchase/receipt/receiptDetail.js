@@ -14,7 +14,7 @@ define(function(require, exports, module) {
 	
 	$.ajax({
 		dataType:'json',
-		url:'../../central/orderReceipt/getReceiptDetailData',
+		url:'../../purchase/orderReceipt/getReceiptDetailData',
 		data:{
 			'shippingId':shippingId,
 			'_t':new Date().getTime()

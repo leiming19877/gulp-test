@@ -11,8 +11,8 @@ define(function(require, exports, module) {
 
 	orderTab.on("tap",".weui_navbar_item",function(e){
 		var self = $(this);
-		self.siblings(".weui_bar_item_on").removeClass("weui_bar_item_on");
-		self.addClass("weui_bar_item_on");
+//		self.siblings(".weui_bar_item_on").removeClass("weui_bar_item_on");
+//		self.addClass("weui_bar_item_on");
 		var queryType = self.data("queryType");
 		pageScroller.setSelectedType(queryType);
 		pageScroller.showQueryType(queryType);

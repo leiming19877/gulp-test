@@ -88,12 +88,12 @@
 	                    	签收数量(件):<br/>
 	                        <input name="signQuantity" class="u-ipt-min" 
 	                        type="number"  min="0" max="10000" maxlength="5"
-	                        value="{{=sd.signQuantity}}" />
+	                        value="{{=sd.deliveryQuantity}}" />
 	                        <br/>
 	                                                                         签收重量(吨):<br/>
 	                        <input name="signWeight" class="u-ipt-min sign-weight" id="{{=sd.deliveryWeight}}"
-	                        type="number"  min="0" max="10000" maxlength="5"
-	                        value="{{=sd.signWeight}}" />
+	                        type="number"  min="0" max="10000" maxlength="5" data-delivery-weight={{=sd.deliveryWeight}}
+	                        value="{{=sd.deliveryWeight}}" />
 	                        
 	                    </td>
 	                </tr>

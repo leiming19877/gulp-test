@@ -90,7 +90,7 @@ define(function(require, exports, module){
 	}
 	function loadData(){
 		pageno=1;
-		$.post("/central/orderReceipt/loadlistData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
+		$.post("/purchase/orderReceipt/loadlistData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
     		pageCount = result.total;
     		data = result.list;
     		data.forEach(function(value){
@@ -110,7 +110,7 @@ define(function(require, exports, module){
     	},'json');
 	}
 	function reLoadData(){
-    	$.post("/central/orderReceipt/loadlistData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
+    	$.post("/purchase/orderReceipt/loadlistData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
     		pageCount = result.total;
     		data = result.list;
     		data.forEach(function(value){

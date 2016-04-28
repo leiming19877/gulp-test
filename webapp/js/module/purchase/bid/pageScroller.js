@@ -53,19 +53,44 @@ define(function(require, exports, module) {
 	var prepareBidTpl = require("./prepareBidList.html");
 	//竞价结束模板
 	var overBidTpl = require("./overBidList.html");
+	//报价排名模板
+	var rankMessageTpl = require("./rankMessage.html");
 	//竞价列表行单击，导航到竞价详情
 	tabContent.on("tap","li.line",function(e){
 		var target = e.target||e.srcElement;
 		target = $(target);
+		var self = $(this);
+		var bidId = self.attr("data-bid-id");
 		//如果是按钮触发
 		if(target.hasClass("join-bid-btn") || target.hasClass("history-quote-btn")){
 			return ;
 		}
-		var self = $(this);
-		var bidId = self.attr("data-bid-id");
+		if(target.hasClass("check-quote-btn") ){
+			$.ajax({
+				url:"viewQuoteRank",
+				data:{bidId:bidId},
+				success:function(data, status, xhz){
+					loadingToast.hide();
+					var tab = $("#bid-tab")[0].childNodes[1];
+					$(tab).css("z-index",1);
+					var tempFn = doT.template(rankMessageTpl);
+		 			var resultHtml = tempFn(JSON.parse(data));
+		 			$("#dialog-content").empty();
+		 			$("#dialog-content").append(resultHtml);
+					$('#dialog2').show();
+				},
+				error:function(xhr, errorType, error){
+					loadingToast.show("数据加载失败");
+			}
+			});
+			return;
+		}
 		loadingToast.show("数据加载中");
 		//跳转到竞价详情
 		window.location.href = "bidDetailPage?bidId="+bidId;
+	});
+	$('#dialog2').on('click', '.primary', function () {
+		$('#dialog2').hide();
 	});
 	tabContent.on("tap",".weui_btn",function(e){
 		loadingToast.show("数据加载中");
@@ -150,7 +175,7 @@ define(function(require, exports, module) {
 		
 		$.ajax({
 			dataType:'json',
-			url:'../../central/bidConsole/bidListData',
+			url:'../../purchase/bidConsole/bidListData',
 			data:{
 				'queryType':selectedType,
 				'pageno':pageNo,
@@ -193,7 +218,7 @@ define(function(require, exports, module) {
 		loadingToast.show("数据加载中");
 		$.ajax({
 			dataType:'json',
-			url:'../../central/bidConsole/bidListData',
+			url:'../../purchase/bidConsole/bidListData',
 			data:{
 				'queryType':selectedType,
 				'pageno':pageNo,

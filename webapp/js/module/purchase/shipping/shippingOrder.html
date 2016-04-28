@@ -4,7 +4,7 @@
             </div> 
             <div id="g-content" class="g-content">
 					                
-					<div class="m-order" >
+					<div class="m-shipping" >
 					    <div class="txt-line">
 	         				<label class="lab">收货地址：</label>
 	         				<div class="txt">
@@ -59,13 +59,13 @@
 					            <input style="width: 85%;" name="shippingUserTel"value="{{=it.orderDetails[0].shippingUserTel}}"id="shippingUserTel"placeholder="收货人电话">
 					         </div>
 					       </div>
-					       <table class="m-order-detail">
+					       <table class="m-shipping-detail">
 					            <thead>
 					                <tr>
 					                    <th>商品信息</th>
 					                    <th style="width: 50px;">验货方式</th>
 					                    <th>订单量（吨）</th>
-					                    <th style="text-align: center;">发货量（吨）</th>
+					                    <th style="text-align: center;">发货信息</th>
 					                </tr>
 					            </thead>
 					            <tbody>
@@ -81,7 +81,9 @@
 					                        {{='理记'}}     
 					                    </td>
 					                    <td>{{=od.orderWeight.toFixed(2)}}</td>
-					                    <td>本次发货：<input type="number" class="u-ipt-min" name="weight"id="{{=(od.orderDetailId)}}"value="0" style="width: 100%;"><br/>未发：<span name="remainWeight" data-remain-weight="{{=od.remainShipWeight}}">{{=od.remainShipWeight.toFixed(2)}}</span></td>
+					                    <td>发货数量（件）<input type="number" class="u-ipt-min quantity" name="quantity" value="0" style="width: 100%;"><br/>
+					                    	发货重量（吨）<input type="number" class="u-ipt-min" name="weight" id="{{=(od.orderDetailId)}}"value="0" style="width: 100%;"><br/>
+					                    	未发重量（吨）<br><span name="remainWeight"  data-remain-weight="{{=od.remainShipWeight}}">{{=od.remainShipWeight.toFixed(2)}}</span></td>
 					                </tr>
 					               {{~}} 
 					            </tbody>
@@ -96,7 +98,7 @@
 					</div>
             </div>
             <div id="g-footer" class="g-footer" >
-				 <div class="m-order-footer" >
+				 <div class="m-shipping-footer" >
 				      <a href="javascript:void(0)" data-order-id={{=it.order.orderId}} class="weui_btn weui_btn_mini weui_btn_primary" >确认发货</a>
 				</div>
             </div>

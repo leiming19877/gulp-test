@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-	
+	require("../../common/String");
 	var $ = require("zepto");
 	 //dot模板引擎
 	var doT = require("dot");
@@ -14,7 +14,7 @@ define(function(require, exports, module) {
 	var params = getParams();
 	$.ajax({
 		dataType:'json',
-		url:'../../central/order/detailInfo',
+		url:'../../purchase/order/detailInfo',
 		data:{
 			'orderId':params.orderId,
 			'bidId':params.bidId,
