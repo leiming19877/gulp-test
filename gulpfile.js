@@ -26,7 +26,26 @@ for(var i=0;i<config.modules.length;i++){
     cssModules.push(config.modules[i]['css']);
     jspModules.push(config.modules[i]['jsp']);
 }
-
+var globalCss = ['webapp/css/global/reset.css',
+                 'webapp/css/global/media.css',
+                 'webapp/css/global/function.css',
+                 'webapp/css/global/page-unit.css',
+                 'webapp/css/global/iconfont.css',
+                 ];
+//打包全局样式
+gulp.task("build:global-css",function(){
+	 return gulp.src(globalCss,
+			{base:'webapp/css/global'})
+	.pipe(concat('global-1.0.1.all.css'))
+    .pipe(cssbeautify())
+    .pipe(csscomb())
+    .pipe(postcss([autoprefixer]))
+    .pipe(gulp.dest("webapp/css/global"))
+    .pipe(nano())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest("webapp/css/global"));
+}
+);
 
 //打包js主模块
 gulp.task( 'build:cmd-moudle', function(){
@@ -90,7 +109,7 @@ gulp.task("build:jsp",['build:copy-jsp'],function(){
                     var contents = file.contents.toString();
                     var cssFilePath = cssModules[i].replace("webapp/css","");
                     var newCssFilePath = cssFilePath.replace(".css",".all.min.css");
-                    var jsFilePath = jsModules[i].replace("webapp/js/","");
+                    var jsFilePath = jsModules[i].replace("webapp/js/","seajs.use\(\"");
                     jsFilePath = jsFilePath.replace(".js","");
                     var newJsFilePath = jsFilePath+".all.min";
                     contents = contents.replace(cssFilePath,newCssFilePath);
@@ -133,3 +152,4 @@ gulp.task("build:seajs",['build:seajs-config'],function(){
 });
 //执行全局打包
 gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs'] );
+//gulp.task( 'default', ['build:global-css'] );

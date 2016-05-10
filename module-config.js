@@ -8,6 +8,11 @@ var modules =[
 	"main-js":"webapp/js/module/purchase/bid/bidDetail.js",
 	"jsp":"webapp/WEB-INF/jsp/purchase/bid/bidDetail.jsp",
 	"css":"webapp/css/module/purchase/bid/bid-detail.css"
+	},
+	{
+		"main-js":"webapp/js/module/purchase/receipt/receipt.js",
+		"jsp":"webapp/WEB-INF/jsp/purchase/receipt/receipt.jsp",
+		"css":"webapp/css/module/purchase/receipt/receipt.css"
 	}
 ];
 //全局配置文件

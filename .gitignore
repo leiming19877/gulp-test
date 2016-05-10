@@ -34,3 +34,13 @@ node_modules
 
 #eclipse project
 .project
+
+#ingore jsp2
+webapp/WEB-INF/jsp2
+
+#ingore *.all,*.min css
+*.all.css
+*.all.min.css
+#ingore *-all.js,*.minjs
+*.all.js
+*.all.min.js
