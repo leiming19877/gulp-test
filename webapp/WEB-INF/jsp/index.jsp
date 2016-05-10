@@ -28,21 +28,23 @@
 		<!-- /header -->
 
 		<div role="main" class="ui-content">
-			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=Constants.APPID %>&redirect_uri=http%3A%2F%2F<%=Constants.DOMAIN %>%2FunBindAccount&response_type=code&scope=snsapi_base&state=1212312#wechat_redirect">绑定账号</a>
+			<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=Constants.APPID %>&redirect_uri=http%3A%2F%2F<%=Constants.DOMAIN %>%2FunBindAccount&response_type=code&scope=snsapi_base&state=1212312#wechat_redirect">解绑账号</a>
             <br/>
-            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=Constants.APPID %>&redirect_uri=http%3A%2F%2F<%=Constants.DOMAIN %>%2FgoBindAccount&response_type=code&scope=snsapi_base&state=1212312#wechat_redirect">解绑账号</a>
+            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=Constants.APPID %>&redirect_uri=http%3A%2F%2F<%=Constants.DOMAIN %>%2FgoBindAccount&response_type=code&scope=snsapi_base&state=1212312#wechat_redirect">绑定账号</a>
             <br/>
             <a href="preorder/iWantBuy" data-ajax="false">我要买</a>
             <br/>
-		    <a href="central/bidConsole/bidListPage" data-ajax="false">竞价</a>
+		    <a href="purchase/bidConsole/bidListPage" data-ajax="false">竞价</a>
 		    <br/>
-		    <a href="central/order/list" data-ajax="false">集采我的订单</a>
+		    <a href="purchase/order/list" data-ajax="false">集采我的订单</a>
 		    <br/>
 		    <a href="preorder/getList" data-ajax="false">订单模式订单</a>	   
 		    <br/>
-		    <a href="central/orderReceipt/list" data-ajax="false">订单收货</a>	   
+		    <a href="purchase/orderReceipt/orderReceiptPage" data-ajax="false">订单收货</a>	   
 		    <br/>
-		    <a href="central/order/center" data-ajax="false">订单中心</a>	   
+		    <a href="purchase/order/center" data-ajax="false">订单中心</a>	 
+		    <br/>
+		    <a href="purchase/favorite/toFavorite" data-ajax="false">我的偏好</a>	   
 		</div>
 		<!-- /content -->
 

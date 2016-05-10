@@ -1,7 +1,5 @@
 <%@page contentType="text/html; charset=utf-8"%>
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
-<%@include file="/WEB-INF/jsp/comm/wx-head.jsp"%>
-<%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +20,7 @@
 <body>
 	      <div id="g-page" class="g-page" >
 	          <div class="g-header">
-	                <a href="list" class="u-back-left" ></a>
+	                <a href="orderReceiptPage" class="u-back-left" ></a>
                     <h3 class="u-title">收货单列表<a id="showActionSheet" href="javascript:void(0)" class="weui_btn weui_btn_mini weui_btn_primary m-receipt-search">搜索收货单</a></h3>
 	          </div>
 	          <div id="g-content" class="g-content">

@@ -42,7 +42,7 @@ define(function(require, exports, module) {
 	//订单发货模板
 //	var orderShippingTpl = require("./orderShippingList.html");
 	//订单列表行单击，导航到订单详情
-	tabContent.on("tap","li.line",function(e){
+	tabContent.on("click","li.line",function(e){
 		var target = e.target||e.srcElement;
 		target = $(target);
 		//如果是按钮触发
@@ -55,7 +55,7 @@ define(function(require, exports, module) {
 //		//跳转到竞价详情
 //		window.location.href = "detailInfo?orderId="+orderId;
 	});
-	tabContent.on("tap",".weui_btn",function(e){
+	tabContent.on("click",".weui_btn",function(e){
 		var target = e.target||e.srcElement;
 		target = $(target);
 		if(target.hasClass("end-receipt-btn")){

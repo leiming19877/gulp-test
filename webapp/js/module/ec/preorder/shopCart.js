@@ -8,9 +8,9 @@
 define(function(require, exports, module) {
 	var $ = require("zepto");
 	//提示模块
-	var toast = require("./toast");
+	var toast = require("../../common/toast");
 	//加载提示模块
-	var loadingToast = require("./loadingToast");
+	var loadingToast = require("../../common/loadingToast");
 	//购物车数量所有模块
 	var shopCart = $(".m-shop-car .num");
 	

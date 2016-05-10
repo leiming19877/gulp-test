@@ -58,30 +58,4 @@
     //加载主模板块
     seajs.use("module/purchase/order/orderDetailPage");
 </script>
-<script type="text/javascript">
-function confirmOrder(orderId){
-	$("#loading-toast").show("正在确认");
-	$.ajax({
-		dataType:'json',
-		url:'../../central/order/affirmOrder',
-		data:{
-			'orderId':orderId,
-			'_t':new Date().getTime()
-		},
-		success:function(data, status, xhz){
-			 if(xhz.status==200&&status=="success"){
-				 $("#loading-toast").hide();
-				 window.alert("订单已确认，赶快去发货吧！");
-				 window.location.href="../../central/order/center";
-			 }else{
-				 window.alert("订单确认失败，请重试！");
-				 window.location.href="../../central/order/center";
-			 }
-		},
-		error:function(xhr, errorType, error){
-			$("#loading-toast").show("确认失败，请重新试试！");
-		}
-	});
-}
-</script>
 </html>

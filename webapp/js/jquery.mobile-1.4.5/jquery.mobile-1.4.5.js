@@ -12,7 +12,6 @@
 
 (function ( root, doc, factory ) {
 	if ( typeof define === "function" && (define.amd || define.cmd) ) {
-		debugger;
 		// AMD. Register as an anonymous module.
 		define( [ "jquery" ], function ( $ ) {
 			if(define.cmd){

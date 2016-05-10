@@ -2,7 +2,10 @@
  * 买家收货分页查询模块
  */
 define(function(require, exports, module) {
+	//引入时间组件
+	require("../../common/Date");
 	//每页多少行
+	var $ = require("zepto");
 	var ROW_SIZE = 4;
 	//待签收
 	var PREPARE_RECEIPT="prepareReceipt";	
@@ -11,9 +14,6 @@ define(function(require, exports, module) {
 
 	//当前选择是的那种类型
 	var selectedType = PREPARE_RECEIPT;
-	//引入时间组件
-	require("../../common/Date");
-	var $ = require("zepto");
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
     //dot模板引擎
@@ -31,7 +31,7 @@ define(function(require, exports, module) {
 	
 	var myScroll = null;
 	//下拉刷新回调
-	var pullDownAction = function(){loadReceiptData(true)};
+	var pullDownAction = function(){loadReceiptData(true);};
 	//上拉刷新回调
 	var pullUpAction = function(){loadReceiptData();};
 
@@ -49,7 +49,7 @@ define(function(require, exports, module) {
 	var orderId = getOrderId();
 	
 	//竞价列表行单击，导航到竞价详情
-	tabContent.on("tap","li.line",function(e){
+	tabContent.on("click","li.line",function(e){
 		var target = e.target||e.srcElement;
 		target = $(target);
 		//如果是按钮触发
@@ -64,7 +64,7 @@ define(function(require, exports, module) {
 	});
 
 	//跳转url
-	tabContent.on("tap",".receipt-btn",function(e){
+	tabContent.on("click",".receipt-btn",function(e){
 		loadingToast.show("数据加载中");
 		var self = $(this);
 		window.location.href = self.attr("data-href");
@@ -98,7 +98,7 @@ define(function(require, exports, module) {
                 mask.hide();
             }).on('webkitTransitionEnd', function () {
                 mask.hide();
-            })
+            });
         }
         function receiptOrder(action){
            if('scan' == action){
@@ -140,7 +140,7 @@ define(function(require, exports, module) {
                 });
            		 $('#dialog1').show().on('click', '.primary', function () {
            		 	var code = $("#code").val();
-           		 	if(code==""){
+           		 	if(code===""){
            		 		alert("输入的收货单不能为空！");
            		 		return;
            		 	}
@@ -316,7 +316,7 @@ define(function(require, exports, module) {
 				
 			},
 			error:function(xhr, errorType, error){
-				loadingToast.show("数据加载中错，请重新试试");
+				loadingToast.show("数据加载失败，请重新试试");
 			}
 		});
 		
@@ -333,7 +333,7 @@ define(function(require, exports, module) {
 			 el.find("ul.list").empty();
 		 }
 		 //如果没数据,显示没记录
-		 if(data.totalrows == 0){
+		 if(data.totalrows === 0){
 			 if(pullDownEl.className.match('loading')) {
 	                pullDownEl.className = '';
 	                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉更新...';
@@ -443,5 +443,18 @@ define(function(require, exports, module) {
 	}
 	module.exports ={
 			'showQueryType':showQueryType
-	}
+	};
+	$ = require("jquery");
+	var wx = require("jweixin");
+	var url = window.location.href;
+	$.getJSON("../../../getSignUrl",{"url":url},function(data){
+		wx.config({
+		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		    appId: data.appId, // 必填，公众号的唯一标识
+		    timestamp: data.timestamp , // 必填，生成签名的时间戳
+		    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+		    signature: data.signature,// 必填，签名
+		    jsApiList: ['scanQRCode','chooseImage','uploadImage','hideOptionMenu','hideAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
+		});
+	});
 });

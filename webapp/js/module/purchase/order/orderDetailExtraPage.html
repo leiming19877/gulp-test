@@ -1,0 +1,91 @@
+            <div class="g-header">
+                    <a href="orderDetaiPage?orderId={{=it.order.orderId}}&bidId={{=it.order.bidId}}&orderStatus={{=it.order.orderStatus}}&action=confirm&_t={{=new Date().getTime()}}" class="u-back-left" ></a>
+                    <h3 class="u-title">订单[{{=it.order.orderCode}}]</h3>
+            </div> 
+            <div id="g-content" class="g-content" >
+					                
+					<div class="m-order-extra" >
+					       <div class="txt-line">
+					         <label class="lab">交货方式：</label>
+					         {{?it.order.deliveryType==1}}
+					         <span>配供</span>
+					         {{?}}
+					         {{?it.order.deliveryType==2}}
+					         <span>自提</span>
+					         {{?}}
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">结算方式：</label>
+					         {{?it.order.settleType==1}}
+					         <span>先款后货</span>
+					         {{?}}
+					         {{?it.order.settleType==2}}
+					         <span>先货后款</span>
+					         {{?}}
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">付款方式：</label>
+					         {{?it.order.payMoneyTypee==1}}
+					         <span>仅限现金</span>
+					         {{?}}
+					         {{?it.order.payMoneyTypee==2}}
+					         <span>支持银行承兑</span>
+					         {{?}}
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">开票方式：</label>
+					         {{?it.order.invoiceType==1}}
+					         <span>一票结算</span>
+					         {{?}}
+					         {{?it.order.invoiceType==2}}
+					         <span>两票结算</span>
+					         {{?}}
+					         {{?it.order.invoiceType==3}}
+					         <span>随需方要求</span>
+					         {{?}}
+					         <label class="lab">贴息率：</label>               
+					         <span>
+					               {{=it.order.discountRate}}%
+					          </span>
+					       </div>
+					       <table class="m-order-contract-term">
+					            <caption>合同条款信息</caption>
+					            <thead>
+					                <tr>
+					                    <th>合同条款</th>
+					                    <th>条款明细</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.lists : ct}}
+					                <tr>
+					                    <td>
+					                       {{=ct.contractTerm}}                             
+					                    </td>
+					                    <td>
+					                        {{=ct.contractTermDetail}}     
+					                    </td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					</div> 
+	   				<!-- end m-order-extra  -->
+            </div>
+            <div id="g-footer" class="g-footer" >
+				<div class="m-order-footer" >
+				      {{?it.action=="seller"}}
+					      {{?it.order.orderStatus==1}}
+					      <a href="#"onclick="confirmOrder({{=it.order.orderId}})" class="weui_btn weui_btn_mini weui_btn_primary" >确认订单</a>
+					      {{?}}
+					      {{?it.order.orderStatus==2&&it.order.shippingStatus!=3}}
+					      <a href="../shippingOrder/shipping?orderId={{=it.order.orderId}}" class="weui_btn weui_btn_mini weui_btn_primary" >订单发货</a>
+					      {{?}}
+				      {{?}}
+				      {{?it.action=="buyer"}}
+				      	{{?it.order.orderStatus==2&&it.order.shippingStatus!=3}}
+				      	<a href="../orderReceipt/toReceiptList?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >收  货</a>
+				      	{{?}}
+				      {{?}}
+				</div>
+            </div>

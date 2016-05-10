@@ -12,8 +12,8 @@
 define(function(require, exports, module) {
 	
 	var $ = require("zepto");
-	var toast = require("./toast");
-	var loadingToast  = require("./loadingToast");
+	var toast = require("../../common/toast");
+	var loadingToast  = require("../../common/loadingToast");
 	//购物车模块
 	var shopCart = require("./shopCart");
 	var productDetail = $("#product-detail");

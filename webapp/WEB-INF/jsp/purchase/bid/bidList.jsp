@@ -73,7 +73,16 @@
 					</div>
 					<!-- weui_tab_bd -->
 				</div>
-
+<div class="weui_dialog_alert" id="dialog2" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">报价排名(红色为当前供应商排名)</strong></div>
+        <div id="dialog-content" class="weui_dialog_bd m-quote-rank"></div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+	</div>
 			</div>
            
              <!-- end -->
@@ -82,8 +91,6 @@
         
     </div>
     <!-- end g-pages -->
-    
-    
      <!-- 加入成功提示  -->
      <div id="toast" style="display:none;z-index: 3;">
             <div class="weui_mask_transparent"></div>

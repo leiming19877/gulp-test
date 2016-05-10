@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 	//订单发货模板
 	var orderShippingTpl = require("./orderShippingList.html");
 	//订单列表行单击，导航到订单详情
-	tabContent.on("tap","li.line",function(e){
+	tabContent.on("click","li.line",function(e){
 		var target = e.target||e.srcElement;
 		target = $(target);
 		//如果是按钮触发
@@ -59,17 +59,17 @@ define(function(require, exports, module) {
 			return ;
 		}else if(target.hasClass("order-shipping-btn")){
 			loadingToast.show("数据加载中");
-			window.location.href="../shippingOrder/toShippingOrder?orderId="+orderId+"&_t="+new Date().getTime();
+			window.location.href="../shipping/toShipping?orderId="+orderId+"&_t="+new Date().getTime();
 		}else if(target.hasClass("detail-shipping-btn")){
 			loadingToast.show("数据加载中");
-			window.location.href="../shippingOrder/checkShippingList?orderId="+orderId+"&_t="+new Date().getTime();
+			window.location.href="../shipping/toShippingList?orderId="+orderId+"&_t="+new Date().getTime();
 		}else{
 			loadingToast.show("数据加载中");
 			//跳转到订单详情
-			window.location.href = "orderDetaiPage?orderId="+orderId+"&bidId="+bidId+"&orderStatus="+orderStatus+"&action=confirm&_t="+new Date().getTime();
+			window.location.href = "toOrderDetaiPage?orderId="+orderId+"&bidId="+bidId+"&orderStatus="+orderStatus+"&action=seller&_t="+new Date().getTime();
 		}
 	});
-	tabContent.on("tap",".weui_btn",function(e){
+	tabContent.on("click",".weui_btn",function(e){
 		loadingToast.show("数据加载中");
 	});
 	function loaded() {

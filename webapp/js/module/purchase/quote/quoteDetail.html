@@ -18,16 +18,12 @@
 	         <span class="txt">
 	               {{=it.rankStr}}
 	          </span>
-	          <div id="detailNav" class="m-quote-detail-nav"> 
-	          <a href="javascript:void(0)" class="m-quote-detail-up weui_btn weui_btn_primary">←</a>
-	          <a href="javascript:void(0)" class="m-quote-detail-down weui_btn weui_btn_primary">→</a>
-	          </div>
 	       </div>
 	       <div class="txt-line">
 	               <label class="lab">开票方式：</label>
 	               <span class="txt">{{=it.quote.invoiceTypeName}}</span>
-	               <label class="lab">运杂费：</label>
-	               <span class="txt">
+	               <label hidden class="lab">运杂费：</label>
+	               <span hidden class="txt">
 	               <input class="u-ipt-min f-bg1" id="freightMiscellaneous" 
 	               readonly="readonly"
 	               name="freightMiscellaneous" type="number" min="0.0" max="100000.00" 
@@ -35,14 +31,15 @@
 	       </div>
 	
 	       <div id="quoteSn" data-quote-sn={{=it.quote.quoteSn}} class="quote-sn">第{{=it.quote.quoteSn}}次报价</div>      
-	       
+	        <a href="javascript:void(0);" class="up-btn weui_btn weui_btn_mini weui_btn_primary">←</a>
+			<a href="javascript:void(0);" class="next-btn weui_btn weui_btn_mini weui_btn_primary">→</a>
 	       <table class="m-quote-detail">
 	            <thead>
 	                <tr>
-	                    <th style="width: 130px;">商品信息</th>
-	                    <th style="width: 35px;">验货方式</th>
-	                    <th style="width: 60px;">重量信息</th>
-	                    <th >价格信息</th>
+	                    <th style="width: 8em;">商品信息</th>
+	                    <th style="width: 3em;">验货<br>方式</th>
+	                    <th style="width: 4em;">计划量（吨）</th>
+	                    <th >报价（元）</th>
 	                </tr>
 	            </thead>
 	            <tbody>
@@ -58,7 +55,7 @@
 	                    <td>
 	                        {{=qd.meteringTypeName}}     
 	                    </td>
-	                    <td>计划量：<br/>{{=qd.planBuyWeight}}吨</td>
+	                    <td>{{=qd.planBuyWeight}}</td>
 	                    <td>
 	                        <input class="u-ipt-min f-bg1" name="quotePrice" 
 	                        data-plan-buy-weight="{{=qd.planBuyWeight}}" 

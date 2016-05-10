@@ -56,7 +56,7 @@ define(function(require, exports, module) {
 	//报价排名模板
 	var rankMessageTpl = require("./rankMessage.html");
 	//竞价列表行单击，导航到竞价详情
-	tabContent.on("tap","li.line",function(e){
+	tabContent.on("click","li.line",function(e){
 		var target = e.target||e.srcElement;
 		target = $(target);
 		var self = $(this);
@@ -92,7 +92,7 @@ define(function(require, exports, module) {
 	$('#dialog2').on('click', '.primary', function () {
 		$('#dialog2').hide();
 	});
-	tabContent.on("tap",".weui_btn",function(e){
+	tabContent.on("click",".weui_btn",function(e){
 		loadingToast.show("数据加载中");
 	});
 	function loaded() {
@@ -240,7 +240,7 @@ define(function(require, exports, module) {
 				loadingToast.hide();//先暂时放置到这里
 			},
 			error:function(xhr, errorType, error){
-				loadingToast.show("数据加载中错，请重新试试");
+				loadingToast.show("数据加载异常，请重新试试");
 			}
 		});
 		

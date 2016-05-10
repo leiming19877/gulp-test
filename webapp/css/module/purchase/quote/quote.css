@@ -21,8 +21,9 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .m-quote .txt-line{line-height: 30px;}
 .m-quote .lab{padding-left: 10px;font-weight:bold;}
 .m-quote .txt{vertical-align:middle;}
-.m-quote .quote-sn{position:absolute;top:10px;right:10px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
-
+.m-quote .quote-sn{position:absolute;top:5px;right:15px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
+.m-quote .up-btn{position: absolute;top: 70px;right: 50px;width: 40px;}
+.m-quote .next-btn{position: absolute;top: 70px;right: 5px; margin-top: 0; width: 40px;}
 
 /** 报价单名细信息  **/
 .m-quote-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
@@ -30,7 +31,7 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .m-quote-detail td,.m-quote-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
 .m-quote-detail-up,.m-quote-detail-down{     padding: 0 .75em;display: inline-block;height: 10px;line-height:0.5;width: 40px;}
 .m-quote-detail-nav{float:right;height: 10px;line-height: 10px;}
-
+.m-quote-dialog-money{height: 2em;font-size: 2em;width: 80%;text-align: center;margin: 0px 10% 0px 10%;}
 
 
 /** 报价合同细条款名细信息  **/

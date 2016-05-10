@@ -45,14 +45,14 @@
 	         <label class="lab">收货人：</label>
 	         <span class="txt">
 	         	<input type="text" style="margin-left: 15px;" id="shippingUserName" name="shippingUserName"
-	         	 required="required" value="{{=it.shipping.shippingUserName}}" />
+	         	 required="required" readonly="readonly" value="{{=it.shipping.shippingUserName}}" />
 	         </span>
 	       </div>
 	       <div class="txt-line">
 	       	 <label class="lab">收货电话：</label>
 	         <span class="txt">
 	         	<input type="text" id="shippingUserTel" name="shippingUserTel"
-	         	 required="required" value="{{=it.shipping.shippingUserTel}}" />
+	         	 required="required" readonly="readonly" value="{{=it.shipping.shippingUserTel}}" />
 	         </span>
 	       </div>
 	       <div class="receipt-sn">第{{=it.shipping.shippingSn}}单收货</div>      
@@ -86,8 +86,8 @@
 	                    </td>
 	                    <td>
 	                    	签收数量(件):<br/>
-	                        <input name="signQuantity" class="u-ipt-min" 
-	                        type="number"  min="0" max="10000" maxlength="5"
+	                        <input name="signQuantity" class="u-ipt-min sign-quantity" 
+	                        type="number"  min="0" max="10000" maxlength="5" data-delivery-quantity={{=sd.deliveryQuantity}}
 	                        value="{{=sd.deliveryQuantity}}" />
 	                        <br/>
 	                                                                         签收重量(吨):<br/>

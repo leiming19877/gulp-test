@@ -16,7 +16,7 @@ define(function(require, exports, module) {
 	var bidId = urlParams['bidId'];
 	var quoteSn = urlParams['quoteSn'];	
 
-	$('#g-page').on('click', '.m-quote-detail-up', function () {
+	$('#g-page').on('click', '.up-btn', function () {
 		var quoteIndex = $("#quoteSn").attr("data-quote-sn")-1;
 		if(quoteIndex<1){
 			alert("已经是第一单了！");
@@ -44,7 +44,7 @@ define(function(require, exports, module) {
 		}
 		});
 	});
-	$("#g-page").on("click",".m-quote-detail-down",function(){
+	$("#g-page").on("click",".next-btn",function(){
 		var quoteIndex = Number($("#quoteSn").attr("data-quote-sn"))+1;
 		if(quoteIndex > quoteSn){
 			alert("已经是最后一次！");

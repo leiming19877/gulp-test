@@ -4,7 +4,7 @@ var
     gulp = require( 'gulp' ),
     concat = require('gulp-concat'), // 合并文件
     uglify = require('gulp-uglify'),// js压缩
-    tap = require('gulp-tap'),//重命名
+    tap = require('gulp-tap'),
     rename = require('gulp-rename'),//重命名
     jshint = require('gulp-jshint'),//js语法检查
     cmdPack = require('gulp-cmd-pack'),
@@ -46,6 +46,19 @@ gulp.task("build:global-css",function(){
     .pipe(gulp.dest("webapp/css/global"));
 }
 );
+//对模块js进行验证
+gulp.task('build:cmd-moudle-check', function(){
+    //return gulp.src(['webapp/js/module/**/*.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})
+    return gulp.src(['webapp/js/module/purchase/receipt/receiptList.all.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})
+
+    .pipe(tap(function (file){
+	            var jsFilePath = file.base+path.sep+file.relative;
+	            jsFilePath = path.normalize(jsFilePath);
+	            //console.log("对文件"+jsFilePath+"进行检查");
+	     }))    
+	    .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});
 
 //打包js主模块
 gulp.task( 'build:cmd-moudle', function(){
@@ -72,6 +85,8 @@ gulp.task( 'build:cmd-moudle', function(){
             ]*/
         }))
         .pipe(rename({ suffix: '.all' }))
+        //.pipe(jshint())
+        //.pipe(jshint.reporter('default'))
         .pipe(gulp.dest('webapp'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(uglify())

@@ -26,7 +26,6 @@
             <div id="g-content" class="g-content" style="height: 100%;">
 				<div id="order-tab" class="weui_tab">
 					<div class="weui_navbar">
-						<div class="weui_navbar_item weui_bar_item_on" data-query-type="order_confirm">订单确认</div>
 						<div class="weui_navbar_item" data-query-type="order_shipping">订单发货</div>
 					</div>
 					<div class="weui_tab_bd">
@@ -36,14 +35,14 @@
 			                        <span class="pullDownIcon"></span><span class="pullDownLabel show-page-loading-msg">下拉更新...</span>
 			                    </div>
 			                    <div id="tab-content">
-			                        <div id="order_confirm" class="m-order-list">
+			                        <div id="order_confirm" class="m-order-list" style="display: none;>
 			                            <ul class="list">
 			                            </ul>
                                         <div  class="no-recording" >
                                                                                                             无记录!
                                         </div>
 			                        </div>
-			                        <div id="order_shipping" class="m-order-list" style="display: none;">
+			                        <div id="order_shipping" class="m-order-list" ">
 			                             <ul class="list">
                                          </ul>
                                          <div  class="no-recording" >

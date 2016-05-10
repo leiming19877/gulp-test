@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 	//竞价导航
 	var bidTab = $("#bid-tab");
 
-	bidTab.on("tap",".weui_navbar_item",function(e){
+	bidTab.on("click",".weui_navbar_item",function(e){
 		var self = $(this);
 		self.siblings(".weui_bar_item_on").removeClass("weui_bar_item_on");
 		self.addClass("weui_bar_item_on");

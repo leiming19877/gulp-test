@@ -25,7 +25,45 @@
         </div>
         <!-- end g-page -->
 
-    
+<div class="weui_dialog_confirm" id="dialog1" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">请输入数量</strong></div>
+        <div id="quantity" class="weui_cell weui_cell_">
+        	<input class="m-receipt-dialog-quantity" min="0" max="10000" maxlength="5" type="number" placeholder="请输入数量"name="quantity">
+        </div>
+        <div class="weui_dialog_ft m-receipt-dft">
+            <a href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+<div class="weui_dialog_confirm" id="dialog2" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">请输入重量</strong></div>
+        <div id="weight" class="weui_cell weui_cell_">
+        	<input class="m-receipt-dialog-weight" min="0" max="10000" maxlength="5" type="number" placeholder="请输入重量"name="weight">
+        </div>
+        <div class="weui_dialog_ft m-receipt-dft">
+            <a href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
+<div class="weui_dialog_confirm" id="dialog3" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">确认收货</strong></div>
+        <div id="weight" class="weui_cell weui_cell_">
+        	<span class="m-receipt-info">是否确认本次收货？</span>
+        </div>
+        <div class="weui_dialog_ft m-receipt-dft">
+            <a href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
     
       
      <!-- 加载提示  -->

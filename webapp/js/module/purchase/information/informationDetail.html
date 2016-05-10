@@ -1,0 +1,20 @@
+<div class="g-header">
+     <a href="informList" class="u-back-left" ></a>
+     <h4 class="u-title">{{=it.informationDetail.title}}</h4>
+            </div> 
+<div id="g-content" class="g-content" style="height: 100%;">
+		<div class="txt-line">
+			<div class="txt">				    
+				<span>来源：{{=it.informationDetail.source}}  </span><span class="txt1">{{=new Date(it.informationDetail.createTime).formatDate("yyyy-MM-dd HH:mm:ss")}}</span>
+			</div>
+		</div>
+		<div id="infoAbstract">{{=it.informationDetail.summary}}</div>
+		   <div class="more">
+			    查看原文 <span> <img id="imgMore"src="../../images/info/information_up.png" />
+			   </span>
+		   </div>
+		    <br /> <br />
+		<div id="detailMore" style="" id="infoText">
+			{{=it.informationDetail.content}}</div>
+</div>
+

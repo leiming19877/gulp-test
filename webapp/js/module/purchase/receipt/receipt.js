@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page")
+	var gPage = $("#g-page");
 	//收货详情模板
 	var receiptTpl = require("./receipt.html");
 	var shippingId = getShipingId();
@@ -40,25 +40,84 @@ define(function(require, exports, module) {
 	gPage.on("focus",".u-ipt-min",function(e){
 		this.select();
 	});
-	gPage.on("input",".sign-weight",function(e){
-		var signWeight = $(this).val();
-		var deliveryWeight = this.attributes.id.nodeValue;
-		if(signWeight<0){
-			window.alert("签收量不能为负数！");
-			$(this).val($(this).attr("data-delivery-weight"))
+	gPage.on("click",".sign-weight,.sign-quantity",function(e){
+		var target = e.target||e.srcElement;
+		var self = $(this);
+		if($(target).hasClass("sign-weight")){
+			$("#dialog2").show();
+			var inputs = $("input[name='signWeight']");
+			var index = inputs.indexOf($(this)[0]);
+			$("#dialog2").attr("data-input-index",index);
+			$("#weight").find("input").val($(this).val());
+			$("#weight").find("input").focus();
+		}else{
+			$("#dialog1").show();
+			var inputs = $("input[name='signQuantity']");
+			var index = inputs.indexOf($(this)[0]);
+			$("#dialog1").attr("data-input-index",index);
+			$("#quantity").find("input").val($(this).val());
+			$("#quantity").find("input").focus();
 		}
-//		if(signWeight>1.08*deliveryWeight){
-//			window.alert("签收重量远超过了发货重量。");
-//			$(this).val($(this).attr("data-delivery-weight"))
-//		}
-//		if(signWeight<0.92*deliveryWeight){
-//			window.alert("签收重量远少于了发货重量。");
-//			$(this).val($(this).attr("data-delivery-weight"))
-//		}
+		
+	});
+	$("#dialog1").on("click",".default",function(e){
+		$("#dialog1").hide();
+	}).on("click",".primary",function(e){
+		var reg = new RegExp("^[0-9]*$");
+		var index = $("#dialog1").attr("data-input-index");
+		var value = $("#quantity").find("input").val();
+		var selectInput = $("input[name='signQuantity']")[index];
+		selectInput = $(selectInput);
+		var quantity = selectInput.attr("data-delivery-quantity");
+		if(!reg.test(value)){
+			window.alert("签收量只能为非负整数！");
+			$("#quantity").find("input").val(quantity);
+			$("#quantity").find("input").focus();
+			$("#quantity").find("input").select();
+			return;
+		}
+		selectInput.val(Number(value));
+		$("#quantity").find("input").val(0);
+		$("#dialog1").hide();
+		var signQuantity = selectInput.val();
+		if(!reg.test(signQuantity)){
+			window.alert("签收量只能为非负整数！");
+			selectInput.val(quantity);
+		}
+	});
+	$("#dialog2").on("click",".default",function(e){
+		$("#dialog2").hide();
+	}).on("click",".primary",function(e){
+		var reg = new RegExp("^[0-9]+(.[0-9]{1,3})?$");
+		var index = $("#dialog2").attr("data-input-index");
+		var value = $("#weight").find("input").val();
+		var selectInput = $("input[name='signWeight']")[index];
+		selectInput = $(selectInput);
+		var weight = selectInput.attr("data-delivery-weight");
+		if(!reg.test(value)){
+			window.alert("签收量只能为非负数，且小数位数不超过3位！");
+			$("#weight").find("input").val(weight);
+			$("#weight").find("input").focus();
+			$("#weight").find("input").select();
+			return;
+		}
+		selectInput.val(Number(value));
+		$("#weight").find("input").val(0);
+		$("#dialog2").hide();
+		var signWeight = selectInput.val();
+		if(!reg.test(signWeight)){
+			window.alert("签收量只能为非负数，且小数位数不超过3位！");
+			$(this).val(weight);
+		}
 		refreshReceiptWeight();
 	});
-	
-	gPage.on("tap",".receipt-btn",function(e){
+	gPage.on("click",".receipt-btn",function(e){
+		$("#dialog3").show();
+	});	
+	$("#dialog3").on("click",".default",function(e){
+		$("#dialog3").hide();
+	}).on("click",".primary",function(e){
+		$("#dialog3").hide();
 		loadingToast.show("保存中...");
 		var params = getSaveParams();
 		$.ajax({

@@ -1,0 +1,34 @@
+{{~it.list:value:index}}
+<li class="line" data-shipping-id="{{=value.id}}">
+       <div class="txt-line">
+         <label class="lab">发货单号：</label>
+         <span class="txt">{{=value.code}}</span>     
+       </div>
+        <div class="txt-line">
+         <label class="lab">发货日期：</label>
+         <span class="txt">{{=new Date(value.shippingDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+       </div>
+       <div class="txt-line">
+         <label class="lab">发货量：</label>
+         <span class="txt">{{=value.shippingQuantity}}吨</span>     
+       </div>
+       <div class="txt-line">
+         <label class="lab">剩余未发：</label>
+         <span class="txt">{{=it.order.remainShipWeight}}吨</span>
+       </div>
+       <div class="txt-line">
+         <label class="lab">发货人：</label>
+         <span class="txt">{{=value.consignor}}</span>     
+       </div>
+       <div class="txt-line">
+         <label class="lab">发货车牌号：</label>
+         <span class="txt">{{=value.consignorCarNumber}}</span>     
+       </div>
+       <div class="txt-line">
+         <label class="lab">已签收：</label>
+         <span class="txt">{{=value.receiptWeight}}吨</span>
+       </div>
+       
+       <div class="receipt-sn">第{{=value.shippingSn}}单发货</div>
+    </li>
+{{~}}

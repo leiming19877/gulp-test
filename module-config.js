@@ -1,5 +1,10 @@
 var modules =[
 	{
+	"main-js":"webapp/js/module/ec/preorder/wantBuy.js",
+	"jsp":"webapp/WEB-INF/jsp/ec/buy/wantBuy.jsp",
+	"css":"webapp/css/module/ec/preorder/want-buy.css"
+	},
+	{
 	"main-js":"webapp/js/module/purchase/bid/bidList.js",
 	"jsp":"webapp/WEB-INF/jsp/purchase/bid/bidList.jsp",
 	"css":"webapp/css/module/purchase/bid/bid-list.css"
@@ -10,9 +15,84 @@ var modules =[
 	"css":"webapp/css/module/purchase/bid/bid-detail.css"
 	},
 	{
-		"main-js":"webapp/js/module/purchase/receipt/receipt.js",
-		"jsp":"webapp/WEB-INF/jsp/purchase/receipt/receipt.jsp",
-		"css":"webapp/css/module/purchase/receipt/receipt.css"
+	"main-js":"webapp/js/module/purchase/bid/bidDetailExtra.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/bid/bidDetailExtra.jsp",
+	"css":"webapp/css/module/purchase/bid/bid-detail.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/quote/quote.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/quote/quote.jsp",
+	"css":"webapp/css/module/purchase/quote/quote.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/quote/quoteDetail.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/quote/quoteDetail.jsp",
+	"css":"webapp/css/module/purchase/quote/quote.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/quote/quoteDetailExtra.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/quote/quoteDetailExtra.jsp",
+	"css":"webapp/css/module/purchase/quote/quote.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/order/orderListPage.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/order/orderList.jsp",
+	"css":"webapp/css/module/purchase/order/order-list.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/order/orderDetailPage.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/order/orderDetail.jsp",
+	"css":"webapp/css/module/purchase/order/order-list.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/order/orderDetailExtraPage.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/order/orderDetailExtraPage.jsp",
+	"css":"webapp/css/module/purchase/order/order-detail.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/shipping/shippingPage.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/shipping/shipping.jsp",
+	"css":"webapp/css/module/purchase/shipping/shipping-detail.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/shipping/shippingDetailPage.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/shipping/shippingDetail.jsp",
+	"css":"webapp/css/module/purchase/shipping/shipping-detail.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/shipping/shippingListPage.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/shipping/shippingList.jsp",
+	"css":"webapp/css/module/purchase/shipping/shipping-list.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/receipt/receiptList.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/receipt/receiptList.jsp",
+	"css":"webapp/css/module/purchase/receipt/receipt-list.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/receipt/receiptDetail.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/receipt/receiptDetail.jsp",
+	"css":"webapp/css/module/purchase/receipt/receipt.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/receipt/receipt.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/receipt/receipt.jsp",
+	"css":"webapp/css/module/purchase/receipt/receipt.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/receipt/orderList.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/receipt/orderReceiptPage.jsp",
+	"css":"webapp/css/module/purchase/receipt/order-list.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/information/informationDetail.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/information/informationDetail.jsp",
+	"css":"webapp/css/module/purchase/information/informationDetail.css"
+	},
+	{
+	"main-js":"webapp/js/module/purchase/information/informationList.js",
+	"jsp":"webapp/WEB-INF/jsp/purchase/information/informationListPage.jsp",
+	"css":"webapp/css/module/purchase/information/informationList.css"
 	}
 ];
 //全局配置文件

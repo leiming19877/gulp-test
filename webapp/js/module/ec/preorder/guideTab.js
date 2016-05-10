@@ -4,7 +4,7 @@
  */
 define(function(require, exports, module) {
 	var $ = require("zepto");
-	var loadingToast = require("./loadingToast");
+	var loadingToast = require("../../common/loadingToast");
 	// 导航元素
 	var guideTab = $("#guide-tab");
 	

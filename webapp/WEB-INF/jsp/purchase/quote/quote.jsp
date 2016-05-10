@@ -36,7 +36,19 @@
         </div>
     </div>
 </div>
-    
+<div class="weui_dialog_confirm" id="dialog2" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">请输入金额</strong></div>
+        <div id="money" class="weui_cell weui_cell_">
+        	<input class="m-quote-dialog-money" min="0" max="10000" maxlength="6" type="number" placeholder="请输入金额"name="weight">
+        </div>
+        <div class="weui_dialog_ft m-receipt-dft">
+            <a href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
       
      <!-- 加载提示  -->
      <div id="loading-toast" class="weui_loading_toast" style="z-index: 3;">

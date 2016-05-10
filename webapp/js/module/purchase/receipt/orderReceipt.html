@@ -49,7 +49,7 @@
        <a href="toReceiptList?orderId={{=value.orderId}}&_t={{=new Date().getTime()}}" class="join-order-btn weui_btn weui_btn_mini weui_btn_primary receipt-btn" style="top:25px;" >收货</a>
        {{?}}
        {{?value.shippingStatus!=1}}
-       <a href="toReceiptList?orderId={{=value.orderId}}&_t={{=new Date().getTime()}}" class="history-quote-btn weui_btn weui_btn_mini weui_btn_primary"style="top:55px;" >查看详情</a>
+       <a href="../order/toOrderDetaiPage?orderId={{=value.orderId}}&bidId={{=value.bidId}}&orderStatus={{=value.orderStatus}}&action=buyer&_t={{=new Date().getTime()}}" class="history-quote-btn weui_btn weui_btn_mini weui_btn_primary"style="top:55px;" >查看详情</a>
        {{?}}
        {{?value.shippingStatus==2&&(value.orderTotalWeight-value.totalSignedWeight)<5&&(value.orderTotalWeight-value.totalShippedWeight)<5}}
        <a href="javascript:void(0)" data-order-id="{{=value.orderId}}" class="history-quote-btn weui_btn weui_btn_mini weui_btn_primary end-receipt-btn"style="top:95px;" >结束收货</a>

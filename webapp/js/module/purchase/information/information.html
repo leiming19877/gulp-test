@@ -1,0 +1,11 @@
+
+{{~it.list:value:index}}
+<li class="line" data-information-id={{=value.infoId}}>
+<div class="txt-line">
+         <label class="lab">{{=value.title}}</label>
+         <div class="txt">
+            <span>{{=new Date(value.createTime).formatDate("yyyy-MM-dd") }}</span>
+         </div>      
+       </div>
+</li>
+{{~}}

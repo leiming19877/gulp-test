@@ -13,24 +13,29 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 
 .u-title{height: 40px; line-height:40px;font-weight: bold;font-size: 14px;overflow: hidden;}
 .u-ipt-min{width: 60px;height: 25px;border: 1px solid #ccc;}
+.u-ipt-quantity{width: 60px;height: 25px;border: 1px solid #ccc;}
+.u-ipt-weight{width: 60px;height: 25px;border: 1px solid #ccc;}
+.u-ipt-ship{width: 85%;height: 25px;border: 1px solid #ccc;}
+.u-span-ship{color: red;}
 .f-red1{color:#EF4F4F;}
 
 /** 发货基本信息  **/
-.m-shipping{}
+.m-shipping{position:relative;}
 .m-shipping .txt-line{}
-.m-shipping .lab{float:left;width:90px;margin-right:-90px;font-weight:bold;}
-.m-shipping .lab.shipping-time{line-height: 72px;}
-.m-shipping .txt{margin-left:90px;vertical-align:middle;}
-.m-shipping .txt *{vertical-align:middle;}
+.m-shipping .lab{padding-left: 5px;font-weight:bold;}
+.m-shipping .txt{vertical-align:middle;}
+.m-shipping .shipping-sn{position:absolute;top:80px;right:40px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
+
+.m-shipping .up-btn{position: absolute;top: 150px;right: 80px;width: 40px;}
+.m-shipping .next-btn{position: absolute;top: 150px;right: 23px; margin-top: 0; width: 40px;}
 
 /** 发货单名细信息  **/
 .m-shipping-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
 .m-shipping-detail th{font-weight: bold;}
 .m-shipping-detail td,.m-shipping-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
 
-.shipping-sn{position:absolute;top:130px;right:10px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
-.m-shipping-detail-up,.m-shipping-detail-down{padding: 0 .75em;display: inline-block;height: 10px;line-height:0.5;width: 40px;}
-.m-shipping-detail-nav{float:right;height: 10px;line-height: 10px;}
+
+.m-shipping-dialog-quantity,.m-shipping-dialog-weight{height: 2em;font-size: 2em;width: 80%;text-align: center;margin: 0px 10% 0px 10%;}
 
 .m-shipping-footer{height:50px; padding-right:10px; text-align: right;}
 .m-shipping-footer .weui_btn{ margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}

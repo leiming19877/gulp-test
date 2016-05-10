@@ -136,11 +136,16 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .m-bid-list .txt{display:inline-block; vertical-align:middle;}
 .m-bid-list .ranking{margin-left:20px; color:#EF4F4F; }
 
-.m-bid-list .join-bid-btn{position: absolute;top: 20px;right: 15px;padding:0.25em 0.75em; width: 100px;}
-.m-bid-list .history-quote-btn{position: absolute;top: 50px;right: 15px;padding:0.25em 0.75em;width: 100px;}
+.m-bid-list .join-bid-btn{position: absolute;top: 20px;right: 15px; width: 100px;height: 25px;}
+.m-bid-list .history-quote-btn{position: absolute;top: 36px;right: 15px;width: 100px;height: 25px;}
 .m-bid-list .history-quote-btn2{top: 30px;}
+.m-bid-list .check-quote-btn{position: absolute;top: 67px;right: 15px;width: 100px;height: 25px;}
 .m-bid-list .no-recording{display:none; text-align: center;}
 
 .m-bid-list.empty .list{display: none;}
 .m-bid-list.empty .no-recording{display: block;}
-
+.m-strong{color: red;background: #FBF885;}
+.m-cell1{width: 5em;text-align: center;}
+.m-cell2{width: 13em;text-align: center;}
+.m-cell3{width: 10em;text-align: center;}
+.m-quote-rank{height: 150px;overflow: auto;}

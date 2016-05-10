@@ -7,7 +7,6 @@ define(function(require, exports, module) {
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
 	var gPage = $("#g-page");
-	var action = $('#action')[0].value;
 	//竞价详情模板
 	var orderDetailTpl = require("./orderDetail.html");
 
@@ -22,12 +21,14 @@ define(function(require, exports, module) {
 			'_t':new Date().getTime()
 		},
 		success:function(data, status, xhz){
-			 loadingToast.hide();
-			 var tempFn = doT.template(orderDetailTpl);
-			 var resultHtml = tempFn(data);
-			 //先清空
-			 gPage.empty();
-			 gPage.append(resultHtml);
+			data.action = params['action'];
+			loadingToast.hide();
+			var tempFn = doT.template(orderDetailTpl);
+			debugger
+			var resultHtml = tempFn(data);
+			//先清空
+			gPage.empty();
+			gPage.append(resultHtml);
 		
 		},
 		error:function(xhr, errorType, error){

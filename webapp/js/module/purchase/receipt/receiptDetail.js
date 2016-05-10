@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page")
+	var gPage = $("#g-page");
 	//收货详情模板
 	var receiptDetailTpl = require("./receiptDetail.html");
 	var shippingId = getShipingId();

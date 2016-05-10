@@ -22,9 +22,36 @@ define(function(require, exports, module) {
 	gPage.on("focusin",".u-ipt-min",function(e){
 		this.select();
 	});
-	
-	gPage.on("input",".u-ipt-min",function(e){
-		var self = $(this);
+	gPage.on("click",".u-ipt-min",function(e){
+		$("#dialog2").show();
+		var inputs = $(".u-ipt-min");
+		var index = inputs.indexOf($(this)[0]);
+		$("#dialog2").attr("data-input-index",index);
+		$("#money").find("input").val($(this).val());
+		$("#money").find("input").focus();
+		$("#money").find("input").select();
+	});
+	$('#dialog2').on('click', '.default', function () {
+		$('#dialog2').hide();
+	});
+	$('#dialog2').on('click', '.primary', function () {
+		$('#dialog2').hide();
+		var reg = new RegExp("^[0-9]+(.[0-9]{1,2})?$");
+		var index = $("#dialog2").attr("data-input-index");
+		var value = $("#money").find("input").val();
+		var self = $(".u-ipt-min")[index];
+		self = $(self);
+		var price = self.attr("data-quote-price");
+		if(!reg.test(value)){
+			window.alert("金额只能为非负数，且小数位数不超过2位");
+			$("#money").find("input").val(price);
+			$("#money").find("input").focus();
+			$("#money").find("input").select();
+			self.val(price);
+			return;
+		}
+		self.val(Number(value));
+		$("#money").find("input").val(0);
 		var val = self.val();
 		if(self.prop("name") == "quotePrice"){
 			var planBuyWeight = self.attr("data-plan-buy-weight");
@@ -48,8 +75,7 @@ define(function(require, exports, module) {
 			//设置提示项
 			$("#freight-miscellaneous-tip").html(val);
 		}
-	});
-	
+	});	
 	gPage.on("change","select[name='placeSteel']",function(e){
 		var self = $(this);
 		var tr = self.parent().parent();
@@ -60,24 +86,24 @@ define(function(require, exports, module) {
 					}).text());
 	});
 	
-	gPage.on("tap",".quote-btn",function(e){
+	gPage.on("click",".quote-btn",function(e){
 		var isFirstQuote = $("#g-content").attr("data-first-quote");
 		var stepType = $("#g-content").attr("data-step-type");
 		var discountStep = $("#g-content").attr("data-discount-step");
 		if(isFirstQuote=="false"){
 		var lastQuoteTotalMoney = $("#quote-total-money").attr("data-quote-total");
 		var currentQuoteTotalMoney = $("#quote-total-money").html().removeDotToNumber();
-			if(stepType==1){
-				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)){
-					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"元");
-					return;
-				}
-			}else if(stepType==2){
-				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)/lastQuoteTotalMoney*100){
-					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"%");
-					return;
-				}
-			}
+//			if(stepType==1){
+//				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)){
+//					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"元");
+//					return;
+//				}
+//			}else if(stepType==2){
+//				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)/lastQuoteTotalMoney*100){
+//					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"%");
+//					return;
+//				}
+//			}
 		}
 		$('#dialog1').show();
 	});
@@ -117,6 +143,7 @@ define(function(require, exports, module) {
 		$('#dialog1').hide();
 	});
 	$('#dialog1').on('click', '.primary', function () {
+		$('#dialog1').hide();
 		loadingToast.show("保存中...");
 		var params = getSaveParams();
 		$.ajax({

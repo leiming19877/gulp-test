@@ -1,133 +1,70 @@
 <%@page contentType="text/html; charset=utf-8"%>
-<%-- <%@include file="/WEB-INF/jsp/include.jsp"%>  --%>
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!doctype html>
 <html>
 <head>
 
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<meta name="viewport"content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>资讯详情</title>
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
+
+<script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <script type="text/javascript">
-	var flag = false;
-	function more() {
-		var detailMore = document.getElementById("detailMore");
-		var imgMore = document.getElementById("imgMore");
-		if (detailMore.style.display == "none") {
-			detailMore.style.display = "block";
-		} else {
-			detailMore.style.display = "none";
-		}
-		if (flag) {
-			imgMore.src = "${ctx}/images/info/information_up.png";
-			flag = false;
-		} else {
-			imgMore.src = "${ctx}/images/info/information_down.png";
-			flag = true;
-		}
-
-	}
+    //加载本模块样式
+    seajs.use("${ctx}/css/module/purchase/information/informationDetail.css");
 </script>
-<style>
-body {
-	background: none repeat scroll 0 0 #FFFFFF;
-	color: #333333;
-	font: 15px/150% "宋体", Arial;
-	overflow-x: hidden;
-}
-
-#infoTitle {
-	text-align: center;
-	font-weight: bold;
-	font-size: 17px;
-}
-
-#infoDel {
-	color: #AAAAAA;
-	float: right;
-	padding-right:15px;
-}
-
-#infoAbstract {
-	clear: both;
-	padding-left:8px;
-}
-
-#detailMore {
-	clear: both;
-	padding-left:8px;
-}
-
-#more {
-	float: right;
-	color: #7A7A7A;
-	background-color: #DFDFDF;
-	padding: 5px;
-	align: "center";
-}
-
-#imgMore {
-	width: 15px;
-}
-
-.top .imageWrap {
-	float: left;
-	width: 20px;
-	height: 20px;
-	margin-top: 10px;
-	margin-left: 6px;
-}
-
-.top .ui-title {
-	font-size: 15px;
-	margin: 0 10px;
-}
-
-.top .image_left {
-	width: 20px;
-	height: 20px;
-}
-</style>
-
 </head>
 <body>
-	<!-- 后退箭头 -->
-	<div class="top">
-		<div data-role="header">
-			<div class="imageWrap" id="infoTitle">
-				<img src="${ctx}/images/icons/icon_left.png" class="image_left">
-			</div>
-			<h1>${informationDetail.title}</h1>
-		</div>
-	</div>
-	<div>
-		<%-- <div  id="infoTitle" >${informationDetail.title} </div> --%>
-		<br />
-		<div id="infoDel">
-			<span id="infoResource">${informationDetail.source}</span> 
-			<span id="infoDate">				    
-				<fmt:formatDate value="${informationDetail.createTime}" pattern="yyyy-MM-dd HH:mm" />
-			</span>
-		</div>
-		<div id="infoAbstract">${informationDetail.summary}</div>
-		   <div id="more" href="javascript:void(0)" onclick="more()">
-			    查看原文 <span> <img id=imgMore
-				src="${ctx}/images/info/information_up.png" />
-			   </span>
-		   </div>
-		    <br /> <br />
-		<div id="detailMore" style="" id="infoText">
-			${informationDetail.content}</div>
-	</div>
+   <div class="g-pages">
+        
+        <div id="g-page" class="g-page" >
+             <!-- end -->
+        </div>
+        <!-- end g-page -->
+        
+    </div>
+    <!-- end g-pages -->
+    
+    
+     <!-- 加入成功提示  -->
+     <div id="toast" style="display:none;z-index: 3;">
+            <div class="weui_mask_transparent"></div>
+            <div class="weui_toast">
+                <i class="weui_icon_toast"></i>
+                <p class="weui_toast_content">加入成功</p>
+            </div>
+     </div>
+     <!-- end 加入成功提示  -->
+      
+     <!-- 加载提示  -->
+     <div id="loading-toast" class="weui_loading_toast" style="z-index: 3;">
+          <div class="weui_mask_transparent"></div>
+          <div class="weui_toast">
+              <div class="weui_loading">
+                  <!-- :) -->
+                  <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+                  <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+              </div>
+              <p class="weui_toast_content">数据加载中</p>
+          </div>
+      </div>
+      <!-- end 加载提示 -->
 </body>
 <script type="text/javascript">
-	//后退事件
-	$(".image_left").on("click", function(){
-		/* window.location.href="${ctx}/central/information/informList?"; */
-		window.history.back();
-	});
+    //加载主模板块
+    seajs.use("module/purchase/information/informationDetail");
 </script>
 </html>

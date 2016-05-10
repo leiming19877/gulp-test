@@ -1,0 +1,27 @@
+					</div>
+					{{?it.ranks.length==0}}
+					{{=it.msg}}
+					{{?}}
+					{{?it.ranks.length!=0}}
+					       <table class="m-bid-contract-term">
+					            <thead>
+					                <tr>
+					                    <th class="m-cell1">名次</th>
+					                    <th class="m-cell2">供应商</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.ranks : r:index}}
+					                <tr class="{{=it.rank==(index+1)?'m-strong':''}}">
+					                    <td>
+					                       {{=(index+1)}}                             
+					                    </td>
+					                    <td>
+					                       {{=r}}                             
+					                    </td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					       {{?}}
+					</div> 
