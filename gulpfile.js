@@ -47,17 +47,13 @@ gulp.task("build:global-css",function(){
 }
 );
 //对模块js进行验证
-gulp.task('build:cmd-moudle-check', function(){
-    //return gulp.src(['webapp/js/module/**/*.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})
-    return gulp.src(['webapp/js/module/purchase/receipt/receiptList.all.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})
-
-    .pipe(tap(function (file){
-	            var jsFilePath = file.base+path.sep+file.relative;
-	            jsFilePath = path.normalize(jsFilePath);
-	            //console.log("对文件"+jsFilePath+"进行检查");
-	     }))    
+gulp.task('build:js-check', function(){
+    return gulp.src(['webapp/js/module/**/*.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})   
 	    .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+        .pipe(jshint.reporter('default'))
+	    .pipe(jshint.reporter('gulp-jshint-file-reporter', {
+	        filename: __dirname + '/jshint-output.log'
+	      }));
 });
 
 //打包js主模块
