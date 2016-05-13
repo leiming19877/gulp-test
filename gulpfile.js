@@ -69,7 +69,8 @@ gulp.task( 'build:cmd-moudle', function(){
                 'zepto': 'zepto/zepto.js',
                 'dot':'doT/doT.js',
                 'iscroll':'iscroll/iscroll-4.2.js',
-                'jweixin':'weixin/jweixin-1.1.0.js'
+                'jweixin':'weixin/jweixin-1.1.0.js',
+                'director':'director/director.js'
             }/*,
             ignore :[
                 'jquery',
