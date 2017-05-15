@@ -1,0 +1,34 @@
+{{~it.page.list :bid}}
+    <li class="line" data-bid-id="{{=bid.bidId}}">
+       <div class="txt-line">
+         <label class="lab">竞价单号：</label>
+         <span class="txt" >{{=bid.bidCode}}</span>      
+       </div>
+       <div class="txt-line">
+         <label class="lab">竞价时间：</label>
+       	 <span  class="txt" >{{=new Date(bid.bidBeginTime).formatDate("yyyy-MM-dd HH:mm")}}<br/>至<br/>{{=new Date(bid.bidEndTime).formatDate("yyyy-MM-dd HH:mm")}}</span>
+       </div>
+       <div class="txt-line">
+         <label class="lab">可报次数：</label>
+         <span class="txt" >{{=(bid.bidTime == 0 ?'不限':bid.bidTime) }}次</span>
+       </div>
+       <div class="txt-line">
+         <label class="lab">已报次数：</label>
+         <span class="txt" >{{=it.quoteSns[bid.bidId]}}次</span>                   
+       </div>
+       <div class="txt-line">
+         <label class="lab">重量合计：</label>
+         <span class="txt" >计划量共<em class="f-red">{{=bid.bidTotalWeight }}</em>吨  </span>
+       </div>
+       {{?it.canQuotes[bid.bidId]}}
+       <a href="../quoteForWuHan/toQuote?bidId={{=bid.bidId}}" class="join-bid-btn weui_btn weui_btn_mini weui_btn_primary" >参与报价</a>
+       {{?}}
+       {{?it.quoteSns[bid.bidId]>0}}
+       <a href="../quoteForWuHan/toQuoteDetail?bidId={{=bid.bidId}}&quoteSn={{=it.quoteSns[bid.bidId]}}" class="history-quote-btn weui_btn weui_btn_mini weui_btn_primary" >查看报价单</a>
+       {{?}}
+       {{?it.quoteSns[bid.bidId]>0}}
+       <a style="top: 67px;" href="bidDetailPage?bidId={{=bid.bidId}}" class="history-quote-btn weui_btn weui_btn_mini weui_btn_primary" >中标查询</a>
+       {{?}}
+       <div hidden><a href="javascript:void(0)" class="check-quote-btn weui_btn weui_btn_mini weui_btn_primary" >查报价排名</a></div>
+    </li>
+{{~}}    

@@ -1,0 +1,56 @@
+@charset "utf-8";
+/*for all---------------------------*/
+/*zy email:zhouyao529@126.com*/
+.f13{font-size:13px;}
+.f14{font-size:14px;}
+.f16{font-size:16px;}
+
+.f10px{font-size:10px}
+.f12px{font-size:12px}
+.f14px{font-size:14px}
+.f16px{font-size:16px}
+.f18px{font-size:18px}
+.f24px{font-size:24px}
+.f30px{font-size:30px}
+.f48px{font-size:48px}
+
+.fb{ font-weight:bold;}
+.bold{font-weight:bold}
+
+.cred{color:#ff0000;}
+.cbule{color:#028ad5;}
+.corange{color:#f60}
+.corange{color:#f2922c;}
+.cgreen{ color:#249d03;}
+.cgray{color:#999}
+.cwhite{color:#fff}
+.cblack{color:#333}
+.yellow {color:#ffd800;}
+.gray {color:#a6a6a6;}
+
+.italic{font-style:italic}
+/*
+for link---------------------------*/
+a.link_cred{color:#f00}
+a.link_cred:hover{color:#f90}
+a.link_cgreen{color:#7b9502;}
+a.link_cgreen:hover{color:#f90}
+a.link_corange{color:#f60}
+a.link_corange:hover{color:#f90}
+a.link_cwhite{color:#fff;}
+a.link_cwhite:hover{color:#f90;}
+a.link_cblue{color:#4197da}
+a.link_cblue:hover{color:#f90}
+a.uline{text-decoration:underline;}
+a.uline:hover{text-decoration:none;}
+
+/*
+for align---------------------------*/
+.text_center{text-align:center;}
+.text_left{text-align:left;}
+.text_right{text-align:right;}
+
+.cblank s{ color:#999; font-size:12px;}
+.tb_01 tr td{ position:relative;}
+.res{margin-top:10px;}
+.icon_yh{ position:absolute; top:-3px; left:-10px; background:url(../images/mian/icon_yh.png); display:block; width:55px;height:24px;}

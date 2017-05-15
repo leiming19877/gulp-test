@@ -1,0 +1,64 @@
+<div class="weui_grids m-nine">
+	{{ var i =0 ;}}
+    {{~it : m}}
+         {{?m.text=='我要卖'}}
+         	    {{ i++; }}
+    			{{~m.children : vo }}
+   				 	{{ 
+    				var url =vo.resUrl;
+    				var bool = url.indexOf("http");
+    				if (bool==0) { }}
+    				
+   					    <a href="{{=vo.resUrl}}" class="weui_grid grid-tapmode">
+				            <div class="weui_grid_icon imageBg"   style='background-image: url("../images/navigation/{{=vo.resIcon}}")'  >
+				                <i class="icon icon_button"></i>
+				            </div>
+				            <p class="weui_grid_label">
+	                                  {{=vo.text}}
+				            </p>
+				        </a>
+	    			{{	}else{ }}
+	   					    <a href="../{{=vo.resUrl}}" class="weui_grid grid-tapmode">
+					            <div class="weui_grid_icon imageBg"   style='background-image: url("../images/navigation/{{=vo.resIcon}}")'  >
+					                <i class="icon icon_button"></i>
+					            </div>
+					            <p class="weui_grid_label">
+		                                  {{=vo.text}}
+					            </p>
+					        </a>
+	    				{{ } }}
+    			{{~}}
+    			{{ 
+    			    var len = 3 - (m.children.length % 3);
+    			    len=len==3?0:len;
+					for(var j=0;j<len;j++){
+				}}
+				    <a href="javascript:void(0);" class="weui_grid">
+			            <div class="weui_grid_icon imageBg"  data-echo-background=""  >
+			                <i class="icon icon_button"></i>
+			            </div>
+			            <p class="weui_grid_label">
+                                &nbsp;&nbsp;
+			            </p>
+			        </a>
+				{{
+					}
+    			}}
+    			
+    		
+    	 {{?}}
+    {{~}}
+
+   {{
+		if(i==0){
+	}}	
+		<div style="padding:150px 0;text-align:center;"   >
+               	暂无权限！
+        </div>
+   {{
+		}
+   }}
+
+  
+ </div>
+  

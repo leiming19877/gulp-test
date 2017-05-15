@@ -1,0 +1,83 @@
+{{~it.page.list :allocation}}
+
+    <li class="line" data-allocation-id="{{=allocation.allocationId}}">
+       <div class="txt-line">
+         <label class="lab">调拨单号：</label>
+         <span class="txt" >{{=allocation.allocationCode}}</span> 
+         
+         <span class="txt f-red" style="float:right;">
+	        {{?allocation.allocatedStatus==1}}
+	        	待供应商确认
+	        {{?}}
+	        {{?allocation.allocatedStatus==2}}
+	        	待实提
+	        {{?}}
+	        {{?allocation.allocatedStatus==3}}
+	        	已实提
+	        {{?}}
+	        {{?allocation.allocatedStatus==4}}
+	        	已作废
+	        {{?}}
+	        {{?allocation.allocatedStatus==5}}
+	        	实提结束
+	        {{?}}
+	  
+        </span> 
+         
+              
+       </div>
+       <div style="clear:both;"></div>
+       <div class="txt-line" >
+         <label class="lab">调拨时间：</label>
+       	 <span  class="txt" >{{=new Date(allocation.createDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+       	 {{?allocation.allocatedStatus==1||allocation.allocatedStatus==2}} 
+       	 	{{?it.memberType==3}}
+       		 	<a href='toAllocationPictureUpload?allocationId={{=allocation.allocationId}}'style="float:right;width:7em;" class="weui_btn weui_btn_mini weui_btn_primary">提货单上传</a>
+       	 		<div style="clear:both;"></div>
+       	 	{{?}}
+       	 {{?}}
+    	 {{?allocation.allocatedStatus==3}} 
+       	 	{{?it.memberType!=3}}
+       		 	<a href='toExaminationAllocationPage?allocationId={{=allocation.allocationId}}'style="float:right;width:7em;" class="weui_btn weui_btn_mini weui_btn_primary">实提审核</a>
+       	 		<div style="clear:both;"></div>
+       	 	{{?}}
+       	 {{?}}
+       	 {{?allocation.allocatedStatus==5}} 
+       	 	{{?it.memberType!=3}}
+       		 	<a href='toExaminationAllocationPage?allocationId={{=allocation.allocationId}}'style="float:right;width:7em;" class="weui_btn weui_btn_mini weui_btn_primary">实提撤销</a>
+       	 		<div style="clear:both;"></div>
+       	 	{{?}}
+       	 {{?}}
+       </div>
+       <div class="txt-line"   >
+         <label class="lab f-red">调拨数量：</label>
+         <span class="txt f-red" >{{=allocation.deliveryTotalQuantity }}件</span>
+         <label class="lab f-red">调拨重量：</label>
+         <span class="txt f-red" >{{=allocation.deliveryTotalWeight==null?0:allocation.deliveryTotalWeight.toString().formatMoney(3)}}吨</span>      
+       	{{?allocation.allocatedStatus==2||allocation.allocatedStatus==3}} 
+	         {{?it.memberType==3}}
+	        	 <a href='toEditallocationPage?allocationId={{=allocation.allocationId}}' style="float:right;width:7em;" class="weui_btn weui_btn_mini weui_btn_primary">实提录入</a>             
+	        	 <div style="clear:both;"></div>	        	
+	         {{?}}
+         {{?}}
+       </div>
+       <div class="txt-line">
+         <label class="lab">供方业务员：</label>
+         <span class="txt" >{{=allocation.supplierSalesmanName}}</span>  
+         <label class="lab">联系电话：</label>
+         <span class="txt" >{{=allocation.supplierSalesmanContactNumber}}</span>  
+       </div>
+       <div class="txt-line">
+         <label class="lab">实提重量：</label>
+         {{?allocation.allocatedStatus==1||allocation.allocatedStatus==2}} 
+          	<span class="txt" style="width:4.5em;" ></span>
+         {{?}}
+         {{?allocation.allocatedStatus==3||allocation.allocatedStatus==4||allocation.allocatedStatus==5}} 
+         	<span class="txt" >{{=allocation.realLadingTotalWeight.toString().formatMoney(3) }}吨  </span>
+         {{?}}
+          <label class="lab">供应商：</label>
+         <span class="txt" >{{=allocation.supplierMemberName }}  </span>
+       </div>
+
+    </li>
+{{~}}    

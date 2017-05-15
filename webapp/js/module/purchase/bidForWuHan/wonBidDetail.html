@@ -1,0 +1,61 @@
+            <div class="g-header">
+                    <a href="bidListPage" class="u-back-left" ></a>
+                    <h3 class="u-title">中标详情【竞价单{{=it.bidVO.bidCode}}】</h3>
+            </div> 
+            <div id="g-content" class="g-content">
+					                
+					<div class="m-bid" >
+					<div style="height: 10px;">
+					</div>
+					<div class="txt-line">
+					     <label class="lab">物料信息：</label>
+					     <div class="txt">
+					     <span>{{=it.bidDetail.brandName}}&emsp;</span>
+					     <span>{{=it.bidDetail.textureName}}&emsp;</span>
+					     <span>{{=it.bidDetail.specification}}</span>
+					     </div>
+					     <label class="lab">计&nbsp;划&nbsp;量&nbsp;：</label>
+					     <div class="txt">
+					     <span>{{=it.bidDetail.planBuyWeight}}吨</span>
+					     </div>
+					     <label class="lab">验货方式：</label>
+					     <div class="txt">
+					     <span>{{=it.bidDetail.meteringTypeName}}</span>
+					     </div>
+					</div>
+					<div class="txt-line"style="color: #00F;font-size: 12px;">
+					<span style="color: red;padding-left: 10px;font-size: 18px;">*</span>如中标则显示订单量
+					</div>
+					       <table class="m-bid-detail"style="text-align: center;">
+					            <thead>
+					                <tr>
+					                    <th class="th1">已生成<br>订单量(吨)</th>
+					                    <th class="th2">供应商</th>
+					                    <th hidden class="th3">网差价<br>排名</th>
+					                    <th hidden class="th4">选中理由</th>
+					                    <th hidden class="th5">产地</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+						              {{~it.list : t}}
+					                <tr class="{{=t.isSelfBid==true?'is-self-bid':''}}">
+					                    <td>
+					                     {{=t.orderWeight==0?'':t.orderWeight}}
+					                    </td>
+					                    <td>
+					                     {{=t.supplierMemberName}}
+					                    </td>
+					                    <td hidden>{{=t.rank}}</td>
+					                    <td hidden>
+					                     {{=t.orderReason}}
+					                    </td>
+					                    <td hidden>
+					                     {{=t.placeSteel}}
+					                    </td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					       
+					</div>
+            </div>

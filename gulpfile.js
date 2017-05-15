@@ -64,13 +64,28 @@ gulp.task( 'build:cmd-moudle', function(){
             base : 'webapp/js/',
             tmpExtNames : ['.html'], //提供模板文件的后缀名用来区分模板
             alias: { 
-                'jquery':'jquery/2.1.1/jquery-2.1.1.js',
-                'jquery-mobile':'jquery.mobile-1.4.5/jquery.mobile-1.4.5.js',
-                'zepto': 'zepto/zepto.js',
-                'dot':'doT/doT.js',
-                'iscroll':'iscroll/iscroll-4.2.js',
-                'jweixin':'weixin/jweixin-1.1.0.js',
-                'director':'director/director.js'
+            	'jquery':'jquery/2.1.1/jquery-2.1.1.min.js',
+	        	'jquery-mobile':'jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js',
+	            'zepto': 'zepto/zepto.min.js',
+	            'dot':'doT/doT.min.js',
+	            'iscroll':'iscroll/iscroll-4.2.js',
+	            'jweixin':'weixin/jweixin-1.1.0.js',
+	            'director':'director/director.js',
+	            'echo':'echo/echo.min.js',
+	            'vue':'vue/vue-2.0.7.min.js',
+	            'vue-router':'vue/vue-router-2.5.3.min.js',
+	            'vue-resource':'vue/vue-resource-1.3.1.min.js',
+	            'moment': 'moment/moment.min.js',
+	            'swiper': 'swiper/swiper.min.js',
+	            'weui':'weui/weui.min.js',
+	            'touch':'touch/touch.min.js',
+	            'date':'common/Date.js',
+	            'string':'common/String.js',
+	            'md5':'common/md5.js',
+	            'base64':'common/base64.js',
+	            'sha1':'common/sha1.js',
+	            'req':'common/req.js',
+	            'index-db':'common/index-db.js'
             }/*,
             ignore :[
                 'jquery',
@@ -135,10 +150,10 @@ gulp.task("build:jsp",['build:copy-jsp'],function(){
 });
 //对seajs-config 版本配置+1，以防止出现缓存问题
 gulp.task("build:seajs-config",function(){
-    return gulp.src("webapp/js/seajs/seajs-config-debug.js",{base:'webapp'}) 
+    return gulp.src("webapp/js/seajs/sea-all.min.js",{base:'webapp'}) 
     .pipe(tap(function (file){
             var filename = path.basename(file.path);
-            if(filename === "seajs-config-debug.js"){
+            if(filename === "sea-all.min.js"){
                 var contents = file.contents.toString();
                 contents = contents.replace(/\$1\?v=\d{1}\.\d{1}\.\d{1}/g,function(m){
                         var t = m.split("=")
@@ -163,5 +178,5 @@ gulp.task("build:seajs",['build:seajs-config'],function(){
     .pipe(gulp.dest('webapp/js/seajs'));
 });
 //执行全局打包
-gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs'] );
+gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs-config'] );
 //gulp.task( 'default', ['build:global-css'] );

@@ -1,0 +1,46 @@
+@charset "utf-8";
+/*for all---------------------------*/
+/*zy email:zhouyao529@icloud.com 2015-09-21*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,em,strong,sub,sup,pre,form,label,input,select,textarea,p,th,td {margin:0; padding:0}
+body{background:#fff; overflow-x:hidden; color:#666; font: 14px/1.5 arial,"Microsoft Yahei","Hiragino Sans GB",sans-serif;}
+p{line-height:150%; margin-bottom:8px;}
+li{list-style:none;}
+img{border:0; vertical-align:middle;}
+td,th{color:#333;padding:2px 3px;}
+a{ color:#8c8c8c;text-decoration:none;}
+a:hover{ text-decoration:none;}
+input,select,textarea{vertical-align:middle; color:#333;}
+input,select{height:26px; padding:0px;}
+input{ border:1px solid #ccc;border-radius:4px;}
+input:hover{ border:1px solid #09F;}
+select[multiple]{height:auto;}
+.clearfix:after{clear:both; content:' '; display:block; font-size:0; line-height:0; visibility: hidden; width:0; height:0;}
+* html .clearfix{height: 1%;}
+.clearfix{display: block; clear:both;}
+.beblock{display:block;}
+.nowrap{white-space:nowrap;}
+.wtitle{font-size:14px; font-weight:bold;}
+.pta{position:absolute;}
+.ptr{position:relative;}
+.fR{float:right;}
+.fL{float:left;}
+.bline{border:1px solid #ebebeb;}
+.mt10{ margin-top:10px;}
+.mr10{ margin-right:10px;}
+.ml10{margin-left:10px;}
+.fl{ float:left;}
+.fr{ float:right;}
+.topBar{ width:100%; line-height:36px; height:36px; font-size:12px; background:#fafafa; border-bottom:1px solid #dfdfdf; color:#8c8c8c; }
+.con{width:1240px; margin:0px auto; height:auto;}
+.topBar .sep{margin: 0px 10px; color: #DFDFDF;}
+.topBar a{ text-decoration:none;color:#8c8c8c;}
+.topBar a:hover{ text-decoration:none; color:#333;}
+
+.logo{ height:118px;}
+.logo img{ padding-top:20px;display:block;}
+
+
+
+
+
+

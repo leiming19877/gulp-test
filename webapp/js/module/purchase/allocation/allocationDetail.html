@@ -1,0 +1,132 @@
+            <div class="g-header">
+                    <a  href="javascript:history.go(-1);" class="u-back-left" ></a>
+                    <h3 class="u-title">调拨单[{{=it.allocation.allocationCode}}]</h3>
+            </div> 
+            <div id="g-content" class="g-content">
+					                
+					<div class="m-al" >
+					       <div class="txt-line">
+					         <label class="lab ">交货方式：</label>
+					         <span >{{=it.allocation.deliveryType==1?'配送':'自提'}}</span>
+					         <label class="lab margin-l ">供应商：</label>
+					         <span >{{=it.allocation.supplierMemberName}} </span>
+					         <span style="float:right;color:red">
+							        {{?it.allocation.allocatedStatus==1}}
+							        	待供应商确认
+							        {{?}}
+							        {{?it.allocation.allocatedStatus==2}}
+							        	待实提
+							        {{?}}
+							        {{?it.allocation.allocatedStatus==3}}
+							        	已实提
+							        {{?}}
+							        {{?it.allocation.allocatedStatus==4}}
+							        	已作废
+							        {{?}}
+							        {{?it.allocation.allocatedStatus==5}}
+							        	 实提结束
+							        {{?}}				       
+						     </span> 
+					       </div>
+					      <div class="txt-line">
+					            <label class="lab">业务员：</label>
+					            <span> {{=it.allocation.supplierSalesmanName}}</span> 
+					            <label class="lab margin-l">联系电话：</label>               
+					            <span>{{=it.allocation.supplierSalesmanContactNumber}}</span>
+		            		 	 {{?it.allocation.allocatedStatus==1||it.allocation.allocatedStatus==2}} 
+							       	 	{{?it.memberType==3}}
+							       		 	<a href='toAllocationPictureUpload?allocationId={{=it.allocation.allocationId}}'style="float:right;width:7em;margin-right: 0.5em;" class="weui_btn weui_btn_mini weui_btn_primary">提货单上传</a>
+							       	 		<div style="clear:both;"></div>
+							       	 	{{?}}
+							      {{?}}
+					       </div>
+	       
+					       <div class="txt-line">
+					         <label class="lab">提货人：</label>
+					         <span>{{=it.allocation.pickUpPerson}}</span>
+					       </div>
+					      <div class="txt-line">
+					         <label class="lab">提货单号：</label>
+					         <span>{{=it.allocation.deliveryGoodsCode==null?'':it.allocation.deliveryGoodsCode}}</span>
+					       </div>
+					       <div class="txt-line">
+					         <label class="lab">提货车牌号：</label>
+					         <span>{{=it.allocation.ladingCarLicenseNumber}}</span>
+					           {{?it.allocation.allocatedStatus==2||it.allocation.allocatedStatus==3}} 
+								      	{{?it.memberType==3}}
+								        	 <a href='toEditallocationPage?allocationId={{=it.allocation.allocationId}}' style="float:right;width:7em;margin-right: 0.5em;" class="weui_btn weui_btn_mini weui_btn_primary">实提录入</a>             
+								        	 <div style="clear:both;"></div>	        	
+								         {{?}}
+							    {{?}}
+					       </div>
+					   	  <div class="txt-line">
+					         <label class="lab">提货单：</label>
+					          <span id="attachments">
+						          {{~it.allocationAttachments : at}}
+						           <a class="at" href="{{=at.mobileUrl}}" >
+						           	  {{=at.attachmentName}}</a>
+						          {{~}}
+					          </span>
+					       </div>
+					       <table class="m-al-detail">
+					            <thead>
+					                <tr>
+					                    <th style="width:30%;text-align: center;">商品<br/>信息</th>
+					                    <th style="width:10%;text-align: center;">验货<br/>方式</th>
+					                    <th style="width:33%;text-align: center;">调拨单<br/>信息</th>
+					                    <th style="width:27%;text-align: center;"><span style="color:red">实提</span><br/>信息</th>					                    
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.allocationDetails : allocation}}
+					                <tr>
+					                    <td>
+					                                                        品名：{{=allocation.brandName}}<br/>
+					                                                        材质：{{=allocation.textureName}}<br/>
+					                                                        规格：{{=allocation.specification}}<br/>
+					                                                        产地：{{=allocation.placeSteel}}<br/>
+					                      {{?it.allocation.deliveryType==1}}
+					                      	  交货地：{{= ( (allocation.shippingAddress.substr(0,allocation.shippingAddress.indexOf("市"))).replace('市','') ).replace('省','')}}
+					                      {{?}}
+					                      {{?it.allocation.deliveryType==2}}
+					                      	  仓库：{{=allocation.ztWarehouse}}
+					                      {{?}}   
+					                    </td>
+					                    <td style="text-align: center;">
+					                       {{?allocation.meteringType==0}}
+					         					磅记  
+									       {{?}}
+					                       {{?allocation.meteringType==1}}
+					                      		 理记
+									       {{?}}
+									       {{?allocation.meteringType==2}}
+					                    		 抄码 
+									       {{?}}   
+					                    </td>
+					                    <td>
+					                                                            数量：{{=allocation.deliveryQuantity}}件<br/>
+					                    	重量：{{=allocation.deliveryWeight.toString().formatMoney(3)}}吨<br/>                                                                     	                                  	
+					                    	单价：{{=allocation.supplyPrice.toString().formatMoney(2)}}元<br/>
+					                                                            小计：{{=allocation.deliveryMoney.toString().formatMoney(2)}}元<br/>
+					                    </td>
+					                    <td>
+					                    	数量：{{=allocation.realLadingQuantity}}件<br/>
+					               			重量：{{=allocation.realLadingWeight.toString().formatMoney(3)}}吨<br/>    
+					                    </td>
+					                    
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+		
+					        <div class="txt-line" style="margin-top: 10px;width:100%;float:left;">
+					            <label class="lab" style="width:4em;float:left;">总计：</label>
+					            <span style="float:left;">
+									调拨单共 {{=it.allocation.deliveryTotalQuantity==null?0:it.allocation.deliveryTotalQuantity }}件  {{=it.allocation.deliveryTotalWeight==null?0:it.allocation.deliveryTotalWeight.toString().formatMoney(3) }}吨	<br/>
+									已<span style="color:red">实提</span>共 {{=it.allocation.realLadingTotalQuantity==null?0:it.allocation.realLadingTotalQuantity }}件  {{=it.allocation.realLadingTotalWeight==null?0:it.allocation.realLadingTotalWeight.toString().formatMoney(3) }}吨
+								</span>
+					       </div>
+					</div>
+            </div>
+            
+   

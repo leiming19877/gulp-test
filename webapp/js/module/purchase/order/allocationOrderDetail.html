@@ -1,0 +1,86 @@
+            <div class="g-header">
+                    <a href="toOrderCenterPage" class="u-back-left" ></a>
+                    <h3 class="u-title">订单[{{=it.order.orderCode}}]</h3>
+            </div> 
+            <div id="g-content" class="g-content">
+					                
+					<div class="m-order" >
+			
+					       <div class="txt-line">
+					         <label class="labs">交货方式</label>
+					         	 <span >{{=it.order.deliveryType==1?'配送':'自提'}}</span>
+					         <label class="labs margin-l">供应商：</label>
+					        	 <span> {{=it.order.supplierMemberName}}</span>
+					       </div>
+					       <div class="txt-line">
+					         <label class="labs order-time">到场日期：</label>	   
+					         {{?it.data.length>0}}  
+					            <span >{{=new Date(it.data[0].arrivalDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+				            {{?}}
+				            {{?it.data.length==0}}
+				               <span >&nbsp;</span>
+				            {{?}}
+					       </div>
+					       <table class="m-order-detail">
+					            <thead>
+					                <tr>
+					                    <th style="width:30%;text-align: center;">商品<br/>信息</th>
+					                    <th style="width:10%;text-align: center;">验货<br/>方式</th>
+					                    <th style="width:28%;text-align: center;">订单<br/>信息</th>
+					                    <th style="width:32%;text-align: center;">价格<br/>信息</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					              {{~it.data : od}}
+					                <tr>
+					                    <td>
+					                                                        品名：{{=od.brandName}}<br/>
+					                                                        材质：{{=od.textureName}}<br/>
+					                                                        规格：{{=od.specification}}<br/>
+					                                                        产地：{{=od.placeSteel}}<br/>
+					                      {{?it.order.deliveryType==1}}
+					                      	  交货地：{{= ( (od.shippingAddress.substr(0,od.shippingAddress.indexOf("市"))).replace('市','') ).replace('省','')}}
+					                      {{?}}
+					                      {{?it.order.deliveryType==2}}
+					                      	  仓库：{{=od.ztWarehouse}}
+					                      {{?}} 
+					                    </td>
+					                    <td style="text-align: center;">
+					                        {{=od.meteringType==1?'理记':'磅记'}}     
+					                    </td>
+					                    <td>
+					                                                            数量：{{=od.orderQuantity}}件<br/>
+					                    	重量：{{=od.orderWeight.toFixed(3)}}吨<br/>
+					                    </td>
+					                    <td>单价:{{=od.orderPrice.toString().formatMoney(2)}}元<br/>
+					                    	合计:{{=(od.orderPrice*od.orderWeight).toString().formatMoney(2)}}元</td>
+					                </tr>
+					               {{~}} 
+					            </tbody>
+					       </table>
+					       
+					       <div class="txt-line" style="margin-top: 10px;width:100%;float:left;">
+					            <label class="labs" style="width:4em;float:left;">总计：</label>
+					            <span style="float:left;">
+					             	订单数量共{{=it.order.orderTotalQuantity }}件,订单重量共{{=it.order.orderTotalWeight.toString().formatMoney(3) }}吨，<br/>
+					            	订单总价{{=it.order.orderTotalMoney.toString().formatMoney(2)}}元
+					            </span>
+					       </div>
+					</div>
+            </div>
+            <div id="g-footer" class="g-footer" >
+				 <div class="m-order-footer" >
+				      {{?it.action=="buyer"}}
+				      <a  href="toAllocationOrderDetailExtraPage?orderId={{=it.order.orderId}}&action=buyer&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+					      {{?it.order.allocationTimes>0}}
+							<a href="../allocation/toAllocationListPage?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >调拨单列表</a>
+					      {{?}}
+				      {{?}}
+				      {{?it.action=="seller"}}
+				      <a  href="toAllocationOrderDetailExtraPage?orderId={{=it.order.orderId}}&action=seller&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+					      {{?it.order.allocationTimes>0}}
+							<a href="../allocation/toAllocationListPage?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >调拨单列表</a>
+					      {{?}}
+				      {{?}}
+				</div>
+            </div>

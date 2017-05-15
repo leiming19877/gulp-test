@@ -1,0 +1,102 @@
+{{~it.page.list:value:index}}
+<li class="line" data-order-id={{=value.orderId}} data-bid-id={{=value.bidId}} data-order-status={{=value.orderStatus}}>
+ 	   {{?value.deliveryStatus==1}}
+       <div class="dealing"style="float:right;">
+         <label class="lab">待提货</label>
+       </div>
+       {{?}}
+       {{?value.deliveryStatus==2}}
+       <div class="complete" style="float:right;">
+         <label class="lab">提货中</label>
+       </div>
+       {{?}}
+       {{?value.deliveryStatus==3}}
+       <div class="cancellation"style="float:right;">
+         <label class="lab">已完成</label>
+       </div>
+       {{?}}
+      {{?value.deliveryStatus==4}}
+       <div class="cancellation"style="float:right;">
+         <label class="lab">已作废</label>
+       </div>
+       {{?}}
+       <div class="txt-line">
+         <label class="lab">订单编号：</label>
+         <div class="txt">
+            <span>{{=value.orderCode}}</span>
+         </div>      
+       </div>
+       <div   style="float: left;width: 100%;">
+       <div class="txt-line text-both"  style="float: left;width:35%;">
+         <label class="lab ">交货方式：</label>
+         <div class="txt">
+           {{?value.deliveryType==1}}
+          		<span>配送</span>
+		   {{?}}
+	       {{?value.deliveryType==2}}
+	            <span >自提</span>
+	       {{?}}
+         </div>    
+        </div>
+         <div class="txt-line text-both" style="float: left;width:65%;">
+         <label class="lab">供应商：</label>
+         <div class="txt">
+            <span>{{=value.supplierMemberName}}</span>
+         </div>   
+       </div>
+       </div>
+       <div style="clear: both;"></div>
+       <div class="txt-line">
+         <label class="lab">到场日期：</label>
+         <div class="txt">
+         {{?value.orderDetails.length>0}}
+            <span >{{=new Date(value.orderDetails[0].arrivalDate).formatDate("yyyy-MM-dd HH:mm")}}</span>
+         {{?}}
+         {{?value.orderDetails.length==0}}
+            <span >&nbsp;</span>
+         {{?}}
+         </div>
+       </div>
+        <div   style="float: left;width: 100%;">
+       <div class="txt-line"  style="float: left;width:35%;">
+         <label class="lab">订单总数：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalQuantity}}件</span>
+         </div>
+       </div>
+       <div class="txt-line" style="float: left;width:65%;">
+         <label class="lab">订单总量：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalWeight.toString().formatMoney(3)}}吨</span>
+         </div>
+       </div>
+      </div>
+      <div style="clear: both;"></div>     
+       <div class="txt-line">
+         <label class="lab">订单总价：</label>
+         <div class="txt">
+            <span >{{=value.orderTotalMoney.toString().formatMoney(2)}}元</span>
+         </div>
+       </div>
+       
+       <div   style="float: left;width: 100%;">
+       <div class="txt-line"  style="float: left;width:40%;">
+         <label class="lab">已开单量：</label>
+         <div class="txt">
+            <span >{{=value.hasBillingWeight.toString().formatMoney(3)}}吨</span>
+         </div>
+       </div>
+       <div class="txt-line"  style="float: left;width:60%;">
+         <label class="lab">已实提量：</label>
+         <div class="txt">
+            <span >{{=value.realLadingWeight.toString().formatMoney(3)}}吨</span>
+         </div>
+       </div>
+       
+      </div>
+      <div style="clear: both;"></div>   
+       {{?value.allocationTimes>0}}
+       <a href="javascript:void(0)" class="detail-shipping-btn weui_btn weui_btn_mini weui_btn_primary" >调拨单列表</a>
+       {{?}}
+    </li>
+{{~}}

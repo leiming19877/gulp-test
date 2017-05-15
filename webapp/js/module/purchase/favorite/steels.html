@@ -1,0 +1,26 @@
+	<div class="m-steel-select">
+		<div class="weui_cells_title weui_cells weui_cells_form">
+			<div class="weui_cell weui_cell_switch">
+				<div class="weui_cell_hd weui_cell_primary">全选</div>
+				<div class="weui_cell_ft">
+					<input class="weui_switch" type="checkbox">
+				</div>
+			</div>
+		</div>
+		<div class="weui_cells weui_cells_checkbox">
+		{{~it.steels:value:q}}
+			<label class="weui_cell weui_check_label">
+				<div class="weui_cell_hd">
+					<input type="checkbox" class="weui_check" name="checkbox1" id="checkBox-{{=value.placeSteelId}}"data-province-name="{{=value.provinceName}}"
+					 data-area-name="{{=value.areaName}}" data-place-steel-name="{{=value.placeSteelName}}"
+					 data-place-steel-id="{{=value.placeSteelId}}"
+					  {{= value.useStatus==1?'checked="checked"':''}}>
+					<i class="weui_icon_checked"></i>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p>{{=value.placeSteelName}}</p>
+				</div>
+			</label>
+		{{~}}
+		</div>
+	</div>

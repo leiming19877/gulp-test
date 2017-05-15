@@ -1,0 +1,68 @@
+		<div class="m-quote" style="height: 100%;">              
+		       <div class="txt-line" >
+		         <label class="lab">总计：</label>
+		         <span  class="txt" >计划量共{{=it.quote.bidTotalWeight }}吨</span><br>
+		         <label class="lab">总价</label>
+		         <span id="quote-total-money-tip"   >{{=it.quote.quoteTotalMoney.toString().formatMoney(2)}}</span>元 
+		       </div>         
+		       <div class="txt-line">
+		       {{?it.quote.invoiceType==2}}
+		               <label class="lab">运杂费：</label>
+		               <span class="txt" id="freight-miscellanous-tip" >{{=it.quote.freightMiscellaneous}}元/吨</span>
+		       {{?}}
+		       </div>
+		       <table class="m-quote-detail">
+		            <thead>
+		                <tr>
+		                    <th style="width: 40%;text-align: center;">商品信息</th>
+		                    <th style="width: 20%;">计划量（吨）</th>
+		                    <th style="width: 40%;text-align: center;border-right: none;">报价信息</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		              {{~it.listQuoteDetail : qd:i}}
+		               {{
+		               	if(qd.quoteWeight == 0 || qd.quotePrice == 0){
+		               		continue;
+		               	 }
+		               }}		           
+		              	<tr >
+		                    <td>
+		                                                        品名：{{=qd.brandName}}<br/>
+		                                                        材质：{{=qd.textureName}}<br/>
+		                                                        规格：{{=qd.specification}}<br/>
+		                   <em class="place-steel" >产地：{{=qd.placeSteel}}</em>
+		                   <br>
+		           		    {{?it.quote.deliveryType==1}}
+		                 	<em class="place-steel">交货地：<span id="info-warehouse" class="ware-house" style="width:100%;">{{=( (qd.shippingAddress.substr(0,qd.shippingAddress.indexOf("市"))).replace('市','') ).replace('省','')}}</span></em> 
+		                 	{{?}}
+		                 	{{?it.quote.deliveryType==2}}
+		                 	<em class="place-steel">仓库：<span id="info-warehouse" class="ware-house" style="width:100%;">{{=qd.ztWarehouse}}</span></em>                                 
+		                    {{?}} 
+		                    </td>
+		                    <td>{{=qd.planBuyWeight}}</td>
+		                    <td style="border-right: none;">
+		                    	可供量：
+		                    	<span id="quote-weight-{{=i}}-tip" class="quote-weight" >{{=qd.quoteWeight}}</span>吨
+		                       	<br/>
+		                       	报价：
+		                       	<span id="quote-price-{{=i}}-tip" class="quote-price" >{{=qd.quotePrice}}</span>元/吨
+		                        <br/>合计：
+		                        <span id="quote-money-{{=i}}-tip"  class="quote-money" >{{=qd.quoteMoney.toString().formatMoney(2)}}</span>元
+		                        <br><span style="color: blue;">当前网差价排名：</span><span style="color: red;">
+		                        {{~qd.ranks:r}}
+		                        {{?r.groupType == 0 && r.sortType == 2}}
+		                        {{=r.rank}}
+		                        {{?}}
+		                        {{~}}
+		                        </span>
+		                    </td>
+		                </tr>
+		               {{~}} 
+		               
+		            </tbody>
+		       </table>
+		       
+		       <div class="txt-line" style="margin-top: 10px;">
+		       </div>
+		</div>

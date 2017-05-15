@@ -1,0 +1,29 @@
+
+<div class="weui_cells_title">当前登录账号</div>
+        <div class="pull_l weui_cells_title"style="width:100%" >
+            <div class="pull_l" style="width:25%">
+                <img src="../images/login/user_image.jpg" alt="">
+            </div>
+           
+            <div  class="pull_l  " style="width:75%">
+               <div class="user"> 账号：{{=it.data.userName}}</div>
+               <div  class="user" id="tel">电话：{{=(it.data.phone).substr(0,3)+"****"+(it.data.phone).substr(7,11) }}</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="weui_cells weui_cells_access non_top" >
+            <a class="weui_cell"  href="./modifyPasswordPage?msg">
+                <div class="weui_cell_bd weui_cell_primary weui_cells_title">
+                    <p>修改登录密码</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+            <a class="weui_cell" href="./forgetPasswordPage?checkOk=0&msg&userPhone={{=it.data.phone}}&phone={{=(it.data.phone).substr(0,3)+'****'+(it.data.phone).substr(7,11) }}">
+                <div class="weui_cell_bd weui_cell_primary weui_cells_title">
+                    <p>忘记密码</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+</div>

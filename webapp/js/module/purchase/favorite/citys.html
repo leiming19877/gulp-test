@@ -1,0 +1,28 @@
+         
+  <div class="weui_cells_title weui_cells weui_cells_form active">
+       <div class="weui_cell weui_cell_switch">
+           <div class="weui_cell_hd weui_cell_primary">全选</div>
+           <div class="weui_cell_ft">
+               <input class="weui_switch" type="checkbox" />
+           </div>
+       </div>
+   </div>
+   <div class="weui_cells weui_cells_checkbox active">
+		{{~it :b:index}}
+       <label class="weui_cell weui_check_label" for="checkbox-{{=index}}">
+           <div class="weui_cell_hd">
+               <input type="checkbox" class="weui_check" 
+               name="checkbox-{{=index}}" 
+               id="checkbox-{{=index}}" 
+               data-province-name="{{=b.provinceName}}"
+               data-city-name="{{=b.cityName}}"
+               {{=b.checked?'checked="checked"':''}} />
+               <i class="weui_icon_checked"></i>
+           </div>
+           <div class="weui_cell_bd weui_cell_primary">
+               <p>{{=b.cityName}}</p>
+           </div>
+       </label>
+    {{~}}
+   </div>
+<!-- end checkbox --> 

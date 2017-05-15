@@ -1,0 +1,54 @@
+<%@page contentType="text/html; charset=utf-8"%>
+<%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>用户中心</title>
+    	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
+		<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
+		<script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
+		
+        <style>
+        .pull_l{float:left;}
+
+        .clear{clear: both;}
+        .non_top{margin-top: 0;}
+        img{width: 90%;margin:0 auto;}
+        .user{color:#666;padding: 5px 0 ;}
+        </style>
+</head>
+<body>
+        <div class="weui_cells_title">当前登录账号</div>
+        <div class="pull_l weui_cells_title"style="width:100%" >
+            <div class="pull_l" style="width:25%">
+                <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3147653961,4067113904&fm=21&gp=0.jpg" alt="">
+            </div>
+            <div  class="pull_l  " style="width:75%">
+               <div class="user"> 账号：移动互联卖家</div>
+               <div  class="user"> 会员全称：中拓博长</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="weui_cells weui_cells_access non_top" >
+            <a class="weui_cell" href="javascript:;">
+                <div class="weui_cell_bd weui_cell_primary weui_cells_title">
+                    <p>修改登录密码</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+            <a class="weui_cell" href="javascript:;">
+                <div class="weui_cell_bd weui_cell_primary weui_cells_title">
+                    <p>忘记密码</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        </div>
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript">
+</script>
+</html>

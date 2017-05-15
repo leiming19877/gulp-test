@@ -1,0 +1,104 @@
+
+
+.Set_up_yz,.Set_up_yz_no{background:#fffddd;background:-webkit-gradient(linear, 0 0, 100% 0, from(#ffffff), to(#fffddd));}.Set_up_yz_ing{background:#f2f2f2; }
+
+.Set_up_yz .Ticket,.Set_up_yz_no .Ticket{ background:#fff url(../img/list_bg.png) no-repeat right top; color:#999;background-size:3% ;}
+.Set_up_yz_ing .Ticket{ background:#fff url(../img/list_bg_on.png) no-repeat right top; color:#999;background-size:3% ;}
+.Set_up_yz .State font{ color:#F63;}
+.Set_up_yz_no .State font{ color:#999;}
+.Set_up_yz_ing .State font{ color:#3366cc;}
+
+.List{min-height:120px; line-height:120px; display:block; margin-bottom:10px; float:left; width:100%; }
+.List ul{ clear:both;}
+.List ul li{ float:left; text-align:center; position:relative;}
+.List ul li dl{ clear:both;}
+.List ul li span{ line-height:26px; display:block; text-align:center; margin-top:10%; width:80%;}
+.List ul li span img{ clear:both;display:block; margin:0px auto; margin-top:10px; max-width:80%; max-height:100px;}
+.List ul li dl dt,.List ul li dl dd{ float:left; min-height:26px; line-height:26px; }
+.List ul li dl dt{ font-size:90%; color:#999; width:30%; text-align:right; margin-right:4%;} 
+.List ul li dl dd{ font-size:105%; font-weight:bold; color:#666; width:65%; text-align:left;}
+.List ul li dl dd b{ margin-right:18px; display:block;  float:left;}
+.List_rewidth{width:auto;}
+
+.list_tiao{ color:#999; }
+.list_tiao span{ display:block; line-height:48px; height:38px; padding-left:10px;}
+.list_tiao dl{ background:#fff; line-height:48px; height:49px; display:block; margin-top:1px; clear:both;}
+.list_tiao dl:hover{ background:#f8ffff;}
+
+.list_tiao dl dt,.list_tiao dl dd{ float:left;}
+.list_tiao dl dt{ font-size:90%; color:#999; width:26%; text-align:right; margin-right:4%;}
+.list_tiao dl dd{ font-size:105%; font-weight:bold; color:#666;  text-align:left; padding-left:10px;}
+.list_tiao dl .cphm{ padding-left:20px;}
+.list_tiao dl:hover .cphm{ color:#36c; font-size:110%;}
+.list_tiao dl .btn_off{height:32px; width:32px; line-height:16px; text-align:center; border-radius:19px; font-weight:bold; font-size:120%; margin-top:8px;}
+.list_tiao dl:hover .btn_off{ background:#ff6633; color:#FFF; border:none;}
+.list_tiao dl .switch,.list_tiao dl .del{ float:right; margin-right:20px;}
+.list_tiao_del{ margin-top:20px;}
+.list_tiao_del dl{ background:none; border-bottom:1px solid #ebebeb; clear:both;}
+
+.list_tiao_del dl:hover{ background:#fffddd; border-bottom:1px solid #ebebeb;}
+
+.btn_k{ margin:0px auto; width:40%; display:block; color:#000;}
+.btn_add{height:32px; width:32px; background:#FFF;line-height:16px; text-align:center; border-radius:19px; font-weight:bold; font-size:140%; margin-top:8px; margin-right:10px;-webkit-box-shadow:0 0 10px 6px #ebebeb;-moz-box-shadow:0 0 10px 6px #ebebeb; box-shadow:0 0 10px 6px #ebebeb;}
+.btn_contraction{height:28px; width:28px;background:#FFF;line-height:16px; text-align:center; border-radius:19px; font-weight:bold; font-size:140%; padding:0px; margin-top:8px; margin-right:10px;-webkit-box-shadow:0 0 10px 6px #ebebeb;-moz-box-shadow:0 0 10px 6px #ebebeb; box-shadow:0 0 10px 6px #ebebeb;}
+a:hover .btn_add{background:#36c; color:#FFF; border:none;-webkit-box-shadow:0 0 10px 6px #fffddd;-moz-box-shadow:0 0 10px 6px #fffddd; box-shadow:0 0 10px 6px #fffddd; }
+
+
+
+.btn{ border:1px solid #ff6633; color:#fff; background:#ff6633; border-radius:4px; padding:5px; font-size:85%; font-weight:bold;}
+.btn:hover{ background:#ff6633; color:#FFF;}
+.btn_b{background:#3366cc; border:1px solid #3366cc;color:#FFF; border-radius:4px; padding:10px 40px; font-size:100%; font-weight:bold; line-height:18px; height:38px;}
+.btn_b:hover{background:#ff6633;border:1px solid #ff6633; color:#FFF;}
+.btn_bule{border:1px solid #3366cc; background:#3366cc; color:#fff; border-radius:4px; padding:5px; font-size:85%; font-weight:bold;}
+.btn_bule:hover{ background:#3366cc; color:#FFF;}
+
+.select_01{ border:1px solid #3366cc; border-radius:4px; }
+.select_01:hover{ border:1px solid #ff6633;}
+.select_01 option{ line-height:30px; height:38px;}
+
+.lading_xq{ background:#fff; padding:10px; margin:10px 0px 10px 0px; float:left;}
+.lading_xq ul{ float:left; }
+.lading_xq ul li{ width:100%; line-height:26px; min-height:26px;  padding:15px 0px; border-bottom:1px dotted #ebebeb;}
+.fb{ font-weight:bold; }
+.font_b{ font-size:110%; margin:0px 10px;}
+.font_s{ font-size:90%; margin:0px 10px;}
+.font_remind {color:#F63;}
+.erwm{background:#fff; padding:10px 0px; margin:0px; text-align:center; float:left; width:100%;}
+.erwm ul li{ line-height:30px; margin:opx auto;text-align:center;}
+.erwm img{ width:100px; margin:opx auto; clear:both;}
+
+input,select{height:26px; padding:0px;}
+input{ border:1px solid #ccc;border-radius:4px; padding:5px; font-size:110%;}
+input:hover{ border:1px solid #09F;}
+
+.Operation{ width:20%;}
+.State{ width:15%; height:120px; font-size:80%; color:#999; background:#FFF; display:block; }
+.Ticket{padding:8px 0px ; width:60%; border-left:1px dotted #888; padding-left:10px;}
+
+
+.title{ position:relative; padding:10px; margin-top:16px;border-bottom:1px solid #e1e1e1;}
+.title h1{ text-align:center; font-size:140%; color:#666;}
+.title a{ position:absolute;  width:48px; height:48px;}
+.icon_back{ background:url(../img/icon_left_back.png) no-repeat center; width:48px; height:48px;background-size:100%; top:0px; left:0px; }
+.icon_back:hover{ background:#fff url(../img/icon_left_back.png) no-repeat center; width:48px; height:48px;background-size:100%; }
+.icon_more{ background:url(../img/t_icon_more.png) no-repeat center; width:48px; height:48px;background-size:80%;top:0px; right:0px;  }
+.icon_more:hover{ background:#fff url(../img/t_icon_more.png) no-repeat center; width:48px; height:48px;background-size:80%; }
+.icon_use{ background:url(../img/icon_wdzt.png) no-repeat center; width:48px; height:48px;background-size:80%;top:0px; right:0px;  }
+.icon_use:hover{ background:#fff url(../img/icon_wdzt.png) no-repeat center; width:48px; height:48px;background-size:80%; }
+
+.poo_lb{ width:100%; height:100%; display:none;}
+.poo_lb_bg{ position: absolute; z-index:2; background:#000; opacity:0.6; display:block; width:100%; height:100%;}
+.poo_lb .list_tiao h3{ font-size:120%; text-align:center; line-height:48px; height:48px; display:block;}
+.list_tiao dl .btn_checkbox{height:32px; width:32px; line-height:16px; text-align:center; border-radius:19px; font-weight:bold; font-size:120%; margin-top:8px; background:#ffffff;}
+.list_tiao dl:active  .btn_checkbox,.list_tiao dl .on{ background:#ff6633; color:#FFF; border:none;}
+.btn_are{ margin:20px 8px; height:48px;}
+.btn_are input{ margin-right:5px; float:left;}
+.show{ display:block;}
+.mt10{ margin-top:10px;}
+
+.condition dl dd{ float:left; padding:0px 0px 0px 5px; display:block;}
+
+.condition { clear:both; min-height:48px; line-height:48px; background:#FFF; padding:5px 10px;border-bottom:1px solid #ebebeb;}
+.list_tiao dl { overflow:hidden;}
+.list_tiao dl dd input{ margin-top:10px;}
+.form-control{ margin-top:9px;}

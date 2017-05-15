@@ -1,0 +1,20 @@
+{{~it.page.list :bid}}
+    <li class="line" data-bid-id="{{=bid.bidId}}">
+       <div class="txt-line">
+         <label class="lab">竞价单号：</label>
+         <span class="txt" >{{=bid.bidCode}}</span>    
+        </div>
+       <div class="txt-line">
+         <label class="lab">竞价时间：</label>
+         <span  class="txt" >{{=new Date(bid.bidBeginTime).formatDate("yyyy-MM-dd HH:mm")}}<br/>至<br/>{{=new Date(bid.bidEndTime).formatDate("yyyy-MM-dd HH:mm")}}</span>
+      </div>
+	  <div class="txt-line">
+         <label class="lab">可报次数：</label>
+         <span class="txt">{{=(bid.bidTime == 0 ?'不限':bid.bidTime) }}次</span>
+       </div>
+       <div class="txt-line">
+         <label class="lab">重量合计：</label>
+         <span class="txt" >计划量共<em class="f-red">{{=bid.bidTotalWeight }}</em>吨  </span>
+       </div>
+    </li>
+{{~}}       

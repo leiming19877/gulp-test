@@ -1,0 +1,10 @@
+{{~it.page.list :bid}}
+    <li class="line" data-bid-id="{{=bid.bidId}}">
+       <div class="txt-line">
+            <span style="margin-left: 0px;line-height: 75px;">竞价单号：[{{=bid.bidCode}}]已结束</span>
+       </div>
+       {{?it.quoteSns[bid.bidId]>0}}
+       <a href="../quoteForWuHan/toQuoteDetail?bidId={{=bid.bidId}}&quoteSn={{=it.quoteSns[bid.bidId]}}" class="history-quote-btn history-quote-btn2 weui_btn weui_btn_mini weui_btn_primary" >查看报价单</a>
+       {{?}}
+    </li>
+{{~}}        

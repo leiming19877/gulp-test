@@ -1,0 +1,148 @@
+{{
+ 	var bidDetailId = null;
+}}
+{{~it.listQuoteDetail : qd}}
+ {{ 
+ 	if(bidDetailId != qd.bidDetailId){
+ 		qd.isFirstLine = true;
+ 		bidDetailId = qd.bidDetailId;
+ 	}
+ 	qd.placeSteelsCount = qd.placeSteels.split(",").length;
+ }}
+{{~}}
+<div class="g-header">
+        <a href="../bidConsoleForWuHan/bidListPage" class="iconfont u-back-left" ></a>
+        <h3 class="u-title">报价</h3>
+</div> 
+<div id="g-content" class="g-content" data-first-quote={{=it.isFirstQuote}} data-step-type={{=it.bid.stepType}} data-discount-step={{=it.bid.discountStep}}>
+		<div class="m-quote" >   
+				<input type="hidden" id="deliveryType" name="deliveryType" value="{{=it.quote.deliveryType}}"/>           
+		       <div class="txt-line">
+		         <label class="lab ">可报价次数：</label>
+		         <span class="txt" >{{=it.hasQuoteSn }}</span>
+		         <label class="lab">已报次数：</label>
+		         <span class="txt">{{=it.quote.quoteSn}}次</span>
+		       </div>
+		       <div class="txt-line">
+		          <label class="lab">交货方式：</label>
+		          <span class="txt">{{=it.quote.deliveryTypeName}}</span>
+		       </div>
+		       <div class="txt-line">
+		               <label class="lab">开票方式：</label>
+		               <span class="txt">{{=it.quote.invoiceTypeName}}</span>
+		               {{?it.quote.invoiceType==2}}
+		               <label  class="lab">运杂费：</label>
+		               <span  class="txt"><input class="u-ipt-min" style="width: 34px;"  id="freightMiscellaneous" 
+		               name="freightMiscellaneous" type="number" min="0.0" max="100000.00" 
+		               {{=it.quote.invoiceTypeName === '一票结算' ?'disabled="disabled"':''}} 
+		               maxlength="9" value="{{=it.quote.freightMiscellaneous}}"
+		                />元/吨</span>
+		                {{?}}
+		               {{?it.quote.invoiceType!=2}}
+		               <label hidden  class="lab">运杂费：</label>
+		               <span hidden  class="txt"><input style="width: 34px;" class="u-ipt-min" id="freightMiscellaneous" 
+		               name="freightMiscellaneous" type="number" min="0.0" max="100000.00" 
+		               {{=it.quote.invoiceTypeName === '一票结算' ?'disabled="disabled"':''}} 
+		               maxlength="9" value="{{=it.quote.freightMiscellaneous}}"
+		                />元/吨</span>
+		                {{?}}
+		       </div>
+		
+		       <div class="quote-sn">第{{=it.quote.quoteSn+1}}次报价</div>      
+		       
+		       <table class="m-quote-detail">
+		            <thead>
+		                <tr>
+		                    <th class="th1">商品<br>信息</th>
+		                    <th class="th2">验货<br>方式</th>
+		                    <th class="th3">计划量（吨）</th>
+		                    <th class="th4">报价<br>信息</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		              {{~it.listQuoteDetail : qd :index}}
+		              <tr>
+		                    <td>
+		                      <input name="bidDetailId" type="hidden" value="{{=qd.bidDetailId}}" />	       
+		                                                        品名：{{=qd.brandName}}<br/>
+		                                                        材质：{{=qd.textureName}}<br/>
+		                                                        规格：{{=qd.specification}}<br/>
+		                   <em class="place-steel" >
+		                   	产地：<select style="width: 55%;" name="placeSteel" data-bid-detail-id="{{=qd.bidDetailId}}"
+		                   	     data-place-steel="{{=qd.placeSteel}}">
+		                            {{~qd.placeSteels.split(","):p}}
+		                                <option value="{{=p}}"  {{=qd.placeSteel == p?'selected="selected"':''}} >{{=p}}</option>
+		                            {{~}}
+		                         </select>
+		                    </em><div style="padding-top: 5px;">
+		                 	<em class="place-steel">
+		                 	{{?it.quote.deliveryType==1}}
+		                 	   交货地：{{=( (qd.shippingAddress.substr(0,qd.shippingAddress.indexOf("市"))).replace('市','') ).replace('省','')}}
+		                 	{{?}}
+		                 	{{?it.quote.deliveryType==2}}
+		                 	仓库：<input class="u-ipt-min ware-house" name="warehouse"value="{{=(qd.ztWarehouse==null?'':qd.ztWarehouse)}}" style="width:55%;height: 20px;">
+		                 	{{?}}
+		                 	</em>
+		                 	
+		                 	</div>
+		                    </td>
+		                    <td style="border-right: none;">
+		                    <span class="td-span">
+		                        {{=qd.meteringTypeName}} 
+		                    </span>
+		                        <div style="position: relative;margin-top: 212%;padding-left: 10%;">
+		                           {{?qd.isFirstLine}}
+		                       	   <button class="copy-btn copy-steel-btn iconfont icon-add weui_btn weui_btn_mini weui_btn_primary"
+		                       	  	data-bid-detail-id="{{=qd.bidDetailId}}"
+		                       	  	data-place-steels-count="{{=qd.placeSteelsCount}}"
+		                       	   >产地</button> 
+		                           {{??}}
+		                           <button class="remove-btn copy-steel-btn iconfont icon-delete weui_btn weui_btn_mini weui_btn_primary"
+		                            data-bid-detail-id="{{=qd.bidDetailId}}"
+		                       	  	data-place-steels-count="{{=qd.placeSteelsCount}}"
+		                           >删除</button> 		            
+		                           {{?}}
+		                        </div>  
+		                    </td>
+		                    <td><div style="padding-bottom: 44%;">{{=qd.planBuyWeight}}</div></td>
+		                    <td style="border-right: none;">
+		                    	供货量：
+		                    	 <input class="u-ipt-min" name="quoteWeight" 
+		                         type="number" 
+		                        min="0.0" max="100000.00" maxlength="9"  
+		                        value="{{=qd.quoteWeight}}" />吨
+		                        <div style="margin-top: 5px;"></div>
+		                                                                          价&emsp;格：
+		                        <input class="u-ipt-min" name="quotePrice" 
+		                         type="number" min="0.0" max="100000.00" maxlength="9" data-quote-price={{=qd.quotePrice}} 
+		                        value="{{=qd.quotePrice}}" />元/吨
+		                        <br/>合&emsp;计：
+		                        <span name="quote-money" class="quote-money" >{{=qd.quoteMoney.toString().formatMoney(2)}}</span>元
+		                        <br><span style="color: blue;font-size: 16px;font-weight: bold;">网差价排名：</span><span style="color: red;font-size: 16px;font-weight: bold;">
+		                        {{~qd.ranks:r}}
+		                        {{?r.groupType == 0 && r.sortType == 2}}
+		                        {{=r.rank}}
+		                        {{?}}
+		                        {{~}}
+		                        </span>
+		                    </td>
+		                </tr>
+		              	{{~}}
+		            </tbody>
+		       </table>
+		       
+		       <div class="txt-line" style="margin-top: 10px;">
+		         <label class="lab">总计：</label>
+		         <span >计划量共{{=it.quote.bidTotalWeight }}吨</span>,
+		         <label class="lab">总价</label>
+		         <span id="quote-total-money" data-quote-total={{=it.quote.quoteTotalMoney}}>{{=it.quote.quoteTotalMoney.toString().formatMoney(2)}}</span>元 
+		       </div>
+		</div>
+
+</div>
+<div id="g-footer" class="g-footer" >
+	<div class="m-quote-footer" >
+	      <a  href="javascript:;" class="mftk-btn weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+	      <a href="javascript:;" class="quote-btn weui_btn weui_btn_mini weui_btn_primary" >确定</a>
+	</div>
+</div>

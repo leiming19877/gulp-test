@@ -1,0 +1,31 @@
+         
+  <div class="weui_cells_title weui_cells weui_cells_form active">
+       <div class="weui_cell weui_cell_switch">
+           <div class="weui_cell_hd weui_cell_primary">全选</div>
+           <div class="weui_cell_ft">
+               <input class="weui_switch" type="checkbox" />
+           </div>
+       </div>
+   </div>
+   <div class="weui_cells weui_cells_checkbox active">
+		{{~it :b}}
+       <label class="weui_cell weui_check_label" for="checkbox-{{=b.commBrandId}}">
+           <div class="weui_cell_hd">
+               <input type="checkbox" class="weui_check" 
+               name="checkbox-{{=b.commBrandId}}" 
+               id="checkbox-{{=b.commBrandId}}" 
+               data-comm-brand-id="{{=b.commBrandId}}"
+               data-brand-id="{{=b.brandId}}"
+               data-brand-name="{{=b.brandName}}"
+               data-comm-variety-id="{{=b.commVarietyId}}"
+               data-abbreviation="{{=b.abbreviation}}"
+               {{= b.isChecked?'checked="checked"':''}} />
+               <i class="weui_icon_checked"></i>
+           </div>
+           <div class="weui_cell_bd weui_cell_primary">
+               <p>{{=b.brandName}}</p>
+           </div>
+       </label>
+    {{~}}
+   </div>
+<!-- end checkbox --> 
