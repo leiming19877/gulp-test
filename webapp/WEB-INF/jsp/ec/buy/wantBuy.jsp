@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>我要买</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
 
 
@@ -54,29 +54,36 @@
 	            <div id="guide-tab" class="m-guide-tab" >
 	               <!-- guide-tab程序会自动填充 -->
 	            </div>
-	            <!--end m-guide-tab -->        
+	            <!--end m-guide-tab --> 
+				<div id="recent-buy-record-list" class="m-recent-buy-record-list" >
+				        <div class="recent-buy-title f-cb">
+				                                              最近购买
+				           <span class="u-push"></span>
+				        </div>
+				        <div class="swiper-container">
+				            <div class="swiper-wrapper">
+				                 <!-- swiper-wrapper程序会自动填充 -->               
+				        </div>
+				        <div class="swiper-pagination"></div>
+				    </div>
+				</div>       
 	        </div>
 	        <div id="g-footer" class="g-footer">
-	              <!--照片下单  -->
-	              <div class="m-picture-order">
+	              <div class="m-fast-order">
+	                    <!--照片下单  -->
 	                     <a href="prePhotoOrder">
-	                        <img class="logo"  src="${ctx}/images/icons/icon_photo.png"  width="45px" height="45px" />
-	                                                           上传照片或拍照下单                                
+	                        <img class="logo"  src="${ctx}/images/icons/icon_mai.png"  width="60px" />
+	                                                                        语音下单                                
+	                     </a> 
+	                     <!--语音下单  -->      
+	                     <a href="prePhotoOrder">
+	                        <img class="logo"  src="${ctx}/images/icons/icon_photo.png"  width="60px"/>
+	                                                                        拍照下单                                
 	                     </a>                           
 	              </div>
 	              
-	             <div id="recent-buy-record-list" class="m-recent-buy-record-list" >
-	                    <div class="recent-buy-title f-cb">
-	                                                          最近购买
-	                       <span class="u-push"></span>
-	                    </div>
-	                    <div class="swiper-container">
-	                        <div class="swiper-wrapper">
-	                             <!-- swiper-wrapper程序会自动填充 -->               
-	                        </div>
-	                        <div class="swiper-pagination"></div>
-	                    </div>
-	                </div>
+	              
+	             
 	        </div>
 	         <!-- end -->
 	    </div>
@@ -192,4 +199,4 @@
 	//加载主模板块
 	seajs.use("module/ec/preorder/wantBuy");
 </script>
-</html>
+

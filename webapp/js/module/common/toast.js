@@ -6,11 +6,21 @@
  */
 define(function(require, exports, module) {
 	var $ = require("zepto");
-
+	var toastTpl = require("./toast.html");
 	//提示元素
-	var toastEl = $("#toast");
+	var $toast = $("#toast");
 	//显示内容
-	var toastContent = toastEl.find(".weui_toast_content");
+	var $toastContent = $toast.find(".weui_toast_content");
+	
+	$(document).ready(function(){
+		if($toast.length == 0){
+			$("body").append(toastTpl);
+			$toast = $("#toast");
+			//显示内容
+			$toastContent = $toast.find(".weui_toast_content");
+		}
+	});
+	
 	/**
 	 * @param content {String} 显示内容
 	 * @param delay {Number} 显示多少时长（毫秒）
@@ -19,10 +29,10 @@ define(function(require, exports, module) {
 		if(typeof delay === undefined){
 			delay  = 1000;
 		}
-		toastContent.text(content);
-		toastEl.show();
+		$toastContent.text(content);
+		$toast.show();
 		window.setTimeout(function(){
-			toastEl.hide();
+			$toast.hide();
 		}, delay)
 	}
 	

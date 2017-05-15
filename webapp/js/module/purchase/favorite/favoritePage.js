@@ -8,5 +8,5 @@ define(function(require, exports, module) {
 	require("./favoriteTab");
 	module.exports ={
 			
-	}
+	};
 });

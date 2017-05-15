@@ -1,5 +1,5 @@
             <div class="g-header">
-                    <a href="orderDetaiPage?orderId={{=it.order.orderId}}&bidId={{=it.order.bidId}}&orderStatus={{=it.order.orderStatus}}&action=confirm&_t={{=new Date().getTime()}}" class="u-back-left" ></a>
+                    <a href="toOrderDetaiPage?orderId={{=it.order.orderId}}&bidId={{=it.order.bidId}}&orderStatus={{=it.order.orderStatus}}&action={{=it.action}}&_t={{=new Date().getTime()}}" class="u-back-left" ></a>
                     <h3 class="u-title">订单[{{=it.order.orderCode}}]</h3>
             </div> 
             <div id="g-content" class="g-content" >
@@ -79,12 +79,12 @@
 					      <a href="#"onclick="confirmOrder({{=it.order.orderId}})" class="weui_btn weui_btn_mini weui_btn_primary" >确认订单</a>
 					      {{?}}
 					      {{?it.order.orderStatus==2&&it.order.shippingStatus!=3}}
-					      <a href="../shippingOrder/shipping?orderId={{=it.order.orderId}}" class="weui_btn weui_btn_mini weui_btn_primary" >订单发货</a>
+					      <a href="../shipping/toShipping?orderId={{=it.order.orderId}}" class="weui_btn weui_btn_mini weui_btn_primary" >订单发货</a>
 					      {{?}}
 				      {{?}}
 				      {{?it.action=="buyer"}}
 				      	{{?it.order.orderStatus==2&&it.order.shippingStatus!=3}}
-				      	<a href="../orderReceipt/toReceiptList?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >收  货</a>
+				      	<a href="../shipping/toReceiptList?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >收  货</a>
 				      	{{?}}
 				      {{?}}
 				</div>

@@ -5,45 +5,67 @@
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
 <html>
 <head>
-	<title>订单详情</title>
+	<title>计划详情</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
     <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
     <link type="text/css" rel="stylesheet" href="${ctx}/js/swiper/swiper.min.css">
     <script type="text/javascript" src="${ctx}/js/swiper/swiper.jquery.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/iscroll/iscroll-4.2.js"></script>
     <script src="${ctx}/js/doT/doT.min.js" type="text/javascript"></script>
-    <script src="${ctx}/js/Date.js" type="text/javascript"></script>
+    <script src="${ctx}/js/common/Date.js" type="text/javascript"></script>
 <body>
 <style>
 *{margin:0;padding:0;list-style-type:none;}
 html{width:100%}
-body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新宋体";height:100%;width:100%}
+body{background-color:#F1F1F3;font:14px/180% , Helvetica, sans-serif, "新宋体";height:100%;width:100%}
 .image_left{width:20px;height:20px;float:left;position:absolute;bottom:10px;left:5px}
-#bar{height:100px;padding-left:3%}
-#status{height:210px;border:1px solid #CCCCCC;padding-left:2%}
-#msghead{height:40px;line-height:40px;border:1px solid #CCCCCC;padding-left:2%;padding-right:2%}
-#msg{height:80px;padding:10px 0;border:1px solid #CCCCCC;padding-right:2%}
-#orprice{width:100%;height:40px;line-height:40px;border:1px solid #CCCCCC;padding-left:2%;padding-right:4%}
+#bar{min-height:80px;}
+#status{height:210px;border:1px solid #ebebeb;}
+#msghead,.lgHead{height:40px;line-height:40px;border-bottom:1px solid #CCCCCC;background:#fff;padding-left:2%;padding-right:2%}
+#msg{min-height:60px;padding:10px 0;border-top:1px solid #ebebeb;border-bottom:1px dotted #ebebeb;padding-right:2%;background:#fefefe;}
+#orprice{width:100%;height:40px;line-height:40px;border-top:1px solid #ebebeb;padding-left:2%;padding-right:4%}
 #orprice div{float:right;margin-right:5%}
 .head{height:40px;line-height:40px;border:1px solid #CCCCCC;padding-left:2%;display:none}
-.lgHead{height:40px;line-height:40px;border:1px solid #CCCCCC;padding-left:2%;}
-#lginf{border:1px solid #CCCCCC;padding:2%;}
+.lgHead{height:40px;line-height:40px;border-bottom:1px solid #ccc;padding-left:2%;}
+#lginf{border-top:1px solid #ebebeb;padding:2%;}
 #lginf section{padding:5px}
+
+
 #message{height:60px;border:1px solid #CCCCCC;padding:2%;display:none}
 #status ul{padding:6px 0;}
 #status li{padding:4px 0;}
+.ui-box ul li,#lginf section{line-height:24px;height:24px;border-bottom:1px dotted #ebebeb; }
+.ui-box ul li .right,#lginf section .right{width:70%;padding-left:10px; float:left;text-align:left;display:block;font-weight:bold;}
+.ui-box ul li .left,#lginf section .left{width:25%;float:left;text-align:right;display:block;}
 #msgfont{float:right;padding-right:10%}
 #msg li{padding:10px 0;}
+.ui-content{padding:0px; min-height:80px;}
 .line{float:left;width:100%;margin:2px;text-align:center}
 .line_a{float:left;padding-left:10px;text-align:left}
-.line_r{float:left;padding-left:7.5%}
-.line_l{float:left;}
+.line_r{float:left;padding-left:48px;}
+.line_l{float:left;padding-left:14px;}
 .line_x{float:right;padding-right:5%}
-.line_t{float:left;width:7%}
-.line_s{float:left;padding-left:7.5%;text-align:left}
+.line_t{
+    float: left;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    padding: 0 0px 0 0;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #3879d9;
+    color: #3879d9;
+    border-radius: 14px;
+    margin:-12px 0px 0px 10px;
+    }
+
+
+
+.line_s{float:left;padding-left:48px;text-align:left}
 .red{color:#FF0000}
 .blue{color:#3366FF}
 .subtotal{height:30px;line-height:30px}
@@ -59,14 +81,42 @@ body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新�
 
 .ui-step {
 	top: 10px;
-	height: 70px;
-    padding: 0 30px;
-    margin: 0 auto;
+	min-height: 60px;
+    padding: 5px 30px 0px 30px;
+    margin: 5px auto;
     font-size: 14px;
     list-style: none;
     zoom: 1;
     position: relative;
     color: #b7b7b7;
+    overflow: hidden;
+    width:80%;
+    background:#fff;
+    border-radius: 4px;
+    box-shadow: 1px 3px 3px #ebebeb;
+    
+}
+.ui-box{
+    top: 0px;
+	min-height: 60px;
+    padding: 10px;
+    margin: 15px auto;
+    font-size: 13px;
+    list-style: none;
+    zoom: 1;
+    position: relative;
+    color: #666666;
+    overflow: hidden;
+    width:91%;
+    background:#fff;
+    border-radius: 4px;
+    box-shadow: 1px 3px 3px #ebebeb;
+}
+.ui-step-a {
+    min-height: 260px;
+    text-shadow: 0px 0px 0px #ebebeb;
+    color:#000;
+    margin-top:10px;
 }
 
 .ui-step-5 li {
@@ -77,16 +127,16 @@ body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新�
     float: left;
     height: 54px;
     margin: 0;
-    width: 20%;
+    width:33%;
     position: relative;
 }
 
 .ui-step .done .ui-step-line {
-    background: #fc9c27;
+    background: #3879d9;
 }
 
 .ui-step .done .ui-step-icon .iconfont {
-    background: #fc9c27;
+    background: #3879d9;
 }
 
 .ui-step li .ui-step-line {
@@ -125,11 +175,12 @@ body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新�
     /* text-shadow: 0 1px 0 #fff;
     left: -50px; */
     top: 10px;
-    width: 50px;
+    width: 90px;
+    text-align:left;
 }
 .ui-step li.ui-step-end {
     position: absolute;
-    top: 0;
+    top: 5;
     right: -110px;
     width: 137px;
     zoom: 1;
@@ -154,73 +205,66 @@ body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新�
     height: 0;
     visibility: hidden;
 }
+.ui-content{
+   overflow-x:inherit;
+}
 </style>
 </head>
 <div data-role="page">
 <div data-role="content" style="padding:0px">
 <div data-role="header">
-<div style="position:relative;width:40px;height:40px;float:left;" onclick="closeWin()"><img src="${ctx}/images/icons/icon_left.png" class="image_left"></div>
-<h1>订单详情</h1>
+     <div style="position:relative;width:40px;height:40px;float:left;" onclick="closeWin()"><img src="${ctx}/images/icons/icon_left.png" class="image_left"></div>
+     <h1>订单详情</h1>
 </div>
 <div id="bar">
-<ol class="ui-step ui-step-5">
+     <div data-role="content">
+           <ol class="ui-step ui-step-5">
 			    <li class="ui-step-start step1">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">订单提交</div>
+			            <div class="ui-step-text">订单已提交</div>
 			        </div>
 			    </li>
 			    <li class="step2">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">付款方式选择</div>
+			            <div class="ui-step-text">备货中</div>
 			        </div>
 			    </li>
 			    <li class="step3">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">物流选择</div>
+			            <div class="ui-step-text">送货中</div>
 			        </div>
 			    </li>
-			    <li class="step4">
+			    <li class="ui-step-end step4">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">生成合同</div>
-			        </div>
-			    </li>
-			    <li class="step5">
-			        <div class="ui-step-line">-</div>
-			        <div class="ui-step-icon">
-			            <div class="iconfont"></div>
-			            <div class="ui-step-text">保证金</div>
-			        </div>
-			    </li>
-			    <li class="ui-step-end step6">
-			        <div class="ui-step-line">-</div>
-			        <div class="ui-step-icon">
-			            <div class="iconfont"></div>
-			            <div class="ui-step-text">已完成</div>
+			            <div class="ui-step-text"  style=" left:-0px;">已完成</div>
 			        </div>
 			    </li>
 			</ol>
+			<div style="clear: both;"></div>
+      </div>
 </div>
 <!--订单状态栏-->
-<div id="status">
+<div id="status" class="ui-box">
     <ul>
-        <li>订单编号：<span>${orderInfo.orderBusiId}</span></li>
-        <li>提货单位：<span>${orderInfo.agentName}</span></li>
-        <li>卖家：<span>${orderInfo.sellerName}</span></li>
-        <li>下单时间：<span>${orderInfo.orderBeginDatetimeDesc}</span></li>
-        <li>订单状态：<span class="blue"><strong>${orderInfo.orderStatusDesc}</strong></span></li>
-        <li>交货时间：<span>${orderInfo.deliveryBeginDatetimeDesc}-${orderInfo.deliveryEndDatetimeDesc}</span></li>
+        <li><span class="left">计划编号：</span><span class="right">${orderInfo.orderBusiId}</span></li>
+        <li><span class="left">卖家单位：</span><span class="right">${orderInfo.agentName}</span></li><!---->
+        <li><span class="left">卖家单位：        </span><span class="right">${orderInfo.sellerName}</span></li>
+        <li><span class="left">下计划时间：</span><span class="right">${orderInfo.orderBeginDatetimeDesc}</span></li>
+        <li><span class="left">计划状态：</span><span class="right blue"><strong>${orderInfo.orderStatusDesc}</strong></span></li>
+        <li><span class="left">交货时间：</span><span class="right">${orderInfo.deliveryBeginDatetimeDesc}-${orderInfo.deliveryEndDatetimeDesc}</span></li>
     </ul>
 </div>
 <!--信息头-->
-<div id="msghead">
+<div class="ui-box" style="padding: 0px;width:97%;">
+<div id="msghead" >
     <strong>所有商品信息</strong>
     <div id="msgfont"><strong>${orderInfo.totalBuyQuantity}支/${orderInfo.totalBuyWeight}吨</strong></div>
 </div>
@@ -228,23 +272,37 @@ body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新�
 	  <article id='information-list'>
     
       </article>
-<article >
-    <section id="orprice">
-    <div>订单价格:&nbsp;&nbsp;<span class="red"><strong>${orderInfo.totalBuyMoney}元</strong></div>
-    </span></section>
-</article>
+	  <article >
+	      <section id="orprice">
+	      <div>订单价格:&nbsp;&nbsp;<span class="red"><strong>${orderInfo.totalBuyMoney}元</strong></div>
+	      </span></section>
+	  </article>
+</div>
+<!--物流信息-->
+<div class="ui-box" style="padding: 0px;width:97%;">
 <div class="lgHead" id="lgHead">
     <strong>物流信息</strong>
 </div>
 <article id="lginf">
-     <div id="zt" style="display:none">
-     <section>配送方式：<span id="deliveryType">${orderInfo.deliveryTypeDesc}</span></section>
-	 <section id="deliveryCarno">车牌号：<span>${orderInfo.deliveryCarno}</span></section>
-	 <section id="deliveryPhoneNumber">联系电话：<span>${orderInfo.deliveryPhoneNumber}</span></section>
+     <div id="zt" >
+     <section>
+               <span class="left">配送方式：</span>
+               <span class="right" id="deliveryType">${orderInfo.deliveryTypeDesc}</span>
+     </section>
+	 <section id="deliveryCarno">
+	           <span class="left">车牌号：</span>
+	           <span class="right">${orderInfo.deliveryCarno}</span>
+	 </section>
+	 <section id="deliveryPhoneNumber">
+	           <span class="left">联系电话：</span>
+	           <span class="right">${orderInfo.deliveryPhoneNumber}</span>
+	 </section>
      </div>
      <div id="information-list1">
      </div>
 </article>
+</div>
+<!--付款信息-->
 <div class="head" id="paymentHead">
     <strong>付款信息</strong>
 </div>
@@ -290,8 +348,8 @@ body{background-color:#F1F1F3;font:14px/180% Arial, Helvetica, sans-serif, "新�
 <script id="information-list-tpl1" type="text/x-dot-template">
 {{~data1:value:index}}
      <section>配送方式：<span>${orderInfo.deliveryTypeDesc}</span></section>
-     <section>地址：<span>{{=value.address}}</span></section> 
-     <section>联系人：<span>{{=value.name1}}</span></section>
+     <section>地址：        <span>{{=value.address}}</span></section> 
+     <section>联系人：    <span>{{=value.name1}}</span></section>
 	 <section>联系电话：<span>{{=value.phone1}}</span></section>
 	 <section>身份证号：<span>{{=value.id_card1}}</span></section>
 {{~}}

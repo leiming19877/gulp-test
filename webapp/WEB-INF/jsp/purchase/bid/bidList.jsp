@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>竞价列表</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
 
 
@@ -102,8 +102,8 @@
      <!-- end 加入成功提示  -->
       
      <!-- 加载提示  -->
-     <div id="loading-toast" class="weui_loading_toast" style="z-index: 3;">
-          <div class="weui_mask_transparent"></div>
+     <div id="loading-toast" class="weui_loading_toast" >
+          <div class="weui_mask_transparent" style="z-index: 3;"></div>
           <div class="weui_toast">
               <div class="weui_loading">
                   <!-- :) -->

@@ -6,16 +6,33 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page")
+	var gPage = $("#g-page");
 
 	//报价详情模板
-	var quoteDetailTpl = require("./quoteDetail.html");
+	var quoteDetailTplFn = doT.template(require("./quoteDetail.html"));
 
+
+	//界面主内容区
+	var gPageMftk = $("#g-page-mflk");
+	//买方条款
+	var quoteDetailExtraTplFn = doT.template(require("./quoteDetailExtra.html"));
 	
 	var urlParams = getUrlParams();
 	var bidId = urlParams['bidId'];
 	var quoteSn = urlParams['quoteSn'];	
 
+	gPage.on("click",".mftk-btn",function(e){
+
+		gPage.removeClass("f-slide-in").addClass("f-slide-out");
+		gPageMftk.removeClass("f-slide-out").addClass("f-slide-in");
+
+	});
+	gPageMftk.on("click",".u-back-left",function(e){
+		gPageMftk.removeClass("f-slide-in").addClass("f-slide-out");
+		gPage.removeClass("f-slide-out").addClass("f-slide-in");
+		
+	});
+	
 	$('#g-page').on('click', '.up-btn', function () {
 		var quoteIndex = $("#quoteSn").attr("data-quote-sn")-1;
 		if(quoteIndex<1){
@@ -33,8 +50,8 @@ define(function(require, exports, module) {
 			},
 			success:function(data, status, xhz){
 			 	loadingToast.hide();
-			 	var tempFn = doT.template(quoteDetailTpl);
-				var resultHtml = tempFn(data);
+			 
+				var resultHtml = quoteDetailTplFn(data);
 				gPage.empty();
 				gPage.append(resultHtml);
 				loadingToast.hide();
@@ -61,8 +78,7 @@ define(function(require, exports, module) {
 			},
 			success:function(data, status, xhz){
 			 	loadingToast.hide();
-			 	var tempFn = doT.template(quoteDetailTpl);
-				var resultHtml = tempFn(data);
+				var resultHtml = quoteDetailTplFn(data);
 				gPage.empty();
 				gPage.append(resultHtml);
 				loadingToast.hide();
@@ -84,14 +100,12 @@ define(function(require, exports, module) {
 		},
 		success:function(data, status, xhz){
 			 loadingToast.hide();
-			 // 1. Compile template function
-			 var tempFn = doT.template(quoteDetailTpl);
-			 // 2. Use template function as many times as you like
-			 var resultHtml = tempFn(data);
-			 //先清空
-			 gPage.empty();
+			 //买方条款
+			 var resultHtml = quoteDetailTplFn(data);
 			 gPage.append(resultHtml);
-			 
+
+			 resultHtml = quoteDetailExtraTplFn(data);
+			 gPageMftk.append(resultHtml);
 		
 			
 		},
@@ -105,13 +119,10 @@ define(function(require, exports, module) {
 	 */
 	function getUrlParams(){
 		var params = {};
-		params["bidId"] = "";
-		params["quoteSn"] = "";
 		var reg = /https?:\/\/[^\/]+\/[^\?]*?\?bidId=(\d*)&quoteSn=(\d*)/g;
 		var url = window.location.href;
 		var m = reg.exec(url);
 		if(m && m.length == 3){
-			var params = {};
 			params["bidId"] = m[1];
 			params["quoteSn"] = m[2];
 		}

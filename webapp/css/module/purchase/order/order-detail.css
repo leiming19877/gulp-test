@@ -19,6 +19,8 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .m-order{}
 .m-order .txt-line{}
 .m-order .lab{float:left;width:80px;margin-right:-80px;font-weight:bold;}
+.m-order .labs{font-weight:bold;}
+.m-order .margin-l{margin-left:1em}
 .m-order .lab.order-time{}
 .m-order .txt{margin-left:80px;vertical-align:middle;}
 .m-order .txt *{vertical-align:middle;}
@@ -27,7 +29,7 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 /** 竞价单名细信息  **/
 .m-order-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
 .m-order-detail th{font-weight: bold;}
-.m-order-detail td,.m-order-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
+.m-order-detail td,.m-order-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;border-right:1px dashed #AB9090}
 
 /** 竞价单扩展信息（买方条款） **/
 .m-order-extra{}

@@ -10,6 +10,10 @@ define(function(require, exports, module) {
 	var gPage = $("#g-page");
 	// 确认对话框内容区
 	var confirmPage = $("#confirm_detial");
+	// 数量输入对话框
+	var dialog2 = $("#dialog2");
+	// 重量输入对话框
+	var dialog3 = $("#dialog3");
 	//发货详情模板
 	var shippingTpl = require("./shipping.html");
 	//发货确认模板
@@ -25,39 +29,98 @@ define(function(require, exports, module) {
 	});
 	gPage.on("blur",".u-ipt-min",function(e){
 		var val = $(this).val();
-		if(val==""){
+		if(val===""){
 			alert("该项为必填项！");
 			this.select();
 		}
 	});
-	gPage.on("input",".u-ipt-min",function(e){
+	gPage.on("click",".u-ipt-min",function(e){
 		var target = e.target||e.srcElement;
 		var self = $(this);
 		if($(target).hasClass("quantity")){
-			if(self.val()<0){
-				alert("发货数量不能小于0！");
-				self.val(0);
-			}
+			dialog2.show();
+			var inputs = $("input[name='quantity']");
+			var index = inputs.indexOf($(this)[0]);
+			$("#dialog2").attr("data-input-index",index);
+			$("#quantity").find("input").val($(this).val());
+			$("#quantity").find("input").focus();
+			return;
+		}else{
+			dialog3.show();
+			var inputs = $("input[name='weight']");
+			var index = inputs.indexOf($(this)[0]);
+			$("#dialog3").attr("data-input-index",index);
+			$("#weight").find("input").val($(this).val());
+			$("#weight").find("input").focus();
+		}
+		
+	});
+	dialog2.on("click",".default",function(e){
+		dialog2.hide();
+	}).on("click",".primary",function(e){
+		var reg = new RegExp("^[0-9]*$");
+		var index = $("#dialog2").attr("data-input-index");
+		var value = $("#quantity").find("input").val();
+		var selectInput = $("input[name='quantity']")[index];
+		selectInput = $(selectInput);
+		if(!reg.test(value)){
+			window.alert("签收量只能为非负整数！");
+			$("#quantity").find("input").val(0);
+			$("#quantity").find("input").focus();
+			$("#quantity").find("input").select();
 			return;
 		}
-		var val = parseFloat(self.val()).toFixed(2);
-		if(val<0){
-			alert("发货重量不能为负数");
-			self.val(0);
+		dialog2.hide();
+		selectInput.val(Number(value));
+		$("#quantity").find("input").val(0);
+		var shippingQuantity = selectInput.val();
+		if(!reg.test(shippingQuantity)){
+			window.alert("发货量只能为非负整数！");
+			selectInput.val(0)
 			return;
 		}
-		self.val(val);
-		var span = self.next().next().next();
+		$("input[name='quantity']").each(function(index){
+			var quantity = $(this).val();
+			quantitys[index] = quantity;
+		});
+	});
+	dialog3.on("click",".default",function(e){
+		dialog3.hide();
+	}).on("click",".primary",function(e){
+		var reg = new RegExp("^[0-9]+(.[0-9]{1,3})?$");
+		var index = $("#dialog3").attr("data-input-index");
+		var value = $("#weight").find("input").val();
+		value = (value===""?0:value);
+		value = parseFloat(value).toFixed(3);
+		var selectInput = $("input[name='weight']")[index];
+		selectInput = $(selectInput);
+		if(!reg.test(value)){
+			window.alert("发货量只能为非负数，且小数位数不超过3位！");
+			$("#weight").find("input").val(0);
+			$("#weight").find("input").focus();
+			$("#weight").find("input").select();
+			return;
+		}
+		selectInput.val(Number(value));
+		$("#weight").find("input").val(0);
+		dialog3.hide();
+		var shippingWeight = selectInput.val();
+		if(!reg.test(shippingWeight)){
+			window.alert("发货量只能为非负数，且小数位数不超过3位！");
+			$(this).val(weight)
+			return;
+		}
+		var span = selectInput.next().next().next();
 		var data = span.attr("data-remain-weight");
-		var remainWeight = data-self.val();
+		var remainWeight = data-shippingWeight;
 		if(remainWeight<0){
 			alert("输入重量不能超过订单量！");
-			self.val(0);
+			selectInput.val(0);
 			span.html(data);
 		}else{
 			span.html(remainWeight);
 		}
-		var shippingWeight = 0;
+		shippingWeight = 0;
 		var remainShipWeight = 0;
 		var remainShipWeightTotal = $("#remainShipWeight").attr("data-remain-ship-weight");
 		$("input[name='weight']").each(function(index){
@@ -65,10 +128,6 @@ define(function(require, exports, module) {
 			shippingWeights[index] = weight;
 			shippingWeight +=weight;
 			remainShipWeight = remainShipWeightTotal - shippingWeight;
-		});
-		$("input[name='quantity']").each(function(index){
-			var quantity = $(this).val();
-			quantitys[index] = quantity;
 		});
 		$("span[name='remainWeight']").each(function(index){
 			var weight = parseFloat($(this).html());
@@ -88,7 +147,7 @@ define(function(require, exports, module) {
 		for(var i=0;i<inputs.length;i++){
 			var content = $(inputs[i]).val().trim();
 			$(inputs[i]).css("border","1px solid #A9A9A9");
-			if(content==""){
+			if(content===""){
 				alert("该项为必填项！");
 				$(inputs[i]).css("border","2px solid red");
 				inputs[i].select();
@@ -101,7 +160,7 @@ define(function(require, exports, module) {
 		var params = getParams();
 		$.ajax({
 			dataType:'json',
-			url:'../../purchase/shippingOrder/loadlistData',
+			url:'../../purchase/shipping/getShippingListData',
 			async:false,
 			data:{
 				'orderId':params.orderId,
@@ -109,18 +168,18 @@ define(function(require, exports, module) {
 			},
 			success:function(data, status, xhz){
 				 $('#dialog1').hide();
-				 data.shippingUserName = $("#shippingUserName").val();
+				 data.shippingUserName = $("#shippingUserName").html();
 				 data.shippingUserTel = $("#shippingUserTel").val();
 				 data.shippingWeight = $("#shippingWeight").html();
 				 data.remainShipWeight = $("#remainShipWeight").html();
-				 data.orderDetails.forEach(function(list,index){
+				 data.order.orderDetails.forEach(function(list,index){
 				 	if(typeof shippingWeights[index] != 'undefined'){
 					 	list.shippingWeight = shippingWeights[index];
 				 	}else{
 				 		list.shippingWeight = 0;
 				 	}
 				 	if(typeof remainWeights[index] != 'undefined'){
-					 	list.remainWeight = remainWeights[index];
+					 	list.remainShipWeight = remainWeights[index];
 				 	}
 				 });
 				 var tempFn = doT.template(shippingMessageTpl);
@@ -134,10 +193,10 @@ define(function(require, exports, module) {
 				loadingToast.show("数据加载失败，请重新试试！");
 			}
 		});
-		$('#dialog1').show().on('click', '.default', function () {
+		$('#dialog1').on('click', '.default', function () {
 			$('#dialog1').off('click').hide();
 		});
-		$('#dialog1').show().on('click', '.primary', function () {
+		$('#dialog1').on('click', '.primary', function () {
 			$('#dialog1').hide();
 			loadingToast.show("保存中...");
 			var params = checkParams(getParams().orderId);
@@ -167,7 +226,8 @@ define(function(require, exports, module) {
 			var $consignorCarNumber = $("#consignorCarNumber");//发货车牌号
 			var $shippingUserName = $("#shippingUserName");//收货人
 			var $shippingUserTel = $("#shippingUserTel");//收货人电话
-			var $input = $("input[name='weight']");
+			var $inputWeight = $("input[name='weight']");
+			var $inputQuantity = $("input[name='quantity']");
 			params['consignorAddress'] = $consignorAddress[0].value;
 			params['consignor'] = $consignor[0].value;
 			params['consignorTel'] = $consignorTel[0].value;
@@ -175,9 +235,12 @@ define(function(require, exports, module) {
 			params['shippingUserName'] = $shippingUserName[0].value;
 			params['shippingUserTel'] = $shippingUserTel[0].value;
 			params['consignorAddress'] = $consignorAddress[0].value;
-			$input.forEach(function(e){
+			$inputWeight.forEach(function(e){
 				params[$(e).attr("id")] = e.value;
-			})
+			});
+			$inputQuantity.forEach(function(e){
+				params["quantity"+$(e).attr("id")] = e.value;
+			});
 			return params;
 		}
         });
@@ -186,7 +249,7 @@ define(function(require, exports, module) {
 	var params = getParams();
 	$.ajax({
 		dataType:'json',
-		url:'../../purchase/shipping/loadlistData',
+		url:'../../purchase/shipping/getShippingListData',
 		data:{
 			'orderId':params.orderId,
 			'_t':new Date().getTime()

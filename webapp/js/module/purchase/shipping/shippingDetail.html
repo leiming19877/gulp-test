@@ -48,16 +48,16 @@
 					       
 					        <div data-shipping-sn={{=it.shipping.shippingSn}} class="shipping-sn">第{{=it.shipping.shippingSn}}次发货</div>
 					       
-					        <a href="javascript:void(0);" class="up-btn weui_btn weui_btn_mini weui_btn_primary">←</a>
-					        <a href="javascript:void(0);" class="next-btn weui_btn weui_btn_mini weui_btn_primary">→</a>
+					        <a href="javascript:void(0);" class="iconfont icon-back up-btn weui_btn weui_btn_mini weui_btn_primary"></a>
+					        <a href="javascript:void(0);" class="iconfont icon-right next-btn weui_btn weui_btn_mini weui_btn_primary"></a>
 						 </div>
 					       
 					       <table class="m-shipping-detail">
 					            <thead>
 					                 <tr>
-					                    <th style="width: 100px;">商品信息</th>
-					                    <th style="width: 35px;">验货<br/>方式</th>
-					                    <th style="width: 70px;">发货信息</th>
+					                    <th style="width: 8em;">商品信息</th>
+					                    <th style="width: 3em;">验货<br/>方式</th>
+					                    <th style="width: 6em;">发货信息</th>
 					                    <th >收货信息</th>
 					                </tr>
 					            </thead>
@@ -75,8 +75,8 @@
 					                        {{=sd.meteringTypeName||""}}     
 					                    </td>
 					                    <td>
-					                    	数量：{{=sd.deliveryQuantity}}件<br/>
-					                    	重量：{{=sd.deliveryWeight}}吨<br/>	              
+					                    	数量(件):{{=sd.deliveryQuantity}}<br/>
+					                    	重量(吨):{{=sd.deliveryWeight}}<br/>	              
 					                    </td>
 					                    <td>
 					                    	签收数量(件):{{=sd.signQuantity}}

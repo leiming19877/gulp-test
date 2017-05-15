@@ -1,5 +1,5 @@
 <div class="g-header">
-        <a href="../bidConsole/bidListPage" class="u-back-left" ></a>
+        <a href="../bidConsole/bidListPage" class="iconfont u-back-left" ></a>
         <h3 class="u-title">报价</h3>
 </div> 
 <div id="g-content" class="g-content" data-first-quote={{=it.isFirstQuote}} data-step-type={{=it.bid.stepType}} data-discount-step={{=it.bid.discountStep}}>
@@ -45,12 +45,12 @@
 		                      <input name="bidDetailId" type="hidden" value="{{=qd.bidDetailId}}" />
 		                                                        品名：{{=qd.brandName}}<br/>
 		                                                        材质：{{=qd.textureName}}<br/>
-		                                                        规格：{{=qd.specification}}<br/>
+		                                                        规格：{{=qd.specification}}<br/>                      
 		                                                        产地：<select name="placeSteel" >
 		                            {{~qd.placeSteels.split(","):p}}
 		                                <option value="{{=p}}"  {{=qd.placeSteel == p?'selected="selected"':''}} >{{=p}}</option>
 		                            {{~}}
-		                           </select>                                  
+		                           </select>                                     
 		                    </td>
 		                    <td>
 		                        {{=qd.meteringTypeName}}     
@@ -80,7 +80,7 @@
 </div>
 <div id="g-footer" class="g-footer" >
 	<div class="m-quote-footer" >
-	      <a  href="toQuoteDetailExtra?bidId={{=it.quote.bidId}}&quoteSn={{=it.quote.quoteSn}}&linkFrom=toQuote" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
+	      <a  href="javascript:;" class="mftk-btn weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
 	      <a href="javascript:;" class="quote-btn weui_btn weui_btn_mini weui_btn_primary" >确定</a>
 	</div>
 </div>

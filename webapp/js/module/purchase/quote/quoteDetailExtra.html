@@ -1,5 +1,5 @@
 <div class="g-header">
-        <a href="../../purchase/quote/{{=it.linkFrom}}?bidId={{=it.quote.bidId}}&quoteSn={{=it.quoteSn}}" class="u-back-left" ></a>
+        <a href="#" class="iconfont u-back-left" ></a>
         <h3 class="u-title">报价单{{=it.quote.quoteCode?('['+it.quote.quoteCode+']'):''}}</h3>
 </div> 
 <div id="g-content" class="g-content" >	    
@@ -15,19 +15,21 @@
 	       <div class="txt-line">
 	         <label class="lab">付款方式：</label>
 	         <span class="txt"> {{=it.quote.payMoneyTypeName}}</span> 
+	         {{?it.quote.payMoneyType!=1}}
+	         <label class="lab">贴息率：</label>               
+	         <span class="txt">
+	               {{=it.quote.discountRate}}%
+	          </span>
+	          {{?}}
 	       </div>
 	       <div class="txt-line">
 	         <label class="lab">支付方式：</label>
 	         <span class="txt"> {{=it.quote.payTypeName}}</span> 
 	       </div>
-	       <div class="txt-line">
+	<!--        <div class="txt-line">
 	         <label class="lab">开票方式：</label>
 	         <span class="txt"> {{=it.quote.invoiceTypeName}}</span> 
-	         <label class="lab">贴息率：</label>               
-	         <span class="txt">
-	               {{=it.quote.discountRate}}%
-	          </span>
-	       </div>
+	       </div> -->
 	       <div class="txt-line">
 	         <label class="lab">产地要求：</label>
 	         <span class="txt">{{=it.placeSteels}}</span>
@@ -37,7 +39,7 @@
 	         <span class="txt">{{=it.rankStr}}</span>
 	       </div>
 	       
-	       <div class="quote-sn">第<span id="quote-sn">0</span>次报价</div> 
+	       <div class="quote-sn">第<span id="quote-sn">{{=it.quote.quoteSn}}</span>次报价</div> 
 	       
 	       <table class="m-quote-contract-term">
 	            <caption>合同条款信息</caption>

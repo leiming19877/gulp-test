@@ -64,13 +64,13 @@
 				      {{?it.action=="buyer"}}
 				      <a  href="orderDetailExtraPage?orderId={{=it.order.orderId}}&action=buyer&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
 					      {{?it.order.orderStatus==2&&it.order.shippingStatus==2}}
-					      <a href="../orderReceipt/toReceiptList?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >收  货</a>
+					      <a href="../shipping/toReceiptList?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >收  货</a>
 					      {{?}}
 				      {{?}}
 				      {{?it.action=="seller"}}
 				      <a  href="orderDetailExtraPage?orderId={{=it.order.orderId}}&action=seller&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >买方条款</a>
 					      {{?it.order.orderStatus==2&&it.order.shippingStatus!=3}}
-					      <a href="../shippingOrder/toShippingOrder?orderId={{=it.order.bidId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >订单发货</a>
+					      <a href="../shipping/toShipping?orderId={{=it.order.orderId}}&_t={{=new Date().getTime()}}" class="weui_btn weui_btn_mini weui_btn_primary" >订单发货</a>
 					      {{?}}
 				      {{?}}
 				</div>

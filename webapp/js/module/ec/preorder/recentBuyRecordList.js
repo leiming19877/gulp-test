@@ -12,7 +12,7 @@ define(function(require, exports, module) {
     //购物车模块
     var shopCart = require("./shopCart");
     //最近购买模板
-    var recentBuyRecordListTpl = require("./recentBuyRecordList.tpl");
+    var recentBuyRecordListTpl = require("./recentBuyRecordList.html");
     //最近购买 元素
     var recentBuyRecordList = $("#recent-buy-record-list");
     var gFooter = $("#g-footer");

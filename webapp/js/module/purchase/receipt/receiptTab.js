@@ -3,6 +3,8 @@
  */
 define(function(require, exports, module) {
 	var $ = require("zepto");
+	//数据加载提示
+	//var loadingToast = require("./loadingToast");
 	var pageScroller = require("./receiptListScroller");
 	//收货导航
 	var receiptTab = $("#receipt-tab");
@@ -19,5 +21,5 @@ define(function(require, exports, module) {
 	
 	module.exports ={
 			
-	};
+	}
 });

@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/jsp/comm/wx-head.jsp"%>
 <%@page contentType="text/html; charset=utf-8"%>
-<link href="${ctx}/css/global/global-1.0.1.min.css" rel="stylesheet" type="text/css" />
+<link href="${ctx}/css/global/global-1.0.1.all.min.css" rel="stylesheet" type="text/css" />
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>
@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-<script src="${ctx}/js/Date.js" type="text/javascript"></script>
+<script src="${ctx}/js/common/Date.js" type="text/javascript"></script>
 <title>选择物流方式</title>
 </head>
 

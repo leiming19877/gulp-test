@@ -15,7 +15,11 @@
 					       </div>
 					       <div class="txt-line">
 					         <label class="lab">付款方式：</label>
-					         <span> {{=it.bid.payMoneyTypeName}}</span> 
+					         <span> {{=it.bid.payMoneyTypeName}}</span>
+					         <label class="lab">贴息率：</label>               
+					         <span>
+					               {{=it.bid.discountRate}}%
+					          </span>
 					       </div>
 					       <div class="txt-line">
 					         <label class="lab">支付方式：</label>
@@ -24,10 +28,6 @@
 					       <div class="txt-line">
 					         <label class="lab">开票方式：</label>
 					         <span> {{=it.bid.invoiceTypeName}}</span> 
-					         <label class="lab">贴息率：</label>               
-					         <span>
-					               {{=it.bid.discountRate}}%
-					          </span>
 					       </div>
 					       <div class="txt-line">
 					         <label class="lab">产地要求：</label>

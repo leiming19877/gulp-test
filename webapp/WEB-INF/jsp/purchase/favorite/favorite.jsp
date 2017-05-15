@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>偏好设置</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
 
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
@@ -21,23 +21,23 @@
             <div id="g-content" class="g-content" >
 				<div id="favorite-tab" class="weui_tab">
 					<div class="weui_navbar">
-						<a id="variety-setting-tab" class="weui_navbar_item weui_bar_item_on" href="#/variety-setting">品种设置</a>
+						<a id="brand-setting-tab" class="weui_navbar_item weui_bar_item_on" href="#/brand-setting">品名设置</a>
 						<a id="steel-factory-setting-tab" class="weui_navbar_item" href="#/steel-factory-setting" >钢厂设置</a>
 						<a id="delivery-address-setting-tab" class="weui_navbar_item" href="#/delivery-address-setting" >交货设置</a>
 					</div>
 					<div class="weui_tab_bd">
-						<div id="variety-setting" class="m-variety-setting tab-content">
-							无记录!
+						<div id="brand-setting" class="m-brand-setting m-guide-tab tab-content">
+								<div class="no-recording">无记录!</div>
 						</div>
-	
-						<div id="steel-factory-setting" class="m-steel-factory-setting tab-content"
+						<!-- end m-brand-setting -->
+						<div id="steel-factory-setting" class="m-steel-factory-setting m-guide-tab tab-content"
 							style="display: none;">
-							无记录!
+							<div class="no-recording">无记录!</div>
 						</div>
 	
 						<div id="delivery-address-setting"
-							class="m-delivery-address-setting tab-content" style="display: none;">
-							无记录!
+							class="m-delivery-address-setting m-guide-tab tab-content" style="display: none;">
+								<div class="no-recording">无记录!</div>
 						</div>
 
 				</div>
@@ -54,7 +54,7 @@
     
       
      <!-- 加载提示  -->
-     <div id="loading-toast" class="weui_loading_toast" style="z-index: 3;">
+     <div id="loading-toast" class="weui_loading_toast" style="z-index: 3;display: none;">
           <div class="weui_mask_transparent"></div>
           <div class="weui_toast">
               <div class="weui_loading">
@@ -75,6 +75,17 @@
               <p class="weui_toast_content">数据加载中</p>
           </div>
       </div>
+	  <!-- 加入成功提示  -->
+	  <div id="toast" style="display:none;z-index: 3;">
+			<div class="weui_mask_transparent"></div>
+			<div class="weui_toast">
+				<i class="weui_icon_toast"></i>
+				<p class="weui_toast_content">加入成功</p>
+			</div>
+	 </div>
+	 <!-- end 加入成功提示  -->
+		
+		
       
 <div class="weui_dialog_confirm" id="dialog1" style="display: none;">
     <div class="weui_mask"></div>

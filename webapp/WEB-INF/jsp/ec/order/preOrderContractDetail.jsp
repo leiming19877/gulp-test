@@ -1,7 +1,7 @@
  <%@include file="/WEB-INF/jsp/comm/wx-head.jsp"%>
  <html xmlns="http://www.w3.org/1999/xhtml"> 
 <%@page contentType="text/html; charset=utf-8"%>
-<link href="${ctx}/css/global/global-1.0.1.min.css" rel="stylesheet" type="text/css" />
+<link href="${ctx}/css/global/global-1.0.1.all.min.css" rel="stylesheet" type="text/css" />
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>

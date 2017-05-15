@@ -10,13 +10,20 @@
 	content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 
 <title></title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>
 <style type="text/css">
 .ui-header, .ui-footer {
 	position: fixed !important;
     border-width: 0 0 !important;
+}
+.ui-bottom{
+    background: rgba(0,0,0,.1);
+    position: fixed;
+    width: 100%;
+    height: 120px;
+    bottom: 0px;
 }
 .ui-content{
     padding: 0;
@@ -31,14 +38,14 @@
 
 /** 重载ui-page **/
 .ui-page {
-	background-size: 100% 100%;
-	background-position-y: 40px;
+	background-size: 100%;
+	background-position-y: 0px;
     background-repeat: no-repeat;
-    background-image: url(${ctx}/images/base/photo-order.png);
+    background-image: url(${ctx}/images/base/photo-order.jpg);
 }
 /** 扩展ui-page **/
 .ui-page.hasPhoto {
-    background-image: url(${ctx}/images/base/photo-order-bg.png);
+    background-image: url(${ctx}/images/base/photo-order-bg.jpg);
 }
 
 .sellerList {
@@ -51,14 +58,22 @@
     height: 40px;
     line-height: 40px;
     margin-top: 3px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    background-color: #3385ff;
+    color: #fff;
+    border: 1px solid #3180f5;
+    position:fixed;
+    bottom:65px;
+    left:10%;
+    width:79%;
+    z-index:101;
+    border-radius: 4px;
+    text-shadow: none !important;
 }
 
 .line_l {
 	float: left;
     font-size: 13px;
-    width: 70px;
+    width: 80px;
     padding-left: 10px;
     text-align: left;
     font-weight: bold;
@@ -66,20 +81,20 @@
 
 .more{
     float: right;
-    width:30px;
-    height:30px;
+    width:26px;
+    height:26px;
     margin-top: -35px;
     margin-right: 8px;
     background-size: contain;
-    background-image: url(${ctx}/images/icons/icon_go.png);
+    background-image: url(${ctx}/images/icons/icon_logo_witre.png);
 }
 
 .submitNav{
 	z-index:100;
 	position:fixed;
 	background:#eee;
-	box-shadow: 0 1px 3px rgba(0,0,0,.2);
-	bottom:0;
+	box-shadow: 0 0px 0px rgba(0,0,0,.2);
+	bottom:5;
 	left:0;
 	width:100%;
 	height:43px;
@@ -104,7 +119,7 @@
 	display: none;
 	float: right;
 	border-radius:4px;
-	background:#436CB4;
+	
 	color:#FFF;
 	text-align:center;
 	font-size:15px;
@@ -113,6 +128,8 @@
 	line-height:43px;
     margin-right: 10%;
 }
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit{background:none;}
+{background:#436CB4;}
 .ui-radio{
 	margin: 0 !important;
 }
@@ -170,16 +187,13 @@
 	<input type="hidden" id="placeOrderType" name="placeOrderType" value="2"/>
 	<input type="hidden"  id="sellerMemberId" name="sellerMemberId" value="${defaultSeller.memberId }"/>
 	<div data-role="page" >
-		<!-- 后退箭头 -->
-		<div data-role="header" data-position="fixed" >
+		<!-- 后退箭头 
+		<div data-role="header" data-position="fixed" style="background:rgba(255,255,255,.8);" >
   			<img src="${ctx}/images/icons/icon_left.png" class="u-image-left">
-            <h1>照片下单</h1>
-            <div class="seller">
-                <div class="line_l">选择卖家：</div>
-                <div id="chose-seller" class="line_r" memberid="${defaultSeller.memberId }">${defaultSeller.memberName }</div>
-                <div class="more" id="more-sellers" page="photo"></div>
-            </div>
+            <h1>照片下计划</h1>
+            
 		</div>
+		-->
 		<div data-role="content">
 
 		    	<!-- 照片清单 -->
@@ -203,10 +217,17 @@
 	        		</c:forEach>
 	        	</div>
 		</div>
-		<div data-role="footer" class="submitNav" >
-			<div id="choose" class="choose">拍照或选择照片</div>
-			<div id="submit" class="submit">提交订单</div>
-		</div>
+		<div class="ui-bottom">
+			<div class="seller">
+	                <div class="line_l">先选择卖家：</div>
+	                <div id="chose-seller" class="line_r" memberid="${defaultSeller.memberId }">${defaultSeller.memberName }</div>
+	                <div class="more" id="more-sellers" page="photo"></div>
+	        </div>
+			<div data-role="footer" class="submitNav" >
+				<div id="choose" class="choose">拍照或选择照片</div>
+				<div id="submit" class="submit">提交订单</div>
+			</div>
+	    </div>
 	</div>
 </form>
 </body>

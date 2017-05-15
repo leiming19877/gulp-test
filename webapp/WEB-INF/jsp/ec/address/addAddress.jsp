@@ -10,7 +10,7 @@
 	content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 
 <title>收货地址信息</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>
 <style type="text/css">

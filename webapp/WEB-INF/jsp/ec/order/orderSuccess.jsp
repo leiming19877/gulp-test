@@ -10,14 +10,14 @@
 	content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 
 <title></title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>
 <style type="text/css">
 body {
-	background: #F2F2F2;
 	padding: 3px 0;
 	overflow: hidden;
+	background:#ebebeb;
 }
 
 .top {
@@ -66,7 +66,6 @@ body {
 .unit {
 	position: relative;
 	margin-bottom: 5px;
-	background: #FFF;
 }
 
 .unit .ui-content {
@@ -75,6 +74,7 @@ body {
     margin-top: 40px;
     width: 100%;
     height: -webkit-calc(100% - 45px * 2);
+    
 }
 
 .submitNav{
@@ -89,7 +89,7 @@ body {
 
 .submitNav .view{
     float: left;
-    color: #fc9c27;
+    color: #3879d9;
     text-align: center;
     font-size: 15px;
     font-weight: bold;
@@ -105,14 +105,15 @@ body {
 }
 .submitNav .order{
     float: right;
-    color: #fc9c27;
+    
     text-align: center;
     font-size: 15px;
     font-weight: bold;
     margin-right: 15%;
     width: 100px;
     height: 35px;
-    border: 1px solid;
+    border: 1px solid #3879d9;
+    background:#3879d9;color:#fff;
     border-radius: 7px;
     line-height: 35px;
 }
@@ -122,15 +123,26 @@ body {
 }
 .ui-step {
 	top: 10px;
-	height: 70px;
-    padding: 0 30px;
-    margin: 0 auto;
+	min-height: 60px;
+    padding: 5px 30px 0px 30px;
+    margin: 5px auto;
     font-size: 14px;
     list-style: none;
     zoom: 1;
     position: relative;
     color: #b7b7b7;
     overflow: hidden;
+    width:80%;
+    background:#fff;
+    border-radius: 4px;
+    box-shadow: 1px 3px 3px #ebebeb;
+    
+}
+.ui-step-a {
+    min-height: 260px;
+    text-shadow: 0px 0px 0px #ebebeb;
+    color:#000;
+    margin-top:10px;
 }
 
 .ui-step-5 li {
@@ -141,16 +153,16 @@ body {
     float: left;
     height: 54px;
     margin: 0;
-    width: 20%;
+    width:33%;
     position: relative;
 }
 
 .ui-step .done .ui-step-line {
-    background: #fc9c27;
+    background: #3879d9;
 }
 
 .ui-step .done .ui-step-icon .iconfont {
-    background: #fc9c27;
+    background: #3879d9;
 }
 
 .ui-step li .ui-step-line {
@@ -189,11 +201,12 @@ body {
     /* text-shadow: 0 1px 0 #fff;
     left: -50px; */
     top: 10px;
-    width: 50px;
+    width: 90px;
+    text-align:left;
 }
 .ui-step li.ui-step-end {
     position: absolute;
-    top: 0;
+    top: 5;
     right: -110px;
     width: 137px;
     zoom: 1;
@@ -219,23 +232,26 @@ body {
     visibility: hidden;
 }
 .success{
-	width: 100px;
-    height: 100px;
+	width: 80px;
+    height: 80px;
     margin: 15px auto 0;
     background-size: contain;
     background-image: url(${ctx}/images/icons/icon_success.png);
+    background-size:100%;
 }
 .desc{
+    margin-top:10px;
     height: 35px;
     line-height: 35px;
     font-weight: bold;
     text-align: center;
 }
 .orderNo{
-    color: #b9b9b9;
+    color: #000;
     font-size: 15px;
     text-align: center;
 }
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper{background-color: #ebebeb ;}
 </style>
 </head>
 <body ontouchstart="">
@@ -257,30 +273,31 @@ body {
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">订单提交</div>
+			            <div class="ui-step-text">订单已提交</div>
 			        </div>
 			    </li>
 			    <li class="step2">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">付款方式选择</div>
+			            <div class="ui-step-text">备货中</div>
 			        </div>
 			    </li>
 			    <li class="step3">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">物流选择</div>
+			            <div class="ui-step-text">送货中</div>
 			        </div>
 			    </li>
-			    <li class="step4">
+			    <li class="ui-step-end step4">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
 			            <div class="iconfont"></div>
-			            <div class="ui-step-text">生成合同</div>
+			            <div class="ui-step-text"  style=" left:-0px;">已完成</div>
 			        </div>
 			    </li>
+			    <!--  
 			    <li class="step5">
 			        <div class="ui-step-line">-</div>
 			        <div class="ui-step-icon">
@@ -295,8 +312,10 @@ body {
 			            <div class="ui-step-text">已完成</div>
 			        </div>
 			    </li>
+			    -->
 			</ol>
 			<div style="clear: both;"></div>
+        <div class="ui-step ui-step-a">
 			<div class="success"></div>
 			<div class="desc">
 				<c:choose>
@@ -324,6 +343,7 @@ body {
 						</c:otherwise>
 					</c:choose>
 				</div>
+			</div>
 			</div>
 		</div>
 	</div>

@@ -27,7 +27,30 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 /** 竞价单名细信息  **/
 .m-bid-detail{table-layout: fixed;border-collapse: collapse; margin-top:10px; width:100%; font-size: 12px;}
 .m-bid-detail th{font-weight: bold;}
-.m-bid-detail td,.m-bid-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;}
+@media screen and (max-width:414px){
+.m-bid-detail .th1{text-align: center;width: 2.5em;}
+.m-bid-detail .th2{text-align: center;width: 2.5em;}
+.m-bid-detail .th3{text-align: center;width: 1.5em;}
+.m-bid-detail .th4{text-align: center;width: 2.5em;}
+.m-bid-detail .th5{text-align: center;width: 2em;border-right: none;}
+}
+@media screen and (max-width:375px){
+.m-bid-detail .th1{text-align: center;width: 2.5em;}
+.m-bid-detail .th2{text-align: center;width: 2.5em;}
+.m-bid-detail .th3{text-align: center;width: 1.5em;}
+.m-bid-detail .th4{text-align: center;width: 2.5em;}
+.m-bid-detail .th5{text-align: center;width: 2em;border-right: none;}
+}
+@media screen and (max-width:320px){
+.m-bid-detail .th1{text-align: center;width: 1.5em;}
+.m-bid-detail .th2{text-align: center;width: 2.5em;}
+.m-bid-detail .th3{text-align: center;width: 1.5em;}
+.m-bid-detail .th4{text-align: center;width: 2.5em;}
+.m-bid-detail .th5{text-align: center;width: 2em;border-right: none;}
+}
+.m-bid-detail td,.m-bid-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;border-right: 1px dashed #AB9090;}
+.m-bid-detail .is-self-bid{color: #F00;background: #FFE4E1;}
+.m-bid-detail .more-btn{height: 20px;line-height: 20px;width: 100%;top: 8px;}
 
 /** 竞价单扩展信息（买方条款） **/
 .m-bid-extra{}

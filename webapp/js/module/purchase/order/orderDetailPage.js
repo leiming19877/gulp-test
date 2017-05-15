@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 	var params = getParams();
 	$.ajax({
 		dataType:'json',
-		url:'../../purchase/order/detailInfo',
+		url:'../../purchase/order/getDetailInfoData',
 		data:{
 			'orderId':params.orderId,
 			'bidId':params.bidId,
@@ -24,7 +24,6 @@ define(function(require, exports, module) {
 			data.action = params['action'];
 			loadingToast.hide();
 			var tempFn = doT.template(orderDetailTpl);
-			debugger
 			var resultHtml = tempFn(data);
 			//先清空
 			gPage.empty();

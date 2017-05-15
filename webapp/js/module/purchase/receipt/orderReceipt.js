@@ -19,7 +19,7 @@ define(function(require, exports, module){
 	
 	var myScroll = null;
 	//下拉刷新回调
-	var pullDownAction = function(){loadData()};
+	var pullDownAction = function(){loadData();};
 	//上拉刷新回调
 	var pullUpAction = function(){
 		++pageno;
@@ -90,12 +90,12 @@ define(function(require, exports, module){
 	}
 	function loadData(){
 		pageno=1;
-		$.post("/purchase/orderReceipt/loadlistData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
+		$.post("/purchase/shipping/getReceiptListData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
     		pageCount = result.total;
     		data = result.list;
     		data.forEach(function(value){
     			value.arrivalDate=value.orderDetails[0].arrivalDate;
-    			value.shippingAddress=value.orderDetails[0].shippingAddress
+    			value.shippingAddress=value.orderDetails[0].shippingAddress;
     		});
     		if(data.length>0){
     	    	var tempFn = doT.template(orderReceiptListTpl);
@@ -110,12 +110,12 @@ define(function(require, exports, module){
     	},'json');
 	}
 	function reLoadData(){
-    	$.post("/purchase/orderReceipt/loadlistData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
+    	$.post("/purchase/shipping/getReceiptListData?pageno="+pageno+"&rowsize="+ROW_SIZE,function(result){
     		pageCount = result.total;
     		data = result.list;
     		data.forEach(function(value){
     			value.arrivalDate=value.orderDetails[0].arrivalDate;
-    			value.shippingAddress=value.orderDetails[0].shippingAddress
+    			value.shippingAddress=value.orderDetails[0].shippingAddress;
     		});
     	    var tempFn = doT.template(orderReceiptListTpl);
     	    var resultText = tempFn(data);
@@ -130,6 +130,6 @@ define(function(require, exports, module){
 	function getSelectedDataAttr(dataAttr){
 		return biding.data(dataAttr);
 	}
-})
+});
 
 

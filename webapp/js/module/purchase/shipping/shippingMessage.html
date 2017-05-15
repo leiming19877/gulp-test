@@ -1,4 +1,5 @@
 <div class="m-shipping" >
+<div class="info">
 					        <div class="txt-line">
 					         <label class="lab">收货人：</label>
 					         <div class="txt">
@@ -11,6 +12,7 @@
 					            <span style="width: 85%;">{{=it.shippingUserTel}}</span>
 					         </div>
 					       </div>
+					       </div>
 					       <table class="m-shipping-detail">
 					            <thead>
 					                <tr>
@@ -20,7 +22,7 @@
 					                </tr>
 					            </thead>
 					            <tbody>
-					              {{~it.orderDetails : od}}
+					              {{~it.order.orderDetails : od}}
 					                <tr>
 					                    <td>
 					                                                        品名：{{=od.brandName}}<br/>
@@ -28,7 +30,7 @@
 					                                                        规格：{{=od.specification}}
 					                    </td>
 					                    <td>{{=od.orderWeight.toFixed(2)}}</td>
-					                    <td>本次发货：<span style="width: 60px;">{{=od.shippingWeight.toFixed(2)}}</span><br>未发：<span>{{=od.remainWeight.toFixed(2)}}</span></td>
+					                    <td>本次发货：<span style="width: 60px;">{{=od.shippingWeight.toFixed(2)}}</span><br>未发：<span>{{=od.remainShipWeight.toFixed(2)}}</span></td>
 					                </tr>
 					               {{~}} 
 					            </tbody> 

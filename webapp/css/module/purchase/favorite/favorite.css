@@ -14,7 +14,7 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .u-ipt-min{width: 60px;height: 25px;border: 1px solid #ccc;}
 .f-bg1{background-color: #e9e9e9;}
 .f-red1{color:#EF4F4F;}
-
+.weui_tab{position: absolute;width: 100%;}
 .weui_navbar_item{color:#333; }
 .weui_navbar_item.weui_bar_item_on{border-color:#38c; color:#fff; background-color: #38c;text-shadow: 0 1px 0 #059;}
 .weui_navbar{z-index: 2;}
@@ -24,10 +24,47 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 
 /** 钢厂设置  **/
 .m-steel-factory-setting{}
-
+.m-steel-tab{font-size: 18px;}
+.m-steel-flow{overflow: auto;}
+.m-steel-tabs{float: left;width: 100%;overflow: auto;}
+.m-steel-tabs>li{border-top: 1px solid #ebebeb;border-left: 1px solid #ebebeb;border-bottom: 1px solid #ebebeb;}
+.m-steel-tabs>li.active{border:none;}
+.m-steel-tabs>div{display: none;}
+.m-steel-tabs>div.active{}
+.m-steel-tabs>li a{display: block;height: 49px;line-height: 49px;color: #333;text-align: center;background-color: #f7f7f7;-webkit-tap-highlight-color: rgba(193,205,193,0.7);}
+.m-steel-tabs>li.active a{display: block;height: 49px;line-height: 49px;text-align: center;-webkit-tap-highlight-color: rgba(193,205,193,0.7);color: #3695f8;background-color: #FFF;}
+.m-steel-line{height:50px;border-top: 1px solid #ebebeb;border-right: 1px solid #ebebeb;text-align: center;line-height: 50px;}
+.m-steel-tab>ul>li{border-top: 1px solid #ebebeb; border-right: 1px solid #ebebeb;}
+.m-steel-factory-setting.guide-tab-content>ul.active{border: none;}
+.m-steel-factory-setting.guide-tab-content>ul.active a{color:#3695f8;background-color: #ffffff;}
+.m-steel-factory-setting.guide-tab-content>ul>li{border-top: 1px solid #ebebeb; border-right: 1px solid #ebebeb;}
 /** 交货地设置  **/
 .m-delivery-address-setting{}
 
+
+/** tab模块  **/
+.m-guide-tab{padding-top:5px; width: 100%;height:99%; font-size: 18px; }
+.m-guide-tab>ul{float: left;width: 100px;height:100%;overflow:auto;}
+.m-guide-tab>ul>li{border-top: 1px solid #ebebeb; border-right: 1px solid #ebebeb; }
+.m-guide-tab>ul>li:last-child{border-bottom: 1px solid #ebebeb;}
+.m-guide-tab>ul>li.active{border: none;}
+.m-guide-tab>ul>li.active a{color:#3695f8;background-color: #ffffff;}
+.m-guide-tab>ul>li>a{display: block;height:49px;line-height:49px;color:#333; text-align:center;background-color: #f7f7f7;-webkit-tap-highlight-color: rgba(193,205,193,0.7);}
+
+
+.m-guide-tab .guide-tab-content{position:relative; display:none; overflow: auto; margin-left:105px;height: 100%;}
+.m-guide-tab>div>div{display:none;}
+/** 让选择的tab 内容显示  **/
+.m-guide-tab .active{display:block;}
+
+.m-guide-tab .no-recording{position: absolute; display:none;top:50%;left:0;width:100%;transform:translateY(-50%); -webkit-transform: translateY(-50%);text-align: center;}
+
+.m-guide-tab.empty>ul,.m-guide-tab.empty .guide-tab-content{display: none;}
+.m-guide-tab.empty .no-recording{display: block;}
+
+
+.weui_cells{margin-top: 0;border-left: 1px solid #D9D9D9;}
+.weui_cells_title{margin-top: 0;}
 
 .m-footer{height:50px; padding-right:10px; text-align: right;}
 .m-footer .weui_btn{ margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}

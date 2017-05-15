@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 	
 	var myScroll = null;
 	//下拉刷新回调
-	var pullDownAction = function(){loadOrderShippingData(true)};
+	var pullDownAction = function(){loadOrderShippingData(true);};
 	//上拉刷新回调
 	var pullUpAction = function(){loadOrderShippingData();};
 
@@ -120,7 +120,7 @@ define(function(require, exports, module) {
 	}
 	function endReceipt(orderId){
 			$.ajax({
-				url:"/purchase/orderReceipt/endReceipt",
+				url:"/purchase/shipping/endReceipt",
 				async:false,
 				data:{
 	            	'orderId' : orderId
@@ -138,7 +138,7 @@ define(function(require, exports, module) {
 	            error:function(xhr, errorType, error){
 					loadingToast.show("保存失败，请重新试试！");
 				}
-			})
+			});
 	}
 	/**
 	 * 加载竞价中数据
@@ -174,7 +174,7 @@ define(function(require, exports, module) {
 		
 		$.ajax({
 			dataType:'json',
-			url:'../../purchase/orderReceipt/loadlistData',
+			url:'../../purchase/shipping/getReceiptListData',
 			data:{
 				'queryType':queryType,
 				'pageno':pageNo,
@@ -200,7 +200,7 @@ define(function(require, exports, module) {
 			 el.find("ul.list").empty();
 		 }
 		 //如果没数据,显示没记录
-		 if(data.page.totalrows == 0){
+		 if(data.page.totalrows === 0){
 			 if (pullDownEl.className.match('loading')) {
 	                pullDownEl.className = '';
 	                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉更新...';
@@ -283,5 +283,5 @@ define(function(require, exports, module) {
 	module.exports ={
 			'setSelectedType':setSelectedType,
 			'showQueryType':showQueryType
-	}
+	};
 });

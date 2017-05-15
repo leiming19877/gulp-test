@@ -15,7 +15,7 @@ define(function(require, exports, module) {
 			if (!data) {
 				return;
 			}
-			var tabs = $('<ul class="tabs"></ul>');
+			var tabs = $('<ul class="tabs kjph"></ul>');
 			guideTab.append(tabs);
 			var firstTab = null;
 			for (var i = 0; i < data.length; i++) {
@@ -27,7 +27,7 @@ define(function(require, exports, module) {
 				li.append('<a href="#" >' + varietyName + '</a>');
 				li.appendTo(tabs);
 				// 增加tab内容区域
-				var tabContent = $('<div class="' + (i === 0 ? 'active' : '')
+				var tabContent = $('<div class="kjph ' + (i === 0 ? 'active' : '')
 						+ '"></div>');
 				if(i === 0){
 					firstTab = li;

@@ -7,14 +7,14 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page");
+	var gPage = $("#g-page")
 	//收货详情模板
 	var receiptTpl = require("./receipt.html");
 	var shippingId = getShipingId();
 	var orderId = "";
 	$.ajax({
 		dataType:'json',
-		url:'../../purchase/orderReceipt/getReceiptDetailData',
+		url:'../../purchase/shipping/getReceiptDetailData',
 		data:{
 			'shippingId':shippingId,
 			'_t':new Date().getTime()
@@ -45,16 +45,16 @@ define(function(require, exports, module) {
 		var self = $(this);
 		if($(target).hasClass("sign-weight")){
 			$("#dialog2").show();
-			var inputs = $("input[name='signWeight']");
-			var index = inputs.indexOf($(this)[0]);
-			$("#dialog2").attr("data-input-index",index);
+			var weightInputs = $("input[name='signWeight']");
+			var i = weightInputs.indexOf($(this)[0]);
+			$("#dialog2").attr("data-input-index",i);
 			$("#weight").find("input").val($(this).val());
 			$("#weight").find("input").focus();
 		}else{
 			$("#dialog1").show();
-			var inputs = $("input[name='signQuantity']");
-			var index = inputs.indexOf($(this)[0]);
-			$("#dialog1").attr("data-input-index",index);
+			var quantityInputs = $("input[name='signQuantity']");
+			var j = quantityInputs.indexOf($(this)[0]);
+			$("#dialog1").attr("data-input-index",j);
 			$("#quantity").find("input").val($(this).val());
 			$("#quantity").find("input").focus();
 		}
@@ -82,7 +82,7 @@ define(function(require, exports, module) {
 		var signQuantity = selectInput.val();
 		if(!reg.test(signQuantity)){
 			window.alert("签收量只能为非负整数！");
-			selectInput.val(quantity);
+			selectInput.val(quantity)
 		}
 	});
 	$("#dialog2").on("click",".default",function(e){
@@ -107,7 +107,7 @@ define(function(require, exports, module) {
 		var signWeight = selectInput.val();
 		if(!reg.test(signWeight)){
 			window.alert("签收量只能为非负数，且小数位数不超过3位！");
-			$(this).val(weight);
+			$(this).val(weight)
 		}
 		refreshReceiptWeight();
 	});
@@ -123,7 +123,7 @@ define(function(require, exports, module) {
 		$.ajax({
 			type:'post',
 			dataType:'json',
-			url:'../../purchase/orderReceipt/confirmShipping',
+			url:'../../purchase/shipping/confirmShipping',
 			data:params,
 			success:function(data, status, xhz){
 				loadingToast.hide();
@@ -175,7 +175,7 @@ define(function(require, exports, module) {
 		signWeights.each(function(index){
 			receiptWeight += Number($(this).val());
 		});
-		$("#receiptWeight").html(receiptWeight);
+		$("#receiptWeight").html(parseFloat(receiptWeight).toFixed(3));
 	}
 	/**
 	 * 获取url中的收货单/发货单参数

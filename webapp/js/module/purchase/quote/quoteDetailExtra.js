@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page")
+	var gPage = $("#g-page");
 
 	//报价详情模板
 	var quoteDetailExtraTpl = require("./quoteDetailExtra.html");
@@ -49,14 +49,10 @@ define(function(require, exports, module) {
 	 */
 	function getUrlParams(){
 		var params = {};
-		params["bidId"] = "";
-		params["quoteSn"] = "";
-		params["linkFrom"] = "";
 		var reg = /https?:\/\/[^\/]+\/[^\?]*?\?bidId=(\d*)&quoteSn=(\d*)&linkFrom=(\w+)/g;
 		var url = window.location.href;
 		var m = reg.exec(url);
 		if(m && m.length == 4){
-			var params = {};
 			params["bidId"] = m[1];
 			params["quoteSn"] = m[2];
 			params["linkFrom"] = m[3];

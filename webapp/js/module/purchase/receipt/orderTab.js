@@ -8,5 +8,5 @@ define(function(require, exports, module) {
 	var pageScroller = require("./pageScroller");
 	module.exports ={
 			
-	}
+	};
 });

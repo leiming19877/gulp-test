@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>报价单详情</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
 
 
@@ -19,11 +19,22 @@
 <body>
 
     
-        
-        <div id="g-page" class="g-page" >
+     
+       <div class="g-pages">
+       	 
+        <div id="g-page" class="g-page f-slide-in"  >
             
+             <!-- end -->
         </div>
         <!-- end g-page -->
+        
+          	 
+        <div id="g-page-mflk" class="g-page f-slide-out"  >
+            
+             <!-- end -->
+        </div>
+        <!-- end g-page -->
+       </div>
 
     
     

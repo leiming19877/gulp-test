@@ -10,12 +10,12 @@
 	content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 
 <title>购物车信息</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <%@include file="/WEB-INF/jsp/comm/wx-hide-menu.jsp"%>
 <style type="text/css">
 body {
-	background: #F2F2F2;
+	background: #fafafa;
 	padding: 3px 0;
 	overflow: hidden;
 }
@@ -50,10 +50,13 @@ body {
 	float: right;
     font-weight: normal;
     font-size: 13px;
-    margin-top: -30px;
+    margin-top: -34px;
     margin-right: 7px;
-    color: #298fbe;
-    text-decoration: underline;
+    color: #3879d9;
+    text-decoration:none;
+    border: 1px solid #3879d9;
+    border-radius:4px;
+    padding:2px 5px;
 }
 
 .head{
@@ -62,7 +65,10 @@ body {
 	padding: 5px 8px 0px 8px;
     border-bottom: 8px solid #ddd;
 }
-
+.top .manage:hover {
+    color: #3e82f7;
+    border: 1px solid #3e82f7;
+}
 .unit {
 	position: relative;
 	margin-bottom: 5px;
@@ -75,6 +81,9 @@ body {
     margin-top: 45px;
     width: 100%;
     height: -webkit-calc(100% - 45px * 2);
+    background:#fafafa;
+    border-radius:4px;
+    border-bottom: 1px solid #ebebeb;
 }
 
 .buttonNav{
@@ -147,7 +156,7 @@ body {
 	height: 50px;
     line-height: 25px;
     width: 100%;
-    padding: 0px 8px;
+    padding: 0px 8px 0px 20px;
 }
 
 .checkWrap {
@@ -155,7 +164,7 @@ body {
     height: 20px;
     background-color: #fff;
     float: left;
-    margin-top: 30px;
+    margin-top: 20px;
     border-radius: 50%;
     border: 1px solid #888;
 }
@@ -174,54 +183,68 @@ body {
 }
 
 .info {
-    width: auto;
-    padding: 0 5px 0 30px;
+	width: auto;
+    padding: 0 5px 0 0px;
     font-size: 13px;
     font-weight: normal;
+    margin-top:2px;
 }
 
-.info.weight .ui-input-text{
-	width: 80px;
-}
-
+.info span{ margin-left:10px; line-height: 18px;}
 .info .add{
 	float: left;
-	width: 25px;
-    height: 25px;
-    border: 1px solid #888;
-    line-height: 25px;
+	width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ddd;
     text-align: center;
-    margin: 1px 0 0 0;
+    margin: 1px 0 0 0px;
+    background:#ffffff;
+    font-size:24px;
+    color:#666;
 }
 
 .info .dec{
 	float: left;
-	width: 25px;
-    height: 25px;
-    line-height: 25px;
-    border: 1px solid #888;
+	width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ddd;
     margin: 1px 0 0 0;
     text-align: center;
+    background:#ffffff;
+    font-size:24px;
+    color:#666;
 }
-
+/**.info .add:hover,.info .dec:hover{background:#ebebeb;}**/
 .info .desc{
 	float: left;
-	margin-left: 5px;
-    line-height: 28px;
+    margin-left: 5px;
+    line-height: 30px;
 }
 
 .info .ui-input-text {
 	float: left;
-    height: 27px;
+    height: 30px;
+    line-height: 30px;
     width: 50px;
+    min-width: 50px;
     margin: 0 !important;
     background-color: #fff;
+    box-shadow: inset 0 0px 0px rgba(0,0,0,.01);
+    border:1px solid #ebebeb;
 }
 
 .info .ui-input-text input{
     font-size: 13px;
     text-align: center;
+    padding:0px;
+    
+    border-radius:0px;
+    min-height: 30px; line-height: 30px;border-radius:0px;border:1px solid #ddd;
+    box-shadow: inset 0 0px 0px rgba(0,0,0,.01);
 }
+
 
 .ui-content .ui-listview {
 	margin: 0;
@@ -267,9 +290,13 @@ body {
 	background-color: orange;
 	text-shadow: none;
 }
+.ui-listview .li-shopcart a{ padding:8px 0px ;background-color:#ffffff;border-bottom: 1px solid #ebebeb;border-width: 0px 0 1 0px;}
+.ui-listview>li>a{border-bottom: 1px solid #ebebeb;}
+.ui-listview .li-shopcart{margin:0px 0px 10px 0px;} 
+.ui-listview>.ui-li-static, .ui-listview>.ui-li-divider, .ui-listview>li>a.ui-btn{border-width: 0px 0 0;  border-bottom:1px solid #ebebeb;}
 </style>
 </head>
-<body ontouchstart="">
+<body ontouchstart="" style="background:#fafafa;">
 <form name="orderForm" id="orderForm" action="${ctx}/preorder/prePlaceOrder" data-ajax="false">
 	<input type="hidden" name="shopCartIds" value=""/>
 	<input type="hidden" name="quantitys" value=""/>
@@ -298,7 +325,7 @@ body {
 									<div class="checked"></div>
 								</div>
 								<div class="info">
-									<span>${shopCart.brandNameDesc }</span><br/><span style="display: block;margin-top: -7px;font-size:smaller;">${shopCart.textureDesc }*${shopCart.specification }</span>
+									<span>${shopCart.brandNameDesc }</span><br/><span>${shopCart.textureDesc }*${shopCart.specification }</span>
 								</div>
 								<div class="info quantity" style="float: left; height: 38px; padding: 0 5px 0 8px;">
 									<div class="dec">－</div>

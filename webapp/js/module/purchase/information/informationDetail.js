@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page")
+	var gPage = $("#g-page");
 	//资讯详情模板
 	var informationDetailTpl = require("./informationDetail.html");
 

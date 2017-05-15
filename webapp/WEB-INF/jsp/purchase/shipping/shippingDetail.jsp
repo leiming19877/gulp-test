@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>发货单详情</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
 
 
@@ -46,6 +46,16 @@
               <p class="weui_toast_content">数据加载中</p>
           </div>
       </div>
+<div class="weui_dialog_confirm" id="dialog1" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">收货确认</strong></div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+        </div>
+    </div>
+</div>
       <!-- end 加载提示 -->
 </body>
 <script type="text/javascript">

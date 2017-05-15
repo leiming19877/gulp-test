@@ -28,7 +28,7 @@ wx.config({
     timestamp:<%=sign.getTimestamp() %> , // 必填，生成签名的时间戳
     nonceStr: '<%=sign.getNonceStr() %>', // 必填，生成签名的随机串
     signature: '<%=sign.getSignature() %>',// 必填，签名，见附录1
-    jsApiList: ['chooseImage','uploadImage','hideAllNonBaseMenuItem','getNetworkType','openLocation','scanQRCode','hideOptionMenu','getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    jsApiList: ['startRecord','onVoiceRecordEnd','stopRecord','playVoice','uploadVoice','downloadVoice','chooseImage','uploadImage','hideAllNonBaseMenuItem','getNetworkType','openLocation','scanQRCode','hideOptionMenu','getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 });
 wx.ready(function(){
     //wx.hideOptionMenu();
@@ -91,6 +91,7 @@ function openLocation(){
         }
     });
 }
+
 function chooseImage(){
 	wx.chooseImage({
 	    count: 9, // 默认9
@@ -112,6 +113,78 @@ function chooseImage(){
 	    }
 	});
 }
+
+function startRecord(){
+	wx.startRecord();
+	wx.onVoiceRecordEnd({
+	    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+	    complete: function (res) {
+	        var localId = res.localId;
+	        wx.uploadVoice({
+	            localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+	            isShowProgressTips: 1, // 默认为1，显示进度提示
+	                success: function (res) {
+	                var serverId = res.serverId; // 返回音频的服务器端ID
+	                document.getElementById("result").value = serverId;
+	                alert(serverId);
+	            }
+	        });
+	        wx.playVoice({
+	            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+	        });
+	    }
+	});
+}
+
+function stopRecord(){
+	wx.stopRecord({
+	    success: function (res) {
+	        var localId = res.localId;
+	        alert(localId);
+	        wx.uploadVoice({
+	            localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+	            isShowProgressTips: 1, // 默认为1，显示进度提示
+	                success: function (res) {
+	                var serverId = res.serverId; // 返回音频的服务器端ID
+	                document.getElementById("result").value = serverId;
+	                alert(serverId);
+	            }
+	        });
+	        wx.playVoice({
+	            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+	        });
+	    }
+	});
+}
+function  playRecord(){
+	
+		 wx.playVoice({
+	            localId: 'testsetseatesa', // 需要播放的音频的本地ID，由stopRecord接口获得
+	            success:function(){
+	            	debugger;
+	            	alert("succes");
+	            },
+	            fail:function(){
+	            	debugger;
+	            	alert("fail");
+	            }
+		 });
+
+}
+function downRecord(){
+	wx.downloadVoice({
+	    serverId: 'ULtKFs29SwSXgo3KupqwrM7Se3o-nhOl3KFsSE5p6WEQZZnW_4yxuoC0LnU4RhVY', // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+	    isShowProgressTips: 1, // 默认为1，显示进度提示
+	    success: function (res) {
+	        var localId = res.localId; // 返回音频的本地ID
+	        alert("下载成功。");
+	    },
+	    fail:function(){
+        	debugger;
+        	alert("fail");
+        }
+	});
+}
 </script>
 
 </head>
@@ -129,7 +202,16 @@ function chooseImage(){
      <br/>
      <br/>
      <input type="button"  value="拍照或上传图片" onclick="chooseImage();" />
-     
+     <br/>
+     <input type="button"  value="录音" onclick="startRecord();" />
+     <br/>
+     <input type="button"  value="停止录音" onclick="stopRecord();" />
+     <br/>
+     <input type="button"  value="播放录音" onclick="playRecord();" />
+     <br/>
+     <input type="button"  value="下载录音" onclick="downRecord();" />
+     <br/>
+     <textarea id="result" style="width: 100%;height:200px;"></textarea>
      <form action="" method="post" enctype="multipart/form-data">
         <input name="file" type="file" />
         <input type="submit" value="提交" />

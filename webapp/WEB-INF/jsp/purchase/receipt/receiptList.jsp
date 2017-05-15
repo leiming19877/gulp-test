@@ -6,10 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>收货列表</title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui.css" />
 
-<script type="text/javascript" src="${ctx}/js/Date.js"></script>
+<script type="text/javascript" src="${ctx}/js/common/Date.js"></script>
 
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 <script type="text/javascript">
@@ -20,7 +20,7 @@
 <body>
 	      <div id="g-page" class="g-page" >
 	          <div class="g-header">
-	                <a href="orderReceiptPage" class="u-back-left" ></a>
+	                <a href="toOrderReceiptPage" class="u-back-left" ></a>
                     <h3 class="u-title">收货单列表<a id="showActionSheet" href="javascript:void(0)" class="weui_btn weui_btn_mini weui_btn_primary m-receipt-search">搜索收货单</a></h3>
 	          </div>
 	          <div id="g-content" class="g-content">

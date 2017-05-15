@@ -139,6 +139,8 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .m-bid-list .join-bid-btn{position: absolute;top: 20px;right: 15px; width: 100px;height: 25px;}
 .m-bid-list .history-quote-btn{position: absolute;top: 36px;right: 15px;width: 100px;height: 25px;}
 .m-bid-list .history-quote-btn2{top: 30px;}
+.m-bid-list .btn3{top: 5px;}
+.m-bid-list .btn4{top: 30px;}
 .m-bid-list .check-quote-btn{position: absolute;top: 67px;right: 15px;width: 100px;height: 25px;}
 .m-bid-list .no-recording{display:none; text-align: center;}
 

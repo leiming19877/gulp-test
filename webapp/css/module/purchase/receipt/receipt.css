@@ -22,7 +22,7 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 .m-receipt .lab{padding-left: 5px;font-weight:bold;}
 .m-receipt .txt{vertical-align:middle;}
 .m-receipt .receipt-sn{position:absolute;top:30px;right:30px; padding:10px 10px; width: 40px;height: 40px;border: 1px solid #EF4F4F;border-radius:50%; text-align:center; color: #EF4F4F;}
-.m-receipt-dialog-quantity,.m-receipt-dialog-weight{height: 2em;font-size: 2em;width: 80%;text-align: center;margin: 0px 10% 0px 10%;}
+.m-receipt-dialog-quantity,.m-receipt-dialog-weight{height: 2em;font-size: 2em;width: 80%;text-align: center;margin: 0px 10% 1px 10%;}
 .m-receipt-dft{margin-top: 0px;}
 .m-receipt-info{width:100%;}
 

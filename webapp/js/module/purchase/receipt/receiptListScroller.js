@@ -31,7 +31,7 @@ define(function(require, exports, module) {
 	
 	var myScroll = null;
 	//下拉刷新回调
-	var pullDownAction = function(){loadReceiptData(true);};
+	var pullDownAction = function(){loadReceiptData(true)};
 	//上拉刷新回调
 	var pullUpAction = function(){loadReceiptData();};
 
@@ -98,7 +98,7 @@ define(function(require, exports, module) {
                 mask.hide();
             }).on('webkitTransitionEnd', function () {
                 mask.hide();
-            });
+            })
         }
         function receiptOrder(action){
            if('scan' == action){
@@ -140,7 +140,7 @@ define(function(require, exports, module) {
                 });
            		 $('#dialog1').show().on('click', '.primary', function () {
            		 	var code = $("#code").val();
-           		 	if(code===""){
+           		 	if(code==""){
            		 		alert("输入的收货单不能为空！");
            		 		return;
            		 	}
@@ -253,7 +253,7 @@ define(function(require, exports, module) {
 		var signStatus = getSelectedSignStatus();
 		$.ajax({
 			dataType:'json',
-			url:'../../purchase/orderReceipt/getReceiptPageData',
+			url:'../../purchase/shipping/getReceiptPageData',
 			data:{
 				'orderId':orderId,
 				'signStatus':signStatus,
@@ -294,7 +294,7 @@ define(function(require, exports, module) {
 		loadingToast.show("数据加载中");
 		$.ajax({
 			dataType:'json',
-			url:'../../purchase/orderReceipt/getReceiptPageData',
+			url:'../../purchase/shipping/getReceiptPageData',
 			data:{
 				'orderId':orderId,
 				'signStatus':signStatus,
@@ -333,7 +333,7 @@ define(function(require, exports, module) {
 			 el.find("ul.list").empty();
 		 }
 		 //如果没数据,显示没记录
-		 if(data.totalrows === 0){
+		 if(data.totalrows == 0){
 			 if(pullDownEl.className.match('loading')) {
 	                pullDownEl.className = '';
 	                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉更新...';
@@ -443,7 +443,7 @@ define(function(require, exports, module) {
 	}
 	module.exports ={
 			'showQueryType':showQueryType
-	};
+	}
 	$ = require("jquery");
 	var wx = require("jweixin");
 	var url = window.location.href;

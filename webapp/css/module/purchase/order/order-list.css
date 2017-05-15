@@ -130,18 +130,18 @@ html,body{ height: 100%;background-color: #fbf9fe;}
 
 /** 订单确认  **/
 .m-order-list{overflow: auto;}
-.m-order-list .line{position: relative;}
+.m-order-list .line{position: relative;padding:10px 0;}
 .m-order-list .txt-line{}
 .m-order-list .lab{float:left;width:80px;margin-right:-80px;font-weight:bold;}
 .m-order-list .lab.order-time{line-height: 72px;}
-.m-order-list .txt{margin-left:80px;vertical-align:middle;}
+.m-order-list .txt{margin-left:70px;vertical-align:middle;}
 .m-order-list .txt *{vertical-align:middle;}
 .m-order-list .ranking{margin-left:20px; color:#EF4F4F; }
 
 .m-order-list .join-order-btn{position: absolute;top: 30px;right: 15px;padding:0.25em 0.75em; width: 100px;}
 .m-order-list .history-quote-btn{position: absolute;top: 60px;right: 15px;padding:0.25em 0.75em;width: 100px;}
 /** 订单发货  **/
-.m-order-list .detail-shipping-btn{position: absolute;top: 45px;right: 15px;padding:0.25em 0.75em; width: 100px;}
+.m-order-list .detail-shipping-btn{position: absolute;top: 45px;right: 15px;padding:0.25em; width: 6em;}
 .m-order-list .order-shipping-btn{position: absolute;top: 85px;right: 15px;padding:0.25em 0.75em;width: 100px;}
 .m-order-list .history-quote-btn2{top: 30px;}
 .m-order-list .no-recording{display:none; text-align: center;}

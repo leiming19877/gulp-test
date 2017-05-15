@@ -10,7 +10,7 @@
 	content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 
 <title></title>
-<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
 <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
 <link type="text/css" rel="stylesheet" href="${ctx}/js/mobiscroll-2.5.2/mobiscroll.core-2.5.2.css"> 
 <script type="text/javascript" src="${ctx}/js/mobiscroll-2.5.2/mobiscroll.core-2.5.2.js"></script>
@@ -124,7 +124,8 @@ body {
     line-height: 40px;
     width: auto;
     padding: 0px 8px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ebebeb;
+    
 }
 
 .line_l {
@@ -132,13 +133,15 @@ body {
     font-size: 13px;
     width: 75px;
     text-align: left;
-    font-weight: bold;
+    color: #666;
 }
 
 .line_r {
 	float: left;
 	width: auto;
 	font-size: 13px;
+	font-weight: bold;
+	
 }
 
 .line_r .ui-input-text {
@@ -153,18 +156,25 @@ body {
 
 .detail {
     line-height: 25px;
-    padding: 0px 8px;
+    padding:8px;
     background-color: #f8f8f8;
     border-bottom: 1px solid #d8d8d8;
 }
 
 .detail .sn{
 	float: left;
-    height: 80px;
-    line-height: 80px;
-    padding: 0 5px 0 0;
+	width:20px;
+    height: 20px;
+    line-height: 20px;
+    text-align:center;
+    padding: 0 0px 0 0;
+    margin:30px 0px;
     font-size: 13px;
     font-weight: bold;
+    border:1px solid #3879d9;
+    color:#3879d9;
+    border-radius:14px;
+    
 }
 
 .detail .info.weight .ui-input-text{
@@ -173,7 +183,7 @@ body {
 
 .info {
 	width: auto;
-    padding: 0 5px 0 16px;
+    padding: 0 5px 0 28px;
     font-size: 13px;
     font-weight: normal;
 }
@@ -182,10 +192,13 @@ body {
 	float: left;
 	width: 25px;
     height: 25px;
-    border: 1px solid #888;
+    border: 1px solid #ccc;
     line-height: 25px;
     text-align: center;
-    margin: 1px 0 0 0;
+    margin: 1px 0 0 -2;
+    font-size: 20px;
+    font-weight:bold;
+    background:#fff;
 }
 
 .info .dec{
@@ -193,11 +206,13 @@ body {
 	width: 25px;
     height: 25px;
     line-height: 25px;
-    border: 1px solid #888;
-    margin: 1px 0 0 0;
+    border: 1px solid #ccc;
+    margin: 1px 0 0 3;
     text-align: center;
+    font-size: 24px;
+    font-weight:bold;
+    background:#fff;
 }
-
 .info .desc{
 	float: left;
     margin-left: 5px;
@@ -206,25 +221,36 @@ body {
 
 .info .ui-input-text {
 	float: left;
-    height: 27px;
+    height: 25px;
     width: 50px;
-    margin: 0 !important;
+    margin:1px;
     background-color: #fff;
-}
+    border:1px solid #ccc;
+    border-radius:0px;
+    box-shadow:0 0 0;
+    margin-left:-2px;
+}{margin: 0 !important;}
 
 .info .ui-input-text input{
     font-size: 13px;
     text-align: center;
+    min-height:25px;
+    line-height:25px;
+    padding:0px;
+    overfllow: hiddle;
 }
 
 .remark {
 	float: left;
-    width: 100%;
-    margin-top: -10px;
+    width: 90%;
+    margin-top: -5px;
+    margin-left:28px;
+    border-radius:0px;
+    box-shadow:0 0 0;
 }
 
 .remark .ui-input-text {
-    height: 27px;
+    height: 30px;
     margin: 0.4em 0;
     background-color: #fff;
 }
@@ -237,13 +263,13 @@ body {
 	height: 40px;
 	padding-left: 10px;
     line-height: 40px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ebebeb;
 }
 
 .deliveryTime .ui-input-text {
     float: left;
 	width: 95px;
-    height: 27px;
+    height: 30px;
     margin: 0 !important;
     background-color: #fff;
 }
@@ -259,9 +285,9 @@ body {
 
 .more{
     float: right;
-    width:30px;
-    height:30px;
-    margin-top: 5px;
+    width:26px;
+    height:26px;
+    margin-top: 8px;
     background-size: contain;
     background-image: url(${ctx}/images/icons/icon_go.png);
 }
@@ -292,6 +318,12 @@ body {
 	background-color: #fff;
 	border-radius: 0 !important;
 }
+.leaveMsg{
+ margin:8px 10px;
+ 
+}
+.remark .ui-input-text input {
+}
 </style>
 </head>
 <body ontouchstart="">
@@ -320,7 +352,7 @@ body {
 				<div class="line_l">商品清单</div>
 			</div>
 			<!-- 商品清单  -->
-			<div class="goodslist" style="border-bottom: 1px solid #ccc;">
+			<div class="goodslist" style="border-bottom: 1px solid #ebebeb;">
 				<c:forEach items="${shopCarts }" var="shopCart" varStatus="shop">
 					<div class="detail">
 						<input type="hidden" name="shopCarts[${shop.index }].shopcartId" value="${shopCart.shopcartId }"/>

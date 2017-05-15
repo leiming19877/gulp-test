@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区
-	var gPage = $("#g-page")
+	var gPage = $("#g-page");
 	// 确认对话框内容区
 	var confirmPage = $("#confirm_detial");
 	//报价模板
@@ -15,6 +15,11 @@ define(function(require, exports, module) {
 	//报价信息模板
 	var quoteMessageTpl = require("./quoteMessagePage.html");
 
+	//界面主内容区
+	var gPageMftk = $("#g-page-mflk");
+	//买方条款
+	var quoteDetailExtraTplFn = doT.template(require("./quoteDetailExtra.html"));
+	
 	var urlParams = getUrlParams();
 	var bidId = urlParams['bidId'];
 	var quoteId = "";//报价单id
@@ -23,91 +28,81 @@ define(function(require, exports, module) {
 		this.select();
 	});
 	gPage.on("click",".u-ipt-min",function(e){
-		$("#dialog2").show();
-		var inputs = $(".u-ipt-min");
-		var index = inputs.indexOf($(this)[0]);
-		$("#dialog2").attr("data-input-index",index);
+		var d = $("#dialog2")[0]; 
+		d["currentInput"]=this;
 		$("#money").find("input").val($(this).val());
+		$("#dialog2").show();
 		$("#money").find("input").focus();
 		$("#money").find("input").select();
+	
 	});
 	$('#dialog2').on('click', '.default', function () {
 		$('#dialog2').hide();
 	});
 	$('#dialog2').on('click', '.primary', function () {
-		$('#dialog2').hide();
 		var reg = new RegExp("^[0-9]+(.[0-9]{1,2})?$");
-		var index = $("#dialog2").attr("data-input-index");
 		var value = $("#money").find("input").val();
-		var self = $(".u-ipt-min")[index];
-		self = $(self);
-		var price = self.attr("data-quote-price");
+		//要映射的输入框dom对象
+		var input =$($('#dialog2')[0].currentInput);
 		if(!reg.test(value)){
-			window.alert("金额只能为非负数，且小数位数不超过2位");
-			$("#money").find("input").val(price);
+			window.alert("只能为非负数，且小数位数不超过2位");
 			$("#money").find("input").focus();
 			$("#money").find("input").select();
-			self.val(price);
 			return;
 		}
-		self.val(Number(value));
-		$("#money").find("input").val(0);
-		var val = self.val();
-		if(self.prop("name") == "quotePrice"){
-			var planBuyWeight = self.attr("data-plan-buy-weight");
+		input.val(Number(value));
+		var val = input.val();
+		if(input.prop("name") == "quotePrice"){
+			var planBuyWeight = input.attr("data-plan-buy-weight");
 			var priceMoney = val*planBuyWeight;
 			priceMoney = priceMoney.toString().formatMoney(2);
-			var tr = self.parent().parent();
-			var index = tr.index();
-			self.siblings(".quote-money").html(priceMoney);
-			$("#quote-price-"+index+"-tip").html(val);
-			$("#quote-money-"+index+"-tip").html(priceMoney);
+			var tr = input.parent().parent();
+			var d = tr.index();
+			input.siblings(".quote-money").html(priceMoney);
+			$("#quote-price-"+d+"-tip").html(val);
+			$("#quote-money-"+d+"-tip").html(priceMoney);
 			//总计金额
 			var quoteTotalMoney = 0;
-			$("span[name='quote-money']").each(function(index){
+			$("span[name='quote-money']").each(function(i){
 				var money = parseFloat($(this).html().removeDotToNumber());
 				quoteTotalMoney+=money;
 			});
 			quoteTotalMoney = quoteTotalMoney.toString().formatMoney(2);
 			$("#quote-total-money").html(quoteTotalMoney);
 			$("#quote-total-money-tip").html(quoteTotalMoney);
-		}else if(self.prop("name") == "freightMiscellaneous"){
+		}else if(input.prop("name") == "freightMiscellaneous"){
 			//设置提示项
 			$("#freight-miscellaneous-tip").html(val);
 		}
+		$('#dialog2').hide();
 	});	
 	gPage.on("change","select[name='placeSteel']",function(e){
 		var self = $(this);
 		var tr = self.parent().parent();
-		var index = tr.index();
-		$("#place-steel-"+index+"-tip").html(self.find("option").not(
+		var i = tr.index();
+		$("#place-steel-"+i+"-tip").html(self.find("option").not(
 				function(){ 
-					return !this.selected
+					return !this.selected;
 					}).text());
 	});
 	
 	gPage.on("click",".quote-btn",function(e){
-		var isFirstQuote = $("#g-content").attr("data-first-quote");
-		var stepType = $("#g-content").attr("data-step-type");
-		var discountStep = $("#g-content").attr("data-discount-step");
-		if(isFirstQuote=="false"){
-		var lastQuoteTotalMoney = $("#quote-total-money").attr("data-quote-total");
-		var currentQuoteTotalMoney = $("#quote-total-money").html().removeDotToNumber();
-//			if(stepType==1){
-//				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)){
-//					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"元");
-//					return;
-//				}
-//			}else if(stepType==2){
-//				if(discountStep > (lastQuoteTotalMoney - currentQuoteTotalMoney)/lastQuoteTotalMoney*100){
-//					alert("报价降价幅度不能小于最小降价幅度"+discountStep+"%");
-//					return;
-//				}
-//			}
+		if(!checkParam()){
+			return ;
 		}
 		$('#dialog1').show();
 	});
+	gPage.on("click",".mftk-btn",function(e){
+		gPage.removeClass("f-slide-in").addClass("f-slide-out");
+		gPageMftk.removeClass("f-slide-out").addClass("f-slide-in");
 
+	});
+	gPageMftk.on("click",".u-back-left",function(e){
+		gPageMftk.removeClass("f-slide-in").addClass("f-slide-out");
+		gPage.removeClass("f-slide-out").addClass("f-slide-in");
+		
+	});
+	
 	$.ajax({
 		dataType:'json',
 		url:'../../purchase/quote/getQuoteData',
@@ -126,12 +121,19 @@ define(function(require, exports, module) {
 			 //先清空
 			 gPage.empty();
 			 gPage.append(resultHtml);
+	
+			 //买方条款
+			 resultHtml = quoteDetailExtraTplFn(data);
+			 gPageMftk.append(resultHtml);
+			 
 			 
 			 tempFn = doT.template(quoteMessageTpl);
 			 resultHtml = tempFn(data);
 			 //先清空
 			 confirmPage.empty();
 			 confirmPage.append(resultHtml);
+			 
+			 
 		},
 		error:function(xhr, errorType, error){
 			loadingToast.show("数据加载失败，请重新试试！");
@@ -167,6 +169,31 @@ define(function(require, exports, module) {
 		});
     });
 	
+
+	function checkParam(){
+		var checkIsOk = true;
+		//运查费
+		var freightMiscellaneous = $("#freightMiscellaneous");
+		if(freightMiscellaneous.disabled &&( freightMiscellaneous.val() ==0 
+				|| freightMiscellaneous.val() == "")){
+			checkIsOk = false;
+			window.alert("运杂费必填。");
+			freightMiscellaneous.focus();
+			return checkIsOk;
+		}
+		var quotePrices = $("input[name='quotePrice']");//报价
+		quotePrices.each(function(index,item){
+			if(this.value == 0){
+				checkIsOk = false;
+				window.alert("你有没有填写的报价，请该资源进行报价。");
+				this.focus();
+				this.select();
+				return false;
+			}
+		});
+		
+		return checkIsOk;
+	}
 	/**
 	 * 获取要保存的报价参数信息
 	 */
@@ -197,12 +224,10 @@ define(function(require, exports, module) {
 	 */
 	function getUrlParams(){
 		var params = {};
-		params["bidId"] = "";
 		var reg = /https?:\/\/[^\/]+\/[^\?]*?\?bidId=(\d*)/g;
 		var url = window.location.href;
 		var m = reg.exec(url);
 		if(m && m.length == 2){
-			var params = {};
 			params["bidId"] = m[1];
 
 		}

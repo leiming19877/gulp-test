@@ -9,11 +9,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
     <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
     <script type="text/javascript" src="${ctx}/js/iscroll/iscroll-4.2.js"></script>
     <script src="${ctx}/js/doT/doT.min.js" type="text/javascript"></script>
-    <script src="${ctx}/js/Date.js" type="text/javascript"></script>
+    <script src="${ctx}/js/common/Date.js" type="text/javascript"></script>
 	<style>
 	body{background:#F2F2F2;margin: 0;padding:3px 0;height:100%;width:100%}
 	.gray{background:#EFEFF1;}
@@ -133,7 +133,7 @@
 </body>
 <script id="information-list-tpl" type="text/x-dot-template">
 	{{~data:value:index}}
-	<a data-ajax="false"  href="detailInfo?orderId={{=value.orderId}}&bidId={{=value.bidId}}&orderStatus={{=value.orderStatus}}&_t={{=new Date().getTime()}}">
+	<a data-ajax="false"  href="getDetailInfoData?orderId={{=value.orderId}}&bidId={{=value.bidId}}&orderStatus={{=value.orderStatus}}&_t={{=new Date().getTime()}}">
     <section class="{{=value.orderStatus==1?'white':(value.orderStatus==2?'orange':'gray')}}">
 	<article class="header">
         <section class="line">

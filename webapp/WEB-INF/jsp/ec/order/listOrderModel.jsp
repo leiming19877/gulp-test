@@ -5,34 +5,36 @@
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
 <html>
 <head>
-	<title>我的订单</title>
+	<title>全部计划</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.min.css">
+	<link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css">
     <%@include file="/WEB-INF/jsp/comm/jquery-mobile-javascript.jsp"%>
     <script type="text/javascript" src="${ctx}/js/iscroll/iscroll-4.2.js"></script>
     <script src="${ctx}/js/doT/doT.min.js" type="text/javascript"></script>
-    <script src="${ctx}/js/Date.js" type="text/javascript"></script>
+    <script src="${ctx}/js/common/Date.js" type="text/javascript"></script>
 	<style>
 	body{height:100%;width:100%;padding:0;margin:0;background-color:#F1F1F3;color:#333;font:14px/180% Arial, Helvetica, sans-serif, "新宋体";}
-    .total{background:#fff;font-size:14px}
-    #ordernum{height:50px;border:1px solid #CCCCCC;padding-left:2%;padding-right:15px;position:relative;}
-    #orderinf{height:100px;border:1px solid #CCCCCC;padding-left:2%;color:#BBBBBB}
-    #orderprice{height:50px;line-height:50px;border:1px solid #CCCCCC;padding-left:2%;}
+    .total{background:#fff;font-size:13px}
+    #ordernum{height:50px;border-bottom:0px solid #ddd;padding-left:2%;padding-right:15px;position:relative;}
+    #orderinf{height:;border-top:0px solid #ebebeb;padding-left:50px;color:#666;}{background-color:#fafafa;}
+    #orderprice{height:38px;line-height:38px;border-top:1px solid #ebebeb;padding-left:2%;}
     #orderprice span{color:#EE0000}
-    #ordermsg section{margin:7px 0;}
-    #status{width:70px;position:absolute;right:5px;top:0;display:table;height:50px;text-align:center;color:#EE0000}
-    #status div{vertical-align:middle;display:table-cell;}
-    #word{padding-top:15px;}
+    #ordermsg section{margin:0px;}
+    #ordermsg section .left{width:66px;display:inline-block; float:left;}
+    #ordermsg section .right{}
+    #status{width:30%;position:absolute;right:0px;top:0;display:table;height:30px;text-align:center;color:#fff;font-size:14px;text-shadow: 0 1px 0 #326bbf; */}
+    #status div{vertical-align:middle;display:table-cell;line-height:30px;height:30px;width:30%; padding:0px 10px;background:#3879d9;border:1px solid #3879d9;border-top:0px;border-right:0px;border-radius:0px 4px 0px 4px;}
+    #word{padding-top:15px; width:60%;}
     a{text-decoration:none;color:#0000FF;}
     #completearea div{height:40px;line-height:40px;width:20%;background:#CCCCCC;color:#FFFFFF;text-align:center;float:right;}
     .aline{width:100%;text-align:center;border:1px solid #CCCCCC;position:absolute;top:350px;background:#fff;z-index:9999;display:none}
     .line_a{height:40px;line-height:40px;border:1px solid #CCCCCC}
     #completearea{height:70px}
-    button{height:30px;background:#fff;margin:13px 3px 0; float:right;border-radius:5px;border:1px solid #999999;}
-    #button1{color:#CCCCCC;border:1px solid #CCCCCC;}
-    #button2{color:#ff6600;border:1px solid #ff6600;}
+    button{height:30px;background:#fff;margin:4px 3px 0; float:right;border-radius:5px;border:1px solid #999999;}
+    #button1{color:#CCCCCC;border:1px solid #CCCCCC; background:#fff;padding:0px 5px; margin-right:5px;}
+    #button2{color:#fff;border:1px solid #ff6600;background: #ff6600;padding:0px 5px;margin-right:5px;}
     #a{ 
     height: 500px;
     line-height:500px;
@@ -49,6 +51,14 @@
     width:100%;
     background:#aaa;
     overflow:auto;
+}
+    .image_left {
+    width: 20px;
+    height: 20px;
+    float: left;
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
 }
     #scroller {
     position:absolute; z-index:1;
@@ -105,18 +115,48 @@
     from { -webkit-transform:rotate(0deg) translateZ(0); }
     to { -webkit-transform:rotate(360deg) translateZ(0); }
 }
+.ui-content{
+    background:#f3f3f3;
+}
+
+.ui-box {
+    top: 0px;
+    min-height: 60px;
+    padding: 10px;
+    margin: 15px auto;
+    font-size: 13px;
+    list-style: none;
+    zoom: 1;
+    position: relative;
+    color: #666666;
+    overflow: hidden;
+    width: 91%;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 1px 3px 3px #ebebeb;
+    }
+.line_t {
+    float: left;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    padding: 0 0px 0 0;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #3879d9;
+    color: #3879d9;
+    border-radius: 14px;
+    margin:0px 8px 0px 0px;
+}
+
 </style>
 </head>
 <body>
    <div data-role="page">
    <div data-role="header">
-    <div data-role="navbar">
-    <%-- <ul>
-      <li><a href="${ctx}/central/order/list"  data-ajax="false">集采订单</a></li>
-      <li ><a href="#" class="ui-btn-active ui-state-persist" data-ajax="false">订单模式订单</a></li>
-    </ul> --%>
-    <h1>我的订单</h1>
-    </div>
+     <div style="position:relative;width:40px;height:40px;float:left;" onclick="closeWin()"><img src="${ctx}/images/icons/icon_left.png" class="image_left"></div>
+     <h1>全部计划</h1>
    </div>
    <div data-role="content" id="totalcontent" style="padding:0"> 
       <div id="wrapper">
@@ -146,41 +186,45 @@
 </div>
 </body>
 <script id="information-list-tpl" type="text/x-dot-template">
+<div class="ui-content"  style="padding: 0px;">
 	{{~data:value:index}}
+        <div class="ui-box" style="padding: 0px;width:97%;">
         <article class="total">
-		<section id="ordernum"><div id="word">{{=index+1}}>&nbsp;<span>{{=value.orderBusiId}}</span></div><div id="status"><div>{{=value.orderStatusDesc}}</div></div></section>
+		<section id="ordernum"><div id="word"><span class="line_t">{{=index+1}}</span>>&nbsp;<span>{{=value.orderBusiId}}</span></div><div id="status"><div>{{=value.orderStatusDesc}}</div></div></section>
 		<section id="orderinf" onclick="getOrderDetail({{=value.orderId}})">
 		    <article id="ordermsg">
-			    <section>交货日期：<span>{{=value.deliveryBeginDatetimeDesc}}-{{=value.deliveryEndDatetimeDesc}}</span></section>
-				<section>下单时间：<span>{{=new Date(value.orderBeginDatetime).formatDate("yyyy-MM-dd HH:mm:ss")}}</span></section>
-				<section>下单量：<span>{{=value.totalBuyQuantity}}支/{{=value.totalBuyWeight}}</span>吨</section>
+			    <section><span class="left">交货日期：</span><span class="right">{{=value.deliveryBeginDatetimeDesc}}-{{=value.deliveryEndDatetimeDesc}}</span></section>
+				<section><span class="left">下单时间：</span><span class="right">{{=new Date(value.orderBeginDatetime).formatDate("yyyy-MM-dd HH:mm:ss")}}</span></section>
+				<section><span class="left">下单量：</span> <span class="right">{{=value.totalBuyQuantity}}支/{{=value.totalBuyWeight}}</span>吨</section>
 			</article>
 		</section>
-		<section id="orderprice">订单价格:<span>{{=value.totalBuyMoney}}/元</span>
+		<section id="orderprice">计划价格:<span>{{=value.totalBuyMoney}}/元</span>
         {{if(value.orderStatus==31){}}
-        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消订单</button>
+        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消计划</button>
         {{}else if(value.orderStatus==32){}}
-        <button onclick="confirmOrder('{{=value.orderId}}')" id="button2">确认订单</button>
-        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消订单</button>
+        <button onclick="confirmOrder('{{=value.orderId}}')" id="button2">确认计划</button>
+        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消计划</button>
         {{}else if(value.orderStatus==33){}}
-        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消订单</button>
+        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消计划</button>
          {{}else if(value.orderStatus==34){}}
         <button  id="button2" onclick="confirmPayType('{{=value.orderId}}')">选择付款方式</button>
-        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消订单</button>
+        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消计划</button>
         {{}else if(value.orderStatus==35){}}
         <button id="button2" onclick="selectLogisticsType('{{=value.orderId}}')">选择物流方式</button>
-        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消订单</button>
+        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消计划</button>
          {{}else if(value.orderStatus==37){}}
         <button id="button2" onclick="confirmLogisticsType('{{=value.orderId}}')">确认物流信息</button>
-        <button id="button1" onclick="return showPopup({'{=value.orderId}}');">取消订单</button>
+        <button id="button1" onclick="return showPopup({'{=value.orderId}}');">取消计划</button>
         {{}else if(value.orderStatus==38){}}
-        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消订单</button>
+        <button id="button1" onclick="return showPopup('{{=value.orderId}}');">取消计划</button>
         {{}else if(value.orderStatus>=39&&value.orderStatus<=42){}}
         <button id="button2"  onclick="queryPreOrderContract('{{=value.orderBusiId}}')">查看合同</button>
         {{ } }}
 		</section>
         </article>
+        </div>
 {{~}}
+</div>
 
 </script>
 <script type="text/javascript" src="${ctx}/js/weixin/jweixin-1.1.0.js"></script>

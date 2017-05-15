@@ -33,7 +33,7 @@ define(function(require, exports, module) {
 	
 	var myScroll = null;
 	//下拉刷新回调
-	var pullDownAction = function(){loadShippingListData(true)};
+	var pullDownAction = function(){loadShippingListData(true);};
 	//上拉刷新回调
 	var pullUpAction = function(){loadShippingListData();};
 
@@ -235,7 +235,7 @@ define(function(require, exports, module) {
 			 el.find("ul.list").empty();
 		 }
 		 //如果没数据,显示没记录
-		 if(data.totalrows == 0){
+		 if(data.totalrows === 0){
 			 if(pullDownEl.className.match('loading')) {
 	                pullDownEl.className = '';
 	                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉更新...';
@@ -361,5 +361,5 @@ define(function(require, exports, module) {
 	
 	module.exports ={
 			'showQueryType':showQueryType
-	}
+	};
 });
