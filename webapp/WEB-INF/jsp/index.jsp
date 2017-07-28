@@ -38,6 +38,8 @@
             <br/>
             <a href="preorder/iWantBuy" data-ajax="false">我要买</a>
             <br/>
+            <a href="ec/futures/buyNav" data-ajax="false">买家导航</a>
+            <br/>
             <a href="ec/futures/publishDemand" data-ajax="false">发布需求</a>
             <br/>
 		    <a href="purchase/bidConsole/bidListPage" data-ajax="false">竞价</a>
@@ -62,6 +64,16 @@
 		    <br/>   
 		    <a href="purchase/order/toOrderCenterPage" data-ajax="false">调拨单订单中心</a>	
 		    <br/> 
+		    <a href="ec/quote/list" data-ajax="false">报价单列表页面</a>	
+		    <br/>
+		    <a href="ec/order/toList4wechat" data-ajax="false">订单管理</a>	
+		    <br/>
+		    <a href="lading/toList4wechat" data-ajax="false">提单管理</a>	
+		    <br/> 
+		    <a href="ec/checkbill/list/init" data-ajax="false">对账单管理</a>	
+		    <br/> 
+		    <a href="ec/contract/toBuyContract" data-ajax="false">合同管理-买</a>    
+            <br/> 
 		</div>
 		<!-- /content -->
 

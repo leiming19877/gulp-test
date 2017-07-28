@@ -1,0 +1,91 @@
+/** 上拉、下拉组件  **/
+.u-push{width:26px;height:26px;}
+.u-push.push-up{background: url(../../../../images/icons/icon_up.png)  no-repeat;}
+.u-push.push-down{background: url(../../../../images/icons/icon_down.png)  no-repeat;}
+/**等高  **/
+.kjphh { margin-bottom: -660px;padding-bottom: 660px;}
+/** 单独购物车组件 **/
+.u-shop-car{width: 40px;height: 40px;background: url(../../../../images/icons/icon_gwc.png) no-repeat;background-size:26px 26px; margin:8px 2px 0px 0px;}
+
+
+
+.u-back-left{float:left;margin: 5px 5px 5px 5px;padding: 0 5px;}
+.u-back-left:before{display:block; font-size:22px;content: "\e604";}
+
+
+.u-title{height: 40px; line-height:40px;font-weight: bold;font-size: 14px;overflow: hidden;}
+
+
+.weui-cells__title{margin:0 0;padding-top:5px;padding-bottom:5px;  background-color:#f8f8f8; }
+
+.weui-btn-area{margin-top: 0;}
+.weui-btn + .weui-btn{margin-top: 5px;}
+.weui-btn{margin-right: 10px;}
+
+.weui-label.large{width: 125px;}
+
+.f-add-price{font-size: 13px;color: #0000FF; }
+
+.other-input {
+	display:inline-block;
+	box-sizing:border-box;
+	padding:0 0;
+    width: 120px;
+    border: 1px solid #e5e5e5;
+    outline: 0;
+    -webkit-appearance: none;
+    background-color: transparent;
+    font-size: inherit;
+    height:28px;
+    line-height:26px;
+    font-size:13px;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
+
+
+
+/** 购物车模块  **/
+.m-shop-car{position:absolute;top:8px;right:20px; display:inline-block; width: 30px;height: 30px;background: url(../../../../images/icons/icon_gwc_w.png) no-repeat;background-size:30px 30px;}
+.m-shop-car .num{position: absolute;right:-8px;top:-3px; width:18px;height:18px;border-radius:50%;font-size:13px;line-height:18px; text-align:center;color:#ffffff; background-color: #FF0000; }
+.m-shop-car .num2{position: absolute;right:-8px;top:-5px; width:14px;height:14px;border-radius:50%;font-size:9px;line-height:14px; text-align:center;color:#ffffff; background-color: #FF0000; }
+
+.m-thickness-price{}
+.m-thickness-price .weui-mask{display:none; z-index: 501; background: rgba(0, 0, 0, 0);transition:background .3s; }
+.m-thickness-price.show .weui-mask{display:block; background: rgba(0, 0, 0, 0.6);}
+.m-thickness-price .content{
+	position: fixed;
+    z-index: 502;
+    top:0;
+    left: 20%;
+    right:0;
+    bottom:0;
+    background-color:#FFFFFF;
+    border-radius: 3px;
+    transform:translateX(100%);
+    -ms-transform:translateX(100%);
+    -webkit-transform:translateX(100%);
+    transition:transform .3s;
+    -ms-transition:transform .3s;
+    -webkit-transition:transform .3s;
+    overflow: hidden;
+}
+.m-thickness-price.show .content{transform:translateX(0);-ms-transform:translateX(0);-webkit-transform:translateX(0);}
+
+.m-thickness-price .table-add-price{width:100%; border-collapse: separate;border-left: 1px solid #C8C8CD; border-top: 1px solid #C8C8CD;text-align: center;}
+.m-thickness-price .table-add-price th{border-bottom: 1px solid #C8C8CD; text-align:center; font-weight: bold;}
+.m-thickness-price .table-add-price td{border-bottom: 1px solid #C8C8CD; }
+
+
+/** 最近购买记录  **/
+.m-recent-buy-record-list{background-color:#ffffff; float:left;margin-top:10px; width: 100%;}
+.m-recent-buy-record-list.hide{display: none;}
+.m-recent-buy-record-list .swiper-container{/* transition:transform 10s; */}
+.m-recent-buy-record-list .swiper-container.hide{display: none; /* transform:scale(0.2,0.2); */}
+.m-recent-buy-record-list li{border-top:1px solid #ebebeb;}
+.m-recent-buy-record-list .recent-buy-title{ padding-left: 10px;height: 40px;line-height: 40px;font-size:15px; background-color: #fff; }
+.m-recent-buy-record-list .u-push{float: right; margin-right: 18px;margin-top:2px;background: url(../../../../images/icons/icon_up.png)  no-repeat; background-size:30px 30px;}
+.m-recent-buy-record-list .u-push.push-down{background: url(../../../../images/icons/icon_down.png)  no-repeat;background-size:30px 30px;}
+.m-recent-buy-record-list .u-shop-car{float: right;margin-right: 10px;}
+.m-recent-buy-record-list .text{display: inline-block;padding-left: 10px;}
+.m-recent-buy-record-list .desc{font-size: 15px;font-weight:bold;height: 40px;line-height: 40px;}
+/* .m-recent-buy-record-list .steel-palce{height:19px; line-height: 19px;font-size: 12px;padding-left: 5px;} */

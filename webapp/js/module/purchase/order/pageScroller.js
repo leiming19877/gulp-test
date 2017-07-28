@@ -2,7 +2,7 @@
  * 竞价分页查询模块
  */
 define(function(require, exports, module) {
-	require("../../common/String");
+	require("string");
 	//每页多少行
 	var ROW_SIZE = 6;
 	//竞价中

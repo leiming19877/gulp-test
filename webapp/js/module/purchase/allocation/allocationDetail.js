@@ -1,12 +1,12 @@
 define(function(require, exports, module) {
-	require("../../common/String");		
+	require("string");		
 	var $ = require("zepto");	
 	 //dot模板引擎
 	var doT = require("dot");
 	//引入时间组件
-	require("../../common/Date");
+	require("date");
 	//查询参数
-	var params = require("../../common/Params");
+	var params = require("params");
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区

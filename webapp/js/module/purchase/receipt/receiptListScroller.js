@@ -3,7 +3,7 @@
  */
 define(function(require, exports, module) {
 	//引入时间组件
-	require("../../common/Date");
+	require("date");
 	//每页多少行
 	var $ = require("zepto");
 	var ROW_SIZE = 4;

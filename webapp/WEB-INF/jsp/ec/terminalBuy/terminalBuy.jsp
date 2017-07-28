@@ -42,7 +42,7 @@
 	                    </div> 
 	                </div>
 	                <div class="g-h-right">
-	                    <a href="${ctx}/preorder/shopcart/view" class="m-shop-car">
+	                    <a href="${ctx}/ec/preorder/shopcart/view" class="m-shop-car">
 	                        <span class="num">0</span>
 	                    </a>
 	                </div>

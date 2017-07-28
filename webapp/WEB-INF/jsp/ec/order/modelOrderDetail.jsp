@@ -5,7 +5,7 @@
 <%@include file="/WEB-INF/jsp/comm/taglib.jsp"%>
 <html>
 <head>
-	<title>计划详情</title>
+	<title>订单详情</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -490,7 +490,8 @@ function raiseObjOrder(){
 	},'json');
 }
 function closeWin(){
-	window.location.href="${ctx}/preorder/getList"
+	//window.location.href="${ctx}/preorder/getList"
+	window.histroy.back();
 }
 function changeDivStyle(){
      if (orderStatus >= 31 && orderStatus <= 42) { //订单提交

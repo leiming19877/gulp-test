@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 	var $ = require("zepto");
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
-	require("../../common/Date");
+	require("date");
     //dot模板引擎
     var doT = require("dot");
     //滑动模块

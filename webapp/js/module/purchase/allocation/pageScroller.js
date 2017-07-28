@@ -2,7 +2,7 @@
  * 竞价分页查询模块
  */
 define(function(require, exports, module) {
-	require("../../common/String");
+	require("string");
 	//每页多少行
 	var ROW_SIZE = 4;
 	//待实提
@@ -18,7 +18,7 @@ define(function(require, exports, module) {
 	
 	var $ = require("zepto");
 	//引入时间组件
-	require("../../common/Date");
+	require("date");
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
     //dot模板引擎

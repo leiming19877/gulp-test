@@ -58,9 +58,9 @@ gulp.task('build:js-check', function(){
 
 //打包js主模块
 gulp.task( 'build:cmd-moudle', function(){
-    return gulp.src(jsModules ,{base:'webapp'})
+    return gulp.src(jsModules ,{base:'webapp/js/moudel'})
         .pipe( cmdPack({
-           
+
             base : 'webapp/js/',
             tmpExtNames : ['.html'], //提供模板文件的后缀名用来区分模板
             alias: { 
@@ -69,13 +69,14 @@ gulp.task( 'build:cmd-moudle', function(){
 	            'zepto': 'zepto/zepto.min.js',
 	            'dot':'doT/doT.min.js',
 	            'iscroll':'iscroll/iscroll-4.2.js',
-	            'jweixin':'weixin/jweixin-1.1.0.js',
+	            'jweixin':'weixin/jweixin-1.2.0.js',
 	            'director':'director/director.js',
 	            'echo':'echo/echo.min.js',
 	            'vue':'vue/vue-2.0.7.min.js',
 	            'vue-router':'vue/vue-router-2.5.3.min.js',
 	            'vue-resource':'vue/vue-resource-1.3.1.min.js',
 	            'moment': 'moment/moment.min.js',
+	            'clipboard':'clipboard/clipboard.min.js',
 	            'swiper': 'swiper/swiper.min.js',
 	            'weui':'weui/weui.min.js',
 	            'touch':'touch/touch.min.js',
@@ -85,7 +86,8 @@ gulp.task( 'build:cmd-moudle', function(){
 	            'base64':'common/base64.js',
 	            'sha1':'common/sha1.js',
 	            'req':'common/req.js',
-	            'index-db':'common/index-db.js'
+	            'index-db':'common/index-db.js',
+	            'params':'common/params.js'
             }/*,
             ignore :[
                 'jquery',
@@ -99,10 +101,10 @@ gulp.task( 'build:cmd-moudle', function(){
         .pipe(rename({ suffix: '.all' }))
         //.pipe(jshint())
         //.pipe(jshint.reporter('default'))
-        .pipe(gulp.dest('webapp'))
+        .pipe(gulp.dest('webapp/js/moudel2'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(uglify())
-        .pipe( gulp.dest("webapp"));
+        .pipe( gulp.dest("webapp/js/moudel2"));
 });
 //打包样式
 gulp.task("build:css",function(){
@@ -111,10 +113,10 @@ gulp.task("build:css",function(){
     .pipe(csscomb())
     .pipe(postcss([autoprefixer]))
     .pipe(rename({ suffix: '.all' }))
-    .pipe(gulp.dest("webapp"))
+    .pipe(gulp.dest("webapp/css/module2"))
     .pipe(nano())
     .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest("webapp"));
+    .pipe(gulp.dest("webapp/css/module2"));
 }
 );
 
@@ -149,7 +151,7 @@ gulp.task("build:jsp",['build:copy-jsp'],function(){
     .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
 });
 //对seajs-config 版本配置+1，以防止出现缓存问题
-gulp.task("build:seajs-config",function(){
+/*gulp.task("build:seajs-config",function(){
     return gulp.src("webapp/js/seajs/sea-all.min.js",{base:'webapp'}) 
     .pipe(tap(function (file){
             var filename = path.basename(file.path);
@@ -167,16 +169,16 @@ gulp.task("build:seajs-config",function(){
             
      }))
     .pipe(gulp.dest('webapp'));
-});
+});*/
 //打包seajs
-gulp.task("build:seajs",['build:seajs-config'],function(){
+/*gulp.task("build:seajs",['build:seajs-config'],function(){
     return gulp.src(["webapp/js/seajs/*.js",'!webapp/js/seajs/sea-all*.js'],{base:'webapp'}) 
     .pipe(concat('sea-all.js'))
     .pipe(gulp.dest('webapp/js/seajs'))
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
     .pipe(gulp.dest('webapp/js/seajs'));
-});
+});*/
 //执行全局打包
-gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp','build:seajs-config'] );
+gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp'] );
 //gulp.task( 'default', ['build:global-css'] );

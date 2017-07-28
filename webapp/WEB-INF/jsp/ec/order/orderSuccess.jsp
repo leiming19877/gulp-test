@@ -389,28 +389,30 @@ $(document).ready(function(){
 	//注册返回事件
 	$(".image_left").on("click", function(){
 		$.mobile.loading("show");
-		if (orderStatus < 34) {
-			window.location.href="${ctx}/preorder/iWantBuy";
+		/* if (orderStatus < 34) {
+			window.location.href="${ctx}/ec/preorder/iWantBuy";
 		} else {
-			window.location.href="${ctx}/preorder/getList";
-		}
+			window.location.href="${ctx}/ec/preorder/getList";
+		} */
+		window.history.back();
 	});
 	
 	//查看订单事件
 	$(".view").on("click", function(){
 		$.mobile.loading("show");
-		window.location.href="${ctx}/preorder/getOrderDetail?orderId="+orderId;
+		window.location.href="${ctx}/ec/preorder/getOrderDetail?orderId="+orderId;
 	});
 	
 	//再次下单事件
 	$(".order").on("click", function(){
 		var $this = $(this);
 		$.mobile.loading("show");
-		if ($this.hasClass("logistics")) {
-			window.location.href="${ctx}/preorder/selectLogisticsType?orderId="+orderId;
+		/* if ($this.hasClass("logistics")) {
+			window.location.href="${ctx}/ec/preorder/selectLogisticsType?orderId="+orderId;
 		} else {
-			window.location.href="${ctx}/preorder/iWantBuy";
-		}
+			window.location.href="${ctx}/ec/preorder/iWantBuy";
+		} */
+		window.history.back();
 	});
 });
 </script>

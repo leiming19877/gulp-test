@@ -10,7 +10,7 @@ wx.config({
     timestamp:<%=sign.getTimestamp() %> , // 必填，生成签名的时间戳
     nonceStr: '<%=sign.getNonceStr() %>', // 必填，生成签名的随机串
     signature: '<%=sign.getSignature() %>',// 必填，签名
-    jsApiList: ['scanQRCode','chooseImage','uploadImage','hideOptionMenu','hideAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
+    jsApiList: ['closeWindow','scanQRCode','chooseImage','uploadImage','hideOptionMenu','hideAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
 });
 wx.ready(function(){
     wx.hideOptionMenu();

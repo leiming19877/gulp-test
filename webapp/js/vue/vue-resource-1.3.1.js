@@ -1086,8 +1086,8 @@ var xhrClient = function (request) {
 
 var nodeClient = function (request) {
 
-    var client = require('got');
-
+    //var client = require('got');
+	var client = {};
     return new PromiseObj(function (resolve) {
 
         var url = request.getUrl();

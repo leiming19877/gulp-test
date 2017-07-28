@@ -1,0 +1,101 @@
+@CHARSET "UTF-8";
+html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
+.g-page {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition:transform 0.1s linear;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;   
+}
+
+[v-cloak]{display: none;}
+
+.g-page{display:-webkit-box; display:flex; -webkit-box-orient:vertical;flex-direction:column ; height: 99.9%;}
+/* .g-page.gp1{left:100%; right:-100%;}
+.g-page.fadein{transform:translate3d(-100%,0,0);  z-index: 6;} */
+
+.g-header{-webkit-box-flex:0;flex:none; width:100%;height: 40px; line-height:40px;border-bottom:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
+.detail_header{
+	text-align:left;
+	margin-left:15px;
+}
+.order_detail_sta{float:right;margin-right:15px;color:blue;}
+.detail_copy{vertical-align:middle;margin-left:6px;}
+.height_30{line-height:30px;height:30px;margin-left:15px;}
+.height_90{line-height:90px;height:90px;margin-left:15px;}
+.lable_l{float:left;width:30%;}
+.lable_r{ float:right;width:70%;}
+.border_bottom{
+	border-bottom: 1px solid lightgray;
+	padding-bottom: 5px;
+}
+.border_bottom_10{
+	border-bottom: 10px solid lightgray;
+	padding-bottom: 5px;
+}
+.g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
+.g-footer{-webkit-box-flex:0;flex:none; width:100%;height:50px; border-top:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
+
+.u-back-left{float:left;margin: 0 5px 0 5px;padding: 0 5px 0 0;}
+.u-back-left:before{display:block; font-size:20px;content: "\e604";}
+
+.u-title{height: 40px; line-height:40px;font-weight: bold;font-size: 14px;overflow: hidden;}
+
+.u-ipt-min{width: 30%;height: 25px;border: 1px solid #ccc;}
+.u-dialog-money-ipt{height: 2em;font-size: 2em;width: 80%;text-align: center;margin: 0px 10% 0px 10%;}
+.u-warehouse{height: 33px;line-height: 33px;border: 1px solid #E4E2E1;width: 71%;margin-left: 14%;}
+
+.f-bg1{background-color: #e9e9e9;}
+.f-red1{color:#EF4F4F;}
+
+	/** 竞价基本信息  **/
+.m-quote{position:relative;}
+.m-quote .txt-line{line-height: 30px;padding-top: 10px;}
+.m-quote .txt-a{color:blue;padding-left:5%;line-height: 30px;padding-top: 10px;}
+.m-quote .lab{padding-left: 10px;font-weight:bold;}
+.m-quote .txt{vertical-align:middle;}
+.m-quote .txt-head{background: darkgray;height: 50px;}
+.m-quote .txt-head .left{position: relative;width: 70%;padding-top: 3px;}
+.m-quote .txt-head .right{float: right;width: 30%;line-height: 0px;font-weight: bold;position: relative;top: -25px;}
+/** 报价单名细信息  **/
+.m-quote-list{table-layout: fixed;border-collapse: collapse; margin-top:4px; width:100%; font-size: 12px;}
+.m-quote-list thead{text-align: center;border-bottom: 1px solid lightgray;}
+.m-quote-list tr{text-align: center;}
+.m-quote-list th{font-weight: bold;text-align: center;border-right: 1px solid lightgray;}
+.m-quote-list td,.m-quote-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;border-right: 1px solid lightgray;}
+.m-quote-list .place-steel{color:#F40; }
+.m-quote-list .show{}
+.m-quote-list .hide{display:none;}
+.m-quote-list .add-show{width: 10em;}
+.m-order-list .copy-steel-btn{width: 5em;height: 1.7em;}
+
+.show{display:block;}
+.hide{display:none;}
+
+.m-quote-footer{height:50px; padding-right:10px; text-align: right;}
+.m-quote-footer .quote-btn{width:100%; margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}
+
+.m-quote-addprice{float: right;position: absolute;top: 50px;left: 100%;width: 100%;height: 100%;background: rgba(80, 78, 88, 0.5)}
+.m-quote-addprice-show{transform: translate(-100%,0px);transition: transform 0.35s;}
+.m-quote-addprice-close{transform: translate(100%,0px);transition: transform 0.35s;}
+.m-quote-addprice .m-quote-price{overflow: auto;background: white;width: 90%;height: 100%;position: absolute;top: -20px;left: 10%;}
+.m-quote-addprice .m-quote-price .txt-line{line-height: 30px;padding-top: 5px;padding-bottom: 5px;}
+.m-quote-addprice .m-quote-price .txt-line select{width: 60%;height: 30px;}
+.m-quote-addprice .m-quote-price .lab{padding-left: 10px;font-weight:bold;}
+.m-quote-addprice .m-quote-price .txt{vertical-align:middle;}
+.m-quote-addprice table{width: 100%;}
+.m-quote-addprice tr{height: 35px; text-align: center;border-bottom: 1px solid darkgray;}
+.m-quote-addprice th{height: 35px; text-align: center;border-right: 1px solid darkgray;}
+.m-quote-addprice td{height: 35px; text-align: center;border-right: 1px solid darkgray;}
+
+
+.search-input{margin-left:50px;border:0}
+.lading-deatail-list{
+	height:110px;
+}
+tr{
+	line-height:30px;
+}

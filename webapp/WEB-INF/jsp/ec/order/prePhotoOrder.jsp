@@ -310,7 +310,7 @@ $(document).ready(function(){
 			$("input[name='serverIds']").val(serverIds);
 			//提交订单
 			$.ajax({
-	            url: '${ctx}/preorder/placeOrder',
+	            url: '${ctx}/ec/preorder/placeOrder',
 	            dataType: "json",
 	            data: $("form[name='orderForm']").serialize(),
 	    		beforeSend: function () {
@@ -326,7 +326,7 @@ $(document).ready(function(){
 	            	if (result) {
 	    				//添加成功后跳转至管理界面
 	    				if (result.success == true) {
-	    					window.location.href="${ctx}/preorder/placeOrderRes?orderId="+result.orderId;
+	    					window.location.href="${ctx}/ec/preorder/placeOrderRes?orderId="+result.orderId;
 	    			    } else {
 	    			    	alert(result.msg);
 	    			    }

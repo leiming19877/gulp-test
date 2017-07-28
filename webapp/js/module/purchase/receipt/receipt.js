@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 	//引入时间组件
-	require("../../common/Date");
+	require("date");
 	var $ = require("zepto");
 	 //dot模板引擎
 	var doT = require("dot");

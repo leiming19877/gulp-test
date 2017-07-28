@@ -2,7 +2,7 @@
  * 竞价导航模块
  */
 define(function(require, exports, module) {
-	require("../../common/String");
+	require("string");
 	var $ = require("zepto");
 	//数据加载提示
 	//var loadingToast = require("./loadingToast");

@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 	 //dot模板引擎
 	var doT = require("dot");
 	//引入时间组件
-	require("../../common/Date");
+	require("date");
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");
 	//界面主内容区

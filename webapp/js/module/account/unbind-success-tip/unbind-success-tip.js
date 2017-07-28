@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	var $ = require("zepto");
 	var wx = require("jweixin");
-	var params = require("../../common/Params");
+	var params = require("params");
 	
 	var url = window.location.href;
 	$.post("../../../../getSignUrl",{"url":url},function(data){

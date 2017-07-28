@@ -14,7 +14,7 @@ define(function(require, exports, module) {
 	//当前选择是的那种类型
 	var selectedType = SIGNING_SHIPPING;
 	//引入时间组件
-	require("../../common/Date");
+	require("date");
 	var $ = require("zepto");
 	//数据加载提示
 	var loadingToast = require("../../common/loadingToast");

@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 	
-	require("../../common/String");
+	require("string");
 	var $ = require("zepto");
 	 //dot模板引擎
 	var doT = require("dot");
