@@ -44,7 +44,7 @@ define(function(require, exports, module) {
         throttle: 25,
         unload: false,
         callback: function (element, op) {
-          console.log(element, 'has been', op + 'ed')
+          console.log(element, 'has been', op + 'ed');
         }
       });
 	/**

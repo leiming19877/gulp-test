@@ -471,8 +471,10 @@ define(function(require, module, exports) {
 				     		self.city = result[1].label;
 				     		self.areaName = result[2].label;
 				     		var address = "";
-				     		if (self.provinceName == self.city) {
-				     			address = self.provinceName + self.areaName;
+				     		if (self.provinceName == self.city && self.city == self.areaName) {
+				     			address = self.provinceName;
+				     		} else if (self.provinceName == self.city && self.city == self.areaName) {
+				     			address = self.provinceName + self.city;
 				     		} else {
 				     			address = self.provinceName + self.city + self.areaName;
 				     		}

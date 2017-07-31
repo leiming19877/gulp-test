@@ -210,7 +210,7 @@ define(function(require, module, exports) {
 				var type = $("#dialog2").attr("data-type");
 				var index = $("#dialog2").attr("data-index");
 				if (type == "spotgoods") {
-					$($("#spotgoods").find("li")[index]).remove();
+					this.resListingList.splice(index,1);
 					/**
 					 * 需要后台删除购物车数据
 					 */
@@ -382,8 +382,10 @@ define(function(require, module, exports) {
 					}
 				});
 				$("#spotgoods input").each(function(index,obj){
-					if ($(obj).val() == "" || !reg.test($(obj).val())) {
-						result = true;
+					if ($(obj).attr("name") == "futureWeight") {
+						if ($(obj).val() == "" || !reg.test($(obj).val())) {
+							result = true;
+						}
 					}
 				});
 				if ($("#transFee").hasClass("show")) {
@@ -434,7 +436,7 @@ define(function(require, module, exports) {
 				});
 			 	$("#spotgoods li").each(function(index,obj){
 			 		var type = $(obj).find("input[name='futureWeight']").attr("delist-type");
-			 		var weight,count;
+			 		var weight = 0,count = 0;
 			 		if (type == 1) { // 按数量
 				 		count = $(obj).find("input[name='futureWeight']").val();
 			 		} else if (type == 2) {// 按重量

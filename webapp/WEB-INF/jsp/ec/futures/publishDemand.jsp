@@ -120,7 +120,7 @@
 	                <div class="weui-cell__bd">
 	                    <input class="weui-input" v-model.number="width"
 	                    type="number" pattern="[0-9]*"  
-	                    @blur="checkNumberVal('width',0);"
+	                    @blur="checkWidthVal();"
 	                     placeholder="请输入宽度" />
 	                </div>
 	                <div class="weui-cell__ft">
@@ -137,7 +137,7 @@
                     <div class="weui-cell__bd">
                         <input class="weui-input" v-model.number="thickness" 
                         type="number"  pattern="[0-9]*[\.][0-9]{0,2}" 
-                          @blur="checkNumberVal('thickness',2);"
+                          @blur="checkThicknessVal();"
                          placeholder="请输入厚度" />
                     </div>
                     <div class="weui-cell__ft">

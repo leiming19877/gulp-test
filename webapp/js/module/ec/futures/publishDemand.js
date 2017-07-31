@@ -458,6 +458,24 @@ define(function(require, exports, module) {
 				 }
 				 return [];
 			},
+			//获取选择的规格
+			getSepecification:function(){
+				var sp = null;
+				if(this.specification && this.specification.specificationName !== '其他' ){
+					sp = this.specification;
+				}else {
+					sp = this.otherSpecification;
+				}
+				return sp;
+			},
+			//获取规格名称
+			getSpecificationName:function(){
+				var sp = this.getSepecification();
+				if(!sp || sp.specificationName=== '请选择'){
+					return '';
+				}
+				return sp.specificationName;
+			},
 			addShopingCart:function(){
 				var params = {};
 				if(!this.sellerMemberId){
@@ -565,8 +583,111 @@ define(function(require, exports, module) {
 			hideAddPrice:function(){
 				this.isShowAddPrice = false;
 			},
+			//校验宽度
+			checkWidthVal:function(){
+				var spn = this.getSpecificationName();
+				if(!spn){
+					weui.toast('请选择具体规格',3000);
+				}
+				var width =this['width'];
+				if(width === null){
+					return ;
+				}
+				var  str = width.toString();
+				var t = str.split("\.");
+				if(t.length >1 && t[1].length > 0){
+					this['width'] = this['width'].toFixed(0);
+				}else if(str === ''){
+					this['width'] = null;
+					weui.toast('请输入合法数字!', 3000);
+					return ;
+				}
+				
+				var sp = spn.split("\*");
+				if(sp.length !== 2){
+					return ;
+				}
+				var cVal = sp[0];
+				//如果宽度是非数字
+				if(isNaN(cVal)){
+					if(cVal.indexOf("以上") > 0){
+						var  cwVal = cVal.split("以上")[0];
+						if(width < cwVal){
+							this['width'] = null;
+							weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);
+							return ;
+						}
+					}
+					
+					if(cVal.indexOf("以下") > 0){
+						var  cwVal = cVal.split("以下")[0];
+						if(width > cwVal){
+							this['width'] = null;
+							weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);
+							return ;
+						}
+					}
+				}else if(width != cVal){
+					this['width'] = null;
+					weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);
+					return ;
+				}
+				
+				return ;
+			},
+			//校验宽度
+			checkThicknessVal:function(){
+				var spn = this.getSpecificationName();
+				if(!spn){
+					weui.toast('请选择具体规格',3000);
+				}
+				var thickness =this['thickness'];
+				if(thickness === null){
+					return ;
+				}
+				var  str = thickness.toString();
+				var t = str.split("\.");
+				if(t.length >1 && t[1].length > 2){
+					this['thickness'] = this['thickness'].toFixed(2);
+				}else if(str === ''){
+					this['thickness'] = null;
+					weui.toast('请输入合法数字!', 3000);
+					return ;
+				}
+				
+				var sp = spn.split("\*");
+				if(sp.length !== 2){
+					return ;
+				}
+				var cVal = sp[1];
+				//如果宽度是非数字
+				if(isNaN(cVal)){
+					var  cwVal = cVal.split("-");
+					//如果规格格式不是12-14这样的格式，就不校验
+					if(cwVal.length !== 2 || isNaN(cwVal[0]) ||  isNaN(cwVal[1])){
+						return ;
+					}
+					
+					if(thickness < cwVal[0] || thickness > cwVal[1]){
+						this['thickness'] = null;
+						weui.toast('厚度必须按选择的规格输入，规格要求'+cVal, 3000);
+						return ;
+					}
+				}else if(thickness != cVal){
+					this['thickness'] = null;
+					weui.toast('厚度必须按选择的规格输入，规格要求'+cVal, 3000);
+					return ;
+				}
+				
+				return ;
+			},
 			checkNumberVal:function(prop,decimal){
 				if(this[prop] === null ){
+					return ;
+				}
+				var pv = this[prop];
+				//没有输入值
+				if(pv === null){
 					return ;
 				}
 				var  str = this[prop].toString();
@@ -574,7 +695,7 @@ define(function(require, exports, module) {
 				if(decimal >= 0 && t.length >1 && t[1].length > decimal){
 					this[prop] = this[prop].toFixed(decimal);
 				}else if(str === ''){
-					this[prop] = 0;
+					this[prop] = null;
 					weui.toast('请输入合法数字!', 3000);
 				}
 				return ;
@@ -615,6 +736,7 @@ define(function(require, exports, module) {
 			recentAddShopCart:function(brandId,brandName,steelWorkId,steelWorkName,
 					specificationName,textureId,textureName,
 					buyWeight){
+			
 				var params = {};
 				if(!this.sellerMemberId){
 					weui.alert("请选择卖家！");
@@ -633,13 +755,13 @@ define(function(require, exports, module) {
 			    var  sp = specificationName.split('\*');
 			    if(sp.length == 2){
 			    	params['width'] = sp[0];
-			    	params['height'] = sp[1];
+			    	params['thickness'] = sp[1];
 			    }
 		
 				params['textureId'] = textureId;
 				params['textureName'] = textureName;
 				
-				params['buyWeight'] = buyWeight;
+				//params['buyWeight'] = buyWeight;
 				
 				var loading = weui.loading('保存中...', {
 					   
@@ -676,15 +798,5 @@ define(function(require, exports, module) {
 		}
 	});
 
-	/*
-	$("#thickness-price .weui-mask").on("click",function(){
-		//debugger;
-		var self = $(this);
-		var p = self.parent();
-		p.removeClass("show");
-	})*/
-	
-	/*$("#thickness-price .content").on("animationend webkitAnimationEnd transitionend webkitTransitionEnd",function(){
-	
-	})*/
+
 });

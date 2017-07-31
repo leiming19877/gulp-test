@@ -41,7 +41,7 @@
 								<a hidden class="txt-a" href="javascript:void(0);">查看仓储费报价</a>
 							</div>
 							<div>
-								<span v-if="futures[0].cueWord != 'null'" style="color:red;padding-left: 18px;" v-text="'提示：'+futures[0].cueWord"></span>
+								<span v-if="futures[0].cueWord" style="color:red;padding-left: 18px;" v-text="'提示：'+futures[0].cueWord"></span>
 							</div>
 							<ul>
 								<li v-for="e in futures">

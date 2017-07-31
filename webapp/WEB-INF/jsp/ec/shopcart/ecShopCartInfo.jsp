@@ -65,32 +65,15 @@
 									<span v-if="e.isDeliver==0" v-text="'配送  '"></span><span v-if="e.isDeliver==1" v-text="'自提  '"></span><span v-text="e.province+e.city"></span>
 								</div>
 								<div class="info3">
-									<input v-if="e.delistType == 1" @click="subNumber(e.unitWeight,$event)" class="sub" type="button" value="-"><input readonly="readonly" v-bind:delist-type="e.delistType" name="futureWeight" class="number" v-if="e.delistType == 1" type="text" value="1"><input  @click="addNumber(e.listingQuantity,e.unitWeight,$event)" v-if="e.delistType == 1" class="add" type="button" value="+">
-									<input v-if="e.delistType == 2" v-bind:delist-type="e.delistType" name="futureWeight" @click="inputFutureWeight($event,'weight')"v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingWeight" type="text" style="" value="" v-bind:placeholder="'限'+e.listingQuantityShow"/>
+									<input v-if="e.delistType == 1" @click="subNumber(e.unitWeight,$event)" class="sub" type="button" value="-"><input v-if="e.delistType == 1" readonly="readonly" v-bind:delist-type="e.delistType" name="futureWeight" class="number" type="text" value="1" v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingQuantity"><input v-if="e.delistType == 1" @click="addNumber(e.listingQuantity,e.unitWeight,$event)" class="add" type="button" value="+">
 									<p v-if="e.delistType == 1"  v-text="e.unitWeight"></p>&nbsp;吨 
+									
+									<input v-if="e.delistType == 2" v-bind:delist-type="e.delistType" name="futureWeight" @click="inputFutureWeight($event,'weight')" v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingWeight" type="text" style="" value="" v-bind:placeholder="'限'+e.listingQuantityShow"/>
 									<span v-if="e.resStatus==0" v-text="'已撤牌'"></span>
-									<a href="javascript:void(0);" @click="deleteSpotgoods" class="weui-icon-cancel"></a>
+									<a href="javascript:void(0);" @click="deleteSpotgoods($event,e.listingId,index)" class="weui-icon-cancel"></a>
 								</div>
 							</div>
 						</li>				
-						<!-- <li class="m-order-spotgoods">
-							<div class="">
-								<div class="info1">
-									<span class="span1">唐山东海&nbsp;带钢&nbsp;Q195&nbsp;570*3.5</span>
-									<span class="span2">¥3670.00/吨</span>
-								</div>
-								<div class="info2">
-									<span class="span1">唐山永昌库</span>&emsp;
-									<span class="span2">12件/24.050吨</span>&emsp;
-									<span>自提&emsp;唐山丰南区</span>
-								</div>
-								<div class="info3">
-									<input @click="inputFutureWeight($event)" type="text" value="" />&nbsp;吨
-									<span hidden>已撤牌</span>
-									<a href="javascript:void(0);" @click="deleteSpotgoods" class="weui-icon-cancel"></a>
-								</div>
-							</div>
-						</li> -->
 					</ul>
 				</div>
 				
