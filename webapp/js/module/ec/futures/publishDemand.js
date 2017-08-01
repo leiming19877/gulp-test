@@ -233,7 +233,7 @@ define(function(require, exports, module) {
 				this.getSellerBrandListAndShopingCart(newSellerMemberId);
 				this.getRecentlyBuyRecordList(newSellerMemberId);
 			},
-			brand:function(newBrand){
+			brand:function(/*newBrand*/){
 				this.steelWork = null;
 				this.specification = null;
 				this.texture = null;
@@ -262,7 +262,7 @@ define(function(require, exports, module) {
 				}
 				
 			},
-			steelWork:function(newSteelWork){
+			steelWork:function(/*newSteelWork*/){
 				this.specification = null;
 				this.texture = null;
 				var list = this.listSpecifications;
@@ -280,7 +280,7 @@ define(function(require, exports, module) {
 					this.thicknessSpecification = list[0];
 				}
 			},
-			specification:function(newSpecification){
+			specification:function(/*newSpecification*/){
 				this.texture = null;
 				var list = this.listTextures;
 				if(list.length > 0){
@@ -300,7 +300,7 @@ define(function(require, exports, module) {
 					this.thicknessSpecification = list[0];
 				}
 			},
-			thicknessSteelWork:function(newSteelWork){
+			thicknessSteelWork:function(/*newSteelWork*/){
 				this.thicknessSpecification = null;
 				var list = this.listThicknessSpecifications;
 				if(list.length > 0){
@@ -504,7 +504,7 @@ define(function(require, exports, module) {
 					params['steelWorkName'] = this.steelWork.steelWorkName;
 	
 				}else {
-					params['steelWorkId'] = this.otherSteelWork.steelWorkId;;
+					params['steelWorkId'] = this.otherSteelWork.steelWorkId;
 					params['steelWorkName'] = this.otherSteelWork.steelWorkName;
 				}
 				
@@ -608,10 +608,11 @@ define(function(require, exports, module) {
 					return ;
 				}
 				var cVal = sp[0];
+				var  cwVal = null;
 				//如果宽度是非数字
 				if(isNaN(cVal)){
 					if(cVal.indexOf("以上") > 0){
-						var  cwVal = cVal.split("以上")[0];
+						cwVal = cVal.split("以上")[0];
 						if(width < cwVal){
 							this['width'] = null;
 							weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);
@@ -620,7 +621,7 @@ define(function(require, exports, module) {
 					}
 					
 					if(cVal.indexOf("以下") > 0){
-						var  cwVal = cVal.split("以下")[0];
+						cwVal = cVal.split("以下")[0];
 						if(width > cwVal){
 							this['width'] = null;
 							weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);

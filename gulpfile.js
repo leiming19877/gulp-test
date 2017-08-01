@@ -48,12 +48,15 @@ gulp.task("build:global-css",function(){
 );
 //对模块js进行验证
 gulp.task('build:js-check', function(){
-    return gulp.src(['webapp/js/module/**/*.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})   
+    return gulp.src(['webapp/js/module/**/*.js','!webapp/js/module/**/*.all*.js','!webapp/js/module/**/*.min.js'] ,{base:'webapp'})   
+    //return gulp.src(['webapp/js/module/ec/futures/*.js','!webapp/js/module/**/*.all*.js',] ,{base:'webapp'})   
 	    .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-	    .pipe(jshint.reporter('gulp-jshint-file-reporter', {
+        //.pipe(jshint.reporter('fail'))
+        .pipe(jshint.reporter('default'));
+       
+	    /*.pipe(jshint.reporter('gulp-jshint-file-reporter', {
 	        filename: __dirname + '/jshint-output.log'
-	      }));
+	      }));*/
 });
 
 //打包js主模块
