@@ -19,11 +19,11 @@
 	<div id="g-content" class="g-content">
 		<div class="success">
 			<div v-text="'订单提交成功，等待卖家审核'"></div>
-			<div v-text="'订单号：'+orderId"></div>
+			<div style="padding-top: 5px;" v-for="e in orderBusiIds" v-text="'订单号：DD'+e"></div>
 		</div>
 		<div class="btn">
 			<a @tap="backToFirstPage($event)" href="javascript:;"class="weui-btn weui-btn_mini weui-btn_primary">返回首页</a>
-			<a @tap="viewOrderDetail(orderId)" href="javascript:;"class="weui-btn weui-btn_mini weui-btn_primary">查看订单</a>
+			<a @tap="viewOrderDetail(orderIds)" href="javascript:;"class="weui-btn weui-btn_mini weui-btn_primary">查看订单</a>
 		</div>
 	</div>
 </div>

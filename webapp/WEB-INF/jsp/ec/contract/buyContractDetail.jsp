@@ -84,6 +84,11 @@
 	                   <span v-text="contract.totalBuyoneyCN"></span>
 	               </td>
 	           </tr>
+	           <tr v-if="contract.goodsRemarkHtml">
+                   <td class="label total-money" colspan="5">
+                       <div v-html="contract.goodsRemarkHtml"></div>
+                   </td>
+               </tr>
 	       </table>
 	       <div v-cloak v-if="contract.dataSource == 0" >
 	           <ul class="u-section">

@@ -1,5 +1,5 @@
 var modules =[
-	{
+	/*{
 	"main-js":"webapp/js/module/account/bind-success-tip/bind-success-tip.js",
 	"jsp":"webapp/WEB-INF/jsp/account/bind-success-tip/bind-success-tip.jsp",
 	"css":"webapp/css/module/account/bind-success-tip/bind-success-tip.css"
@@ -212,27 +212,27 @@ var modules =[
 	   //调拔单的
 		{
 			"main-js":"webapp/js/module/purchase/allocation/allocation-picture-upload.js",
-			"jsp":"WEB-INF/jsp/purchase/allocation/allocationPictureUpload.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/allocation/allocationPictureUpload.jsp",
 			"css":"webapp/css/module/purchase/allocation/allocation-detail.css"
 			},
 		{
 			"main-js":"webapp/js/module/purchase/allocation/allocationDetail.js",
-			"jsp":"WEB-INF/jsp/purchase/allocation/allocationDetail.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/allocation/allocationDetail.jsp",
 			"css":"webapp/css/module/purchase/allocation/allocation-detail.css"
 			},
 		{
 			"main-js":"webapp/js/module/purchase/allocation/allocationList.js",
-			"jsp":"WEB-INF/jsp/purchase/allocation/allocationList.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/allocation/allocationList.jsp",
 			"css":"webapp/css/module/purchase/allocation/allocation-list.css"
 			},
 		{
 			"main-js":"webapp/js/module/purchase/allocation/editAllocation.js",
-			"jsp":"WEB-INF/jsp/purchase/allocation/editAllocation.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/allocation/editAllocation.jsp",
 			"css":"webapp/css/module/purchase/allocation/allocation-detail.css"
 			},
 		{
 			"main-js":"webapp/js/module/purchase/allocation/examinationAllocation.js",
-			"jsp":"WEB-INF/jsp/purchase/allocation/examinationAllocation.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/allocation/examinationAllocation.jsp",
 			"css":"webapp/css/module/purchase/allocation/allocation-detail.css"
 			},
 		{
@@ -242,19 +242,22 @@ var modules =[
 			},
 		{
 			"main-js":"webapp/js/module/purchase/order/allocationOrderDetailExtraPage.js",
-			"jsp":"WEB-INF/jsp/purchase/order/allocationOrderDetailExtraPage.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/order/allocationOrderDetailExtraPage.jsp",
 			"css":"webapp/css/module/purchase/order/order-detail.css"
 			},
 		{
 			"main-js":"webapp/js/module/purchase/order/allocationOrderListPage.js",
-			"jsp":"WEB-INF/jsp/purchase/order/allocationOrderList.jsp",
+			"jsp":"webapp/WEB-INF/jsp/purchase/order/allocationOrderList.jsp",
 			"css":"webapp/css/module/purchase/order/order-list.css"
-			}/*,
-		    {
+		},{
 			"main-js":"webapp/js/module/ec/futures/publishDemand.js",
-			"jsp":"WEB-INF/jsp/ec/futures/publishDemand.jsp",
+			"jsp":"webapp/WEB-INF/jsp/ec/futures/publishDemand.jsp",
 			"css":"webapp/css/module/ec/futures/publishDemand.css"
-			}*/
+		},*/{
+			"main-js":"webapp/js/module/ec/contract/buy-contract-list.js",
+			"jsp":"webapp/WEB-INF/jsp/ec/contract/buyContractList4Buyer.jsp",
+			"css":"webapp/css/module/ec/contract/contractList.css"
+		}
 		
 			
 ];

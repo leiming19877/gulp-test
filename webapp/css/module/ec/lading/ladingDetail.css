@@ -19,20 +19,20 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .g-header{-webkit-box-flex:0;flex:none; width:100%;height: 40px; line-height:40px;border-bottom:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
 .detail_header{
 	text-align:left;
-	margin-left:15px;
+	padding-left:15px;
 }
-.order_detail_sta{float:right;margin-right:15px;color:blue;}
+.order_detail_sta{float:right;margin-right:15px;color:#3879d9;}
 .detail_copy{vertical-align:middle;margin-left:6px;}
 .height_30{line-height:30px;height:30px;margin-left:15px;}
 .height_90{line-height:90px;height:90px;margin-left:15px;}
 .lable_l{float:left;width:30%;}
 .lable_r{ float:right;width:70%;}
 .border_bottom{
-	border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid #ebebeb;
 	padding-bottom: 5px;
 }
 .border_bottom_10{
-	border-bottom: 10px solid lightgray;
+	border-bottom: 10px solid #ebebeb;
 	padding-bottom: 5px;
 }
 .g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
@@ -61,10 +61,10 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-quote .txt-head .right{float: right;width: 30%;line-height: 0px;font-weight: bold;position: relative;top: -25px;}
 /** 报价单名细信息  **/
 .m-quote-list{table-layout: fixed;border-collapse: collapse; margin-top:4px; width:100%; font-size: 12px;}
-.m-quote-list thead{text-align: center;border-bottom: 1px solid lightgray;}
+.m-quote-list thead{text-align: center;border-bottom: 1px solid #ebebeb;}
 .m-quote-list tr{text-align: center;}
-.m-quote-list th{font-weight: bold;text-align: center;border-right: 1px solid lightgray;}
-.m-quote-list td,.m-quote-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;border-right: 1px solid lightgray;}
+.m-quote-list th{font-weight: bold;text-align: center;border-right: 1px solid #ebebeb;}
+.m-quote-list td,.m-quote-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;border-right: 1px solid #ebebeb;}
 .m-quote-list .place-steel{color:#F40; }
 .m-quote-list .show{}
 .m-quote-list .hide{display:none;}

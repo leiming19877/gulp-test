@@ -9,6 +9,7 @@
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/futures/buyNav.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/zmd.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 
 <body>

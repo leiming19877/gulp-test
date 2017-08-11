@@ -7,6 +7,8 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
     bottom: 0;
     left: 0;
     transition:transform 0.1s linear;
+    -ms-transition:transform 0.1s linear;
+    -webkit-transition:transform 0.1s linear;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;   
 }
@@ -95,9 +97,9 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-order-footer .order-btn{width:40%; margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}
 
 .m-quote-transportfee{float: right;position: absolute;top: 0px;width: 100%;height: 100%;background: rgba(80, 78, 88, 0.5)}
-.m-quote-transportfee-show{transform: translate(-100%,0px);transition: transform 0.35s;}
-.m-quote-transportfee-close{transform: translate(100%,0px);transition: transform 0.35s;}
-.m-quote-transportfee .m-quote-fee{overflow: auto;background: white;width: 95%;height: 100%;position: absolute;top: 0;left: 100%;}
+.m-quote-transportfee-show{transform: translate(-100%,0px);transition: transform 0.35s;-ms-transform: translate(-100%,0px);-ms-transition: transform 0.35s;-webkit-transform: translate(-100%,0px);-webkit-transition: transform 0.35s;}
+.m-quote-transportfee-close{transform: translate(100%,0px);transition: transform 0.35s;-ms-transform: translate(100%,0px);-ms-transition: transform 0.35s;-webkit-transform: translate(100%,0px);-webkit-transition: transform 0.35s;}
+.m-quote-transportfee .m-quote-fee{overflow: auto;background: white;width: 90%;height: 100%;position: fixed;top: 0;left: 100%;}
 .m-quote-transportfee .m-quote-fee .txt-line{padding-left: 15px;line-height: 30px;padding-top: 5px;padding-bottom: 5px;}
 .m-quote-transportfee .m-quote-fee .txt-line select{width: 60%;height: 30px;}
 .m-quote-transportfee .m-quote-fee .lab{padding-left: 10px;font-weight:bold;}
@@ -115,16 +117,18 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-quote-transportfee .m-quote-search .search-btn{width: 90%;margin-left: 5%;position: absolute;top: 90%;height: 40px;line-height: 40px;font-size: 18px;}
 
 .m-quote-addrManage{float: right;position: absolute;top: 0px;width: 100%;height: 100%;background: rgba(80, 78, 88, 0.5)}
-.m-quote-addrManage-show{transform: translate(-100%,0px);transition: transform 0.35s;}
-.m-quote-addrManage-close{transform: translate(100%,0px);transition: transform 0.35s;}
-.m-quote-addrManage .m-quote-addr{overflow: auto;background: #E4E4E4;width: 100%;height: 100%;position: absolute;top: 0;left: 100%;}
+.m-quote-addrManage-show{transform: translate(-100%,0px);transition: transform 0.35s;-ms-transform: translate(-100%,0px);-ms-transition: transform 0.35s;-webkit-transform: translate(-100%,0px);-webkit-transition: transform 0.35s;}
+.m-quote-addrManage-close{transform: translate(100%,0px);transition: transform 0.35s;-ms-transform: translate(100%,0px);-ms-transition: transform 0.35s;-webkit-transform: translate(100%,0px);-webkit-transition: transform 0.35s;}
+.m-quote-addrManage .m-quote-addr{overflow: auto;background: #E4E4E4;width: 100%;height: 100%;position: fixed;top: 0;left: 100%;}
+.m-quote-addrManage .m-quote-addr ul{position: relative;height: 86%;overflow: scroll;}
 .m-quote-addrManage .m-quote-addr li{background: white;border-bottom: 8px solid #E4E4E4;}
-.m-quote-addrManage .m-quote-addr .title{text-align: center;border-bottom: 1px solid #F8F8F8;background: #F8F8F8;font-weight: bold;height: 44px;line-height: 44px;}
+.m-quote-addrManage .m-quote-addr .title{text-align: center;border-bottom: 1px solid #F8F8F8;background: #F8F8F8;font-weight: bold;height: 7%;line-height: 44px;}
 .m-quote-addrManage .m-quote-addr .txt-line{line-height: 15px;padding-top: 5px;padding-bottom: 5px;}
 .m-quote-addrManage .m-quote-addr .edit-txt-line{line-height: 30px;padding-top: 5px;padding-bottom: 5px;height: 30px;background: white;border-bottom: 1px solid lightgrey;}
-.m-quote-addrManage .m-quote-addr .bottons{position:absolute;bottom: 0px;width: 100%;height: 40px;}
+.m-quote-addrManage .m-quote-addr .bottons{position:absolute;bottom: 0px;width: 100%;height: 7%;}
 .m-quote-addrManage .m-quote-addr .bottons .cancle{width: 50%;height: 100%;display: inline-block;background: white;text-align: center;line-height: 40px;font-size: 17px;}
 .m-quote-addrManage .m-quote-addr .bottons .save{width: 50%;height: 100%;display: inline-block;background: #3D80D6;text-align: center;margin-left:-2%;color:white;line-height: 40px;font-size: 17px;}
+.m-quote-addrManage .m-quote-addr .bottons .insert{width: 100%;height: 100%;display: inline-block;background: #3D80D6;text-align: center;color:white;line-height: 40px;font-size: 17px;}
 .m-quote-addrManage .m-quote-addr .edit-txt-line input{border: 0px;height: 100%;text-align: center;width: 80%;}
 .m-quote-addrManage .m-quote-addr .txt-line-default{height: 40px;line-height: 40px;}
 .m-quote-addrManage .m-quote-addr .txt-blank{width: 94%;padding-left: 3%;height: 1px;background: lightgray;}

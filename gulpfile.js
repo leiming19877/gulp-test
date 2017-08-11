@@ -12,7 +12,8 @@ var
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
     cssbeautify = require('gulp-cssbeautify'),
-    csscomb = require('gulp-csscomb');
+    csscomb = require('gulp-csscomb'),
+    babel = require('gulp-babel');
  
 
 var jsModules = [];
@@ -61,7 +62,7 @@ gulp.task('build:js-check', function(){
 
 //打包js主模块
 gulp.task( 'build:cmd-moudle', function(){
-    return gulp.src(jsModules ,{base:'webapp/js/moudel'})
+    return gulp.src(jsModules ,{base:'webapp/js/module'})
         .pipe( cmdPack({
 
             base : 'webapp/js/',
@@ -75,9 +76,9 @@ gulp.task( 'build:cmd-moudle', function(){
 	            'jweixin':'weixin/jweixin-1.2.0.js',
 	            'director':'director/director.js',
 	            'echo':'echo/echo.min.js',
-	            'vue':'vue/vue-2.0.7.min.js',
-	            'vue-router':'vue/vue-router-2.5.3.min.js',
-	            'vue-resource':'vue/vue-resource-1.3.1.min.js',
+	            'vue':'vue/vue-2.0.7.js',
+	            'vue-router':'vue/vue-router-2.5.3.js',
+	            'vue-resource':'vue/vue-resource-1.3.1.js',
 	            'moment': 'moment/moment.min.js',
 	            'clipboard':'clipboard/clipboard.min.js',
 	            'swiper': 'swiper/swiper.min.js',
@@ -91,27 +92,25 @@ gulp.task( 'build:cmd-moudle', function(){
 	            'req':'common/req.js',
 	            'index-db':'common/index-db.js',
 	            'params':'common/params.js'
-            }/*,
+            },
             ignore :[
-                'jquery',
-                'jquery-mobile',
-                'zepto',
-                'dot',
-                'iscroll',
-                'jweixin'
-            ]*/
+                'weui' 
+                ]
         }))
+       /*.pipe(babel({
+            presets: ['es2015']
+        }))*/
         .pipe(rename({ suffix: '.all' }))
         //.pipe(jshint())
         //.pipe(jshint.reporter('default'))
-        .pipe(gulp.dest('webapp/js/moudel2'))
+        .pipe(gulp.dest('webapp/js/module2'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(uglify())
-        .pipe( gulp.dest("webapp/js/moudel2"));
+        .pipe(gulp.dest("webapp/js/module2"));
 });
 //打包样式
 gulp.task("build:css",function(){
-    return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp'})
+    return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp/css/module'})
     .pipe(cssbeautify())
     .pipe(csscomb())
     .pipe(postcss([autoprefixer]))
@@ -152,6 +151,15 @@ gulp.task("build:jsp",['build:copy-jsp'],function(){
             }
      }))
     .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
+});
+
+gulp.task('build:babel', function(){
+    return gulp.src(['webapp/js/vue/*.js','!webapp/js/vue/*.min.js','!webapp/js/vue/*.babel.js'],{base:'webapp'})
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(rename({ suffix: '.babel' }))
+        .pipe(gulp.dest('dist'));
 });
 //对seajs-config 版本配置+1，以防止出现缓存问题
 /*gulp.task("build:seajs-config",function(){

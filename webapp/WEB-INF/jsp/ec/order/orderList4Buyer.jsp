@@ -8,26 +8,26 @@
 <title>订单列表</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/order/orderList.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
-<script type="text/javascript">
-    //加载本模块样式
-    seajs.use("${ctx}/css/module/ec/order/orderList.css");
-</script>
 <body>
 	<div id='g-page' class="weui-tab g-page">
          <div class="weui-navbar">
              <div id='type_all' @click="changeTab('type_all','-1')" class="weui-navbar__item weui-bar__item_on">全部</div>
-             <div id='type_dsx' @click="changeTab('type_dsx','31,32')" class="weui-navbar__item">待生效</div>
+             <div id='type_dsx' @click="changeTab('type_dsx','1,31,32')" class="weui-navbar__item">待生效</div>
              <div id='type_zxz' @click="changeTab('type_zxz','4')" class="weui-navbar__item">执行中</div>
-             <div id='type_ywc' @click="changeTab('type_ywc','42')" class="weui-navbar__item">已完成</div>
+             <div id='type_ywc' @click="changeTab('type_ywc','5,42')" class="weui-navbar__item">已完成</div>
              <div class="weui-navbar__item">
                  <i class="weui-icon-search" style="font-size:20px;" @click="showSearchPanel()"></i>
              </div>
          </div>
          <div v-cloak name='type_all' class="m-order-content show">
          	<ul id="orderList">
+         	    
          		<li v-for="e in dataList" @click="toOrderDetail(e.orderId)">
+         		
          			<div class="m-order" v-for="(d,index) in e.iteams" v-if="index<2">
+         			<div class="blank"></div>
          				<div class="m-order-info1">
          					<span class="info" v-text="d.brandNameDesc+' '+d.textureDesc+' '+d.specification+' '+d.placeSteelDesc"></span>
 	         				<span class="right" v-text="'¥'+d.buyPrice+'/吨'"></span>
@@ -36,7 +36,6 @@
          					<span class="info" v-text="d.warehouseDesc"></span>
          					<span class="right" v-text="d.buyQuantity+'件/'+d.buyWeight+'吨'"></span>
          				</div>
-	         			<div class="blank"></div>
          			</div>
         			<div v-cloak style="text-align: center;" v-if="e.iteams.length > 2">
         				更多<span>></span>
@@ -67,62 +66,88 @@
          			</div>
          			<div class="line-blank"></div>
          		</li>
+         		
          		<li v-cloak v-if="dataList == null || dataList.length==0">
          			<div class='no-order'>您还没有相关订单</div>
          		</li>
          	</ul>
          	<div class="hide" id="loadMore">
-	         	<a class="weui-cell weui-cell_access js_item" href="javascript:;" @click="loadMore()">
+	         	<a class="weui-cell weui-cell_access js_item" href="javascript:;" @click="loadMore()"  style="display:block; margin:0px auto;">
 	                <div class="weui-cell__bd" style="text-align:center;">
 	                    <p>加载更多</p>
 	                </div>
 	            </a>
             </div>
          </div>
-         
-         
          <!-- 查询 -->
          <div v-cloak id="searchPanel" @click="closeSearch" class="m-quote-addprice hide">
 			<div class="m-quote-price" @click="stopCloseSearchPanel">
-				<div class="weui-cells page__category-content">
-	                 <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
+			    <div class="hd f-cb">
+                         <i class="iconfont u-back-left" @click="closeSearch" ></i>
+                         <h3 class="u-title">查询条件</h3>
+                </div>
+				<div style="margin-top: 0;" class="weui-cells">
+				    
+	                 <div class="weui-cell weui-cell_access js_item" data-id="button" >
 	                     <div class="weui-cell__bd">
 	                         <p>下单日期</p>
 	                     </div>
-	                     <input id="startDate" class="u-ipt-min" name="startDate" style="width: 6em; text-align: center;" value="" />&nbsp;-&nbsp;
-						 <input id="endDate" class="u-ipt-min" name="endDate" style="width:6em; text-align: center;" value="" />
-	                 </a>
-	                 <a class="weui-cell weui-cell_access js_item" data-id="input" href="javascript:;">
-	                     <div class="weui-cell__bd">
-	                         <p>卖家
-		                 		<input id="sellerName" class="search-input" type="text" placeholder="请输入关键字">
-		                	</p>
-	                     </div>
-	                 </a>
-	                 <a class="weui-cell weui-cell_access js_item" data-id="list" href="javascript:;">
+	                     <input id="startDate" readonly="readonly"  @click="pickStartDate($event)" class="u-ipt-min" name="startDate" style="width: 6em; text-align: center;" value="" />&nbsp;-&nbsp;
+						 <input id="endDate"   readonly="readonly" @click="pickEndDate($event)" class="u-ipt-min" name="endDate" style="width:6em; text-align: center;" value="" />
+	                 </div>
+	                 <div class="weui-cell" >
+	                     <div class="weui-cell__hd">
+                            <label for="" class="weui-label">订单号</label>
+                        </div>
+                        <div class="weui-cell__bd">    
+                               <input id="orderBusiId" class="weui-input"  type="text"  placeholder="请输入关键字" />
+                        </div>
+	                     
+	                 </div>
+	                 <div class="weui-cell"  >
+	                     <div class="weui-cell__hd">
+                            <label for="" class="weui-label">卖家</label>
+                        </div>
+                        <div class="weui-cell__bd">    
+                               <input id="sellerName" class="weui-input"  type="text"  placeholder="请输入关键字" />
+                        </div>
+	                     
+	                 </div>
+	                 <div class="weui-cell weui-cell_access js_item" data-id="list" >
 	                     <div class="weui-cell__bd">
 	                         <p>交货方式</p>
 	                     </div>
 	                     <div class="weui-cell__ft" id="showPicker_jhfs"></div>
 	                     <input type="hidden" value="-1" id="deliveryType"/>
-	                 </a>
-	                 <a class="weui-cell weui-cell_access js_item" data-id="slider" href="javascript:;">
+	                 </div>
+	                 <div class="weui-cell weui-cell_access js_item"  >
 	                     <div class="weui-cell__bd">
 	                         <p>提货单位</p>
 	                     </div>
 	                     <div class="weui-cell__ft" id="showPicker_thdw"></div>
 	                     <input type="hidden" value="-1" id="agentName"/>
-	                 </a>
-	                 <a class="weui-cell weui-cell_access js_item" data-id="uploader" href="javascript:;">
-	                     <div class="weui-cell__bd">
-	                         <p>项目名称
-	                         	<input id="projectName" class="search-input" style="margin-left:15px;" type="text" placeholder="请输入关键字">
-	                         </p>
-	                     </div>
-	                 </a>
+	                 </div>
+	                 <div class="weui-cell"  >
+	                     
+	                    <div class="weui-cell__hd">
+                            <label for="" class="weui-label">项目名称</label>
+                        </div>
+                        <div class="weui-cell__bd">    
+                              <input id="projectName" class="weui-input"   type="text" placeholder="请输入关键字">
+                        </div>
+	                    
+	                 </div>
+	                 <div class="weui-cell btn-area">
+	                     <div style="width: 150px;text-align: center;" class="weui-cell__hd">
+                             <button @click="doQuery" class="weui-btn weui-btn_mini weui-btn_primary qryBtn" >查询</button>
+                        </div>
+                        <div class="weui-cell__bd">    
+                            <button @click="clearBtn" class="weui-btn weui-btn_mini weui-btn_primary clearBtn" >清空</button> 
+                        </div>       
+	                 </div>
+	                 
 	             </div>
-	             <button @click="doQuery" class="weui-btn weui-btn_primary qryBtn" style="font-size:14px;width:20%;">查询</button>
-				<button @click="clearBtn" class="weui-btn weui-btn_primary clearBtn" style="font-size:14px;width:20%;">清空</button>	       
+	            
 			</div>
 		</div>
 		
@@ -160,8 +185,16 @@
             </div>
         </div>
         
+        <div class="js_dialog" id="iosDialog2" style="opacity: 1;display:none;">
+		    <div class="weui-mask"></div>
+		    <div class="weui-dialog">
+		        <div class="weui-dialog__bd">请先输入交货起始日期，起始日期须大于结束日期！</div>
+		        <div class="weui-dialog__ft">
+		            <a href="javascript:;" @click="doneClose($event)" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+		        </div>
+		    </div>
+		</div>
      </div>
-	
 	
 </body>
 <script type="text/javascript">

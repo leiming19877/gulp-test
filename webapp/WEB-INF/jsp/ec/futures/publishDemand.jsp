@@ -8,6 +8,8 @@
 <title>发布需求</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/js/swiper/swiper.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/js/swiper/zmd.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/futures/publishDemand.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 
@@ -50,8 +52,11 @@
 		                </div>
 		                <div class="weui-cell__ft">上传照片直接下单</div>
 		            </a>
-		            
-		            <div class="weui-cells__title">品名</div>
+		          
+		          
+<div class="bjhui"></div>	          
+<div class="tjsall">		            
+		        <div class="weui-cells__title">品名</div>
                 <div class="weui-btn-area">
                     <a 
                     v-for="e in listBrands"
@@ -71,9 +76,9 @@
                     v-bind:class="['weui-btn','weui-btn_mini',{'weui-btn_default':!steelWork || e.id !== steelWork.id},{'weui-btn_warn':steelWork && e.id === steelWork.id}]"
                     @click="setSteelWork(e)"
                     ></a>
-                    <select @change="setOtherSteelWork($event)" v-if="steelWork && steelWork.steelWorkName === '其他'">
+                  <!--   <select @change="setOtherSteelWork($event)" v-if="steelWork && steelWork.steelWorkName === '其他'">
                         <option v-for="e in listOtherSteelWorks" v-bind:value="JSON.stringify(e)"  v-text="e.steelWorkName" ></option>
-                    </select>
+                    </select> -->
                    <!-- 
                     <input v-if="steelWork && steelWork.steelWorkName === '其他'"
                         maxlength="20"
@@ -89,9 +94,9 @@
                     v-bind:class="['weui-btn','weui-btn_mini',{'weui-btn_default':!specification || e.specificationId!==specification.specificationId},{'weui-btn_warn':specification && e.specificationId === specification.specificationId}]"
                     @click="setSpecification(e)"
                     ></a>
-                    <select @change="setOtherSpecification($event)" v-if="specification && specification.specificationName === '其他'">
+                <!--     <select @change="setOtherSpecification($event)" v-if="specification && specification.specificationName === '其他'">
                         <option v-for="e in listOtherSpecifications" v-bind:value="JSON.stringify(e)"  v-text="e.specificationName" ></option>
-                    </select>
+                    </select> -->
                  <!--    <input v-if="specification && specification.specificationName === '其他'" 
                      class="other-input" v-model="otherSpecificationName" 
                      maxlength="20"
@@ -106,9 +111,9 @@
                     v-bind:class="['weui-btn','weui-btn_mini',{'weui-btn_default':!texture || e.id!==texture.id},{'weui-btn_warn':texture && e.id === texture.id}]"
                     @click="setTexture(e)"
                     ></a>
-                    <select @change="setOtherTexture($event)" v-if="texture && texture.textureName === '其他'">
+                 <!--    <select @change="setOtherTexture($event)" v-if="texture && texture.textureName === '其他'">
                         <option v-for="e in listOtherTextures" v-bind:value="JSON.stringify(e)"  v-text="e.textureName" ></option>
-                    </select>
+                    </select> -->
                   <!--    <input v-if="texture && texture.textureName === '其他'"
                        maxlength="20" 
                        class="other-input" v-model="otherTextureName" 
@@ -136,8 +141,10 @@
                     </div>
                     <div class="weui-cell__bd">
                         <input class="weui-input" v-model.number="thickness" 
+                        readonly="readonly"
                         type="number"  pattern="[0-9]*[\.][0-9]{0,2}" 
-                          @blur="checkThicknessVal();"
+                         @focus="showThicknessInputDialog();"
+                        
                          placeholder="请输入厚度" />
                     </div>
                     <div class="weui-cell__ft">
@@ -160,11 +167,13 @@
                 <div class="weui-btn-area">
 		            <a class="weui-btn weui-btn_primary" @click="addShopingCart()" href="javascript:void(0)" >加到购物车</a>
 		        </div>
-		        
-		        </div>
+		  </div>
+</div>
+
 		        
                
                <!-- start  recent-buy-record-list-->
+               <div class="bjhui"></div>
 		       <div id="recent-buy-record-list" v-bind:class="['m-recent-buy-record-list',{'hide':isFullHideRecentlyBuyRecord}]" >
 		                  <div class="recent-buy-title f-cb"  >
 		                                                        最近购买
@@ -177,14 +186,13 @@
 		                            <ul>
 		                                <li v-for="d in p" class="f-cb">
 		                                    <div class="text">
-		                                         <p class="desc" v-text="d.brandNameDesc+'  '+d.textureDesc+'*'+ d.specification +'   '+ d.placeSteelDesc">test test*test</p>
+		                                         <p class="desc" v-text="d.brandNameDesc+'  '+d.textureDesc+'  '+ d.specification +'   '+ d.placeSteelDesc">test test*test</p>
 		                                    </div>
 		                                    <a class="u-shop-car" href="javascript:void(0);" 
-		                                     data-brandId="" 
-		                                     data-textureId=""
-		                                     data-specification=""
-		                                     @click="recentAddShopCart(d.brandName,d.brandNameDesc,d.placeSteel,d.placeSteelDesc,d.specification,d.texture,d.textureDesc,d.buyWeight)" 
+		                                     v-if="!d.isBuyed"
+		                                     @click="recentAddShopCart(d)" 
 		                                     ></a>
+		                                     <a v-if="d.isBuyed" class="u-buyed-btn">已选购</a>
 		                                </li>
 		                            </ul>
 		                        </div>              
@@ -280,7 +288,32 @@
 		</div>
 		<!-- end  thickness-price-->
 		
-		  
+        <!-- start 厚度输入对话框 -->
+		<div v-cloak id="thickness-input-dialog" v-bind:class="['m-thickness-input-dialog',{'show':thicknessInputDialog.isShowThicknessInputDialog}]">
+			<div class="weui-mask weui-animate-fade-in"></div>
+			<div class="weui-dialog weui-animate-fade-in">
+				<div class="weui-dialog__hd">
+					<strong class="weui-dialog__title">请输入</strong>
+				</div>
+				<div class="weui-dialog__bd">
+				        <select class="u-dialog-money-ipt" v-if="thicknessInputDialog.selectedVal != -1" v-model="thicknessInputDialog.selectedVal">
+				             <option value="" >请选择</option>
+				            <option v-for="e in currentListThicknessAddPrices" :key="e.id" v-bind:value="e.thickness" v-text="e.thickness+'(加价'+e.thicknessPrice+'元)'" ></option>
+				            <option value="-1" >其他</option>
+				        </select>
+				        <input class="u-dialog-money-ipt" v-if="thicknessInputDialog.selectedVal == -1"
+				          
+				         placeholder="请输入" type="number" v-model="thicknessInputDialog.inputVal" />
+				</div>
+				<div class="weui-dialog__ft">
+					<a href="javascript:;" @click="hideThicknessInputDialog();"
+						class="weui-dialog__btn weui-dialog__btn_default">取消</a> <a
+						href="javascript:;" @click="thicknessInputDialogOkBtn();"
+						class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+				</div>
+			</div>
+		</div>
+		<!--end 厚度输入对话框 -->
 	</div> 
    
 </body>

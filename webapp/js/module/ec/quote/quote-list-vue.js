@@ -9,7 +9,7 @@ define(function(require, module, exports) {
 	var jq = require("jquery");
 	var wx = require("jweixin");
 	var loading = weui.loading('正在加载...', {className: 'custom-classname'});
-	
+	var sellerId = getParam();
 	var queryVue = new Vue({
 		el: "#g-page",
 		data: {
@@ -18,7 +18,7 @@ define(function(require, module, exports) {
 			queryForm:null,
 			areaList:[],
 			currentCity:null,
-			sellerMemberId:null,//卖家会员号
+			sellerMemberId:0,//卖家会员号
 			sellerMemberName:null,//卖家会员号
 			brandId:0,//初始化时品名id
 			saerchBrandId:null,//查询时用的品名id
@@ -34,6 +34,8 @@ define(function(require, module, exports) {
 			provinceName:null,
 			city:null,
 			areaName:null,
+			chooseAreaSetId:"",//选择地区时保存的地区id
+			areaSetId:"",//查询资源时的地区id，用于查询资源用的
 			priceType:0,
 			addPirce:[],
 			bigAddPriceList:[],//厚度加价规则
@@ -355,19 +357,25 @@ define(function(require, module, exports) {
 				var cityName = $("#city").attr("city");
 				var areaName = $("#city").attr("areaName");
 				var address = "";
-				if (provinceName == cityName) {//
+				if (provinceName == cityName && cityName == areaName) {//
+		        	address = provinceName;
+		        } else if (provinceName == cityName && cityName != areaName) {
 		        	address = provinceName + areaName;
-		        } else {
+		        } else if (provinceName != cityName) {
 		        	address = provinceName + cityName + areaName;
 		        }
+				self.closeSaerchView();
+				self.areaSetId = self.chooseAreaSetId;
 				this.$http.post("getQuoteListData",{'memberId':sellerId,'priceType':priceType,'provinceName':provinceName,'cityName':cityName,'areaName':areaName,'brandId':brandId,'brandName':brandName},{emulateJSON:true}).then(function(data){
 					queryVue.futuresList = data.data.futuresList;
+					queryVue.futuresList.forEach(function(obj,index){//遍历卖家是否设置运费报价
+		        		debugger
+		        	});
 		        	queryVue.queryForm = data.data.queryForm;
 		        	queryVue.brandNme = queryVue.queryForm.brandName;
 		        	queryVue.addPrice = data.data.addPrice;
 		        	queryVue.currentCity = address;
 		        	loading.hide();
-		       // 	self.closeSaerchView();
 			  }).catch(function(rs){
 				  weui.toast('网络异常!', 3000);
 			  });
@@ -402,6 +410,7 @@ define(function(require, module, exports) {
 				var memberIds = [];
 				var priceTypes = [];
 				var memberId = null;
+				var areaSetId = this.areaSetId;
 				var flag = true;
 				$("#g-content tbody tr").each(function(index,obj){
 					if ($(obj).find("input").prop("checked")) {
@@ -432,7 +441,7 @@ define(function(require, module, exports) {
 					}
 				});
 				if (flag && (quoteIds.length > 0 || listingIds.length > 0)) {
-					window.location.href="../shopcart/toOrderPage?quoteIds=" + quoteIds + "&memberId=" + memberId +"&listingIds="+listingIds;
+					window.location.href="../shopcart/toOrderPage?quoteIds=" + quoteIds + "&memberId=" + memberId +"&listingIds="+listingIds+"&areaSetId="+areaSetId;
 				} else {
 					alert("请选择同一卖家的资源下单！现货资源报价类型须相同！")
 				}
@@ -459,6 +468,7 @@ define(function(require, module, exports) {
 						});
 					}
 				});
+				self.chooseAreaSetId = defaultValue[2];
 				weui.picker(data, {
 				     className: 'custom-classname',
 				     defaultValue: defaultValue,
@@ -470,6 +480,7 @@ define(function(require, module, exports) {
 				     		self.provinceName = result[0].label;
 				     		self.city = result[1].label;
 				     		self.areaName = result[2].label;
+				     		self.chooseAreaSetId = result[2].value;
 				     		var address = "";
 				     		if (self.provinceName == self.city && self.city == self.areaName) {
 				     			address = self.provinceName;
@@ -488,6 +499,7 @@ define(function(require, module, exports) {
 			}
 		},
 		created:function(){
+			this.sellerMemberId = sellerId;
 			this.getListSellers();
 			this.getAreaList();
 			this.getBrandList();
@@ -583,17 +595,19 @@ define(function(require, module, exports) {
 	        queryData.areaName = district;
 	        queryData.brandId = brandId;
 	        var address = "";
-	        if (province == city) {//
+	        if (province == city && city == district) {
+	        	address = province;
+	        } else if (province == city && city != district) {//
 	        	address = province + district;
 	        } else {
 	        	address = province + city + district;
 	        }
 	        var loading = weui.loading('正在加载...', {className: 'custom-classname'});
 	        /* 首次根据自动获取地区查询报价单*/
-	        queryVue.$http.post("getQuoteListData",{'memberId':0,'priceType':queryData.priceType,'provinceName':queryData.provinceName,'cityName':queryData.cityName,'areaName':queryData.areaName,'brandId':queryData.brandId},{emulateJSON:true}).then(function(data){
+	        queryVue.$http.post("getQuoteListData",{'memberId':sellerId,'priceType':queryData.priceType,'provinceName':queryData.provinceName,'cityName':queryData.cityName,'areaName':queryData.areaName,'brandId':queryData.brandId},{emulateJSON:true}).then(function(data){
 	        	queryVue.futuresList = data.data.futuresList;
-	        	queryVue.queryForm = data.data.queryForm;
 	        	queryVue.addPrice = data.data.addPrice;
+	        	queryVue.queryForm = data.data.queryForm;
 	        	queryVue.currentCity = address;
 	        	loading.hide();
 			}).catch(function(rs){
@@ -621,13 +635,28 @@ define(function(require, module, exports) {
 			        var accuracy = res.accuracy; // 位置精度
 	             	var lat = parseFloat(latitude);
 			    	var lng = parseFloat(longitude);
-			    	//var latLng = new qq.maps.LatLng(lat, lng);
+			    	var latLng = new qq.maps.LatLng(lat, lng);
 			    	//var latLng = new qq.maps.LatLng(39.0851, 117.19937);//天津河西区
-			    	var latLng = new qq.maps.LatLng(39.1282700000,117.2522800000);//天津河东区
+			    	//var latLng = new qq.maps.LatLng(39.1282700000,117.2522800000);//天津河东区
 			    	//var latLng = new qq.maps.LatLng(38.4711700000,106.2586700000);//宁夏回族自治区
 			   	 	geocoder.getAddress(latLng);
+			    },
+			    cancel: function (res) {  
+			        alert('用户拒绝授权获取地理位置');
 			    }
 			});
+			loading.hide();
+			wx.error(function (res) {  
+				  alert("调用微信jsapi返回的状态:"+res.errMsg);  
+			}); 
 		});
 	});
+	function getParam() {
+		var url = window.location.href;
+		if (url.indexOf("=") == -1) {
+			return 0;
+		} else {
+			return url.substring(url.indexOf("=")+1);
+		}
+	}
 });

@@ -5,8 +5,11 @@
   "main": "hello-world-server.js",
   "scripts": {
     "build": "gulp",
-    "build-check":"gulp build:js-check",
-    "build-cmd":"gulp build:cmd-moudle",
+    "build-check": "gulp build:js-check",
+    "build-cmd": "gulp build:cmd-moudle",
+    "test-run": "node   --inspect --debug-brk test.js",
+    "test-run-gulp": "node  --inspect --debug-brk ./node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js",
+    "test-run2": "node --debug-brk test.js",
     "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
   },
   "repository": "",
@@ -29,7 +32,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
+    "babel-preset-es2015": "^6.24.1",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-cmd-pack": "^1.0.7",
     "gulp-concat": "^2.6.0",

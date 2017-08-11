@@ -212,6 +212,13 @@ define(function(require, exports, module) {
 						loading.hide();
 					});
 				},
+				clearByBtn:function(){
+					this.queryParam.startDate = '';
+					this.queryParam.endDate = '';
+					this.queryParam.sellerName = '',//卖家会员名称
+					this.queryParam.contractStatus = -1;//合同状态
+					this.queryParam.contractType= -1;//合同类型
+				},
 				loadNextPage:function(callback){
 					var self = this;
 					var isNeedQuery = false;

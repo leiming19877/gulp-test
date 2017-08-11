@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 	var bidDetailTpl = require("./buyNavigation.html");
 
 	gPage.on("click",".grid-tapmode",function(){
-		 loadingToast.show("数据加载中");
+		 //loadingToast.show("数据加载中");
 	});
 	
 	$.ajax({

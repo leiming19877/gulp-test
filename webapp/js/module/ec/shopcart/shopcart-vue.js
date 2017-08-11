@@ -7,6 +7,7 @@ define(function(require, module, exports) {
 	var $ = require("zepto");
 	var quoteIds = getParams("quoteIds");// 期货报价单id串
 	var memberId = getParams("memberId");// 卖家会员id
+	var areaSetId = getParams("areaSetId");// 资源区域id
 	var listingIds = getParams("listingIds");// 现货资源id串
 	var loading = weui.loading('正在加载...', {className: 'custom-classname'});
 	var dataVue = new Vue({
@@ -17,7 +18,7 @@ define(function(require, module, exports) {
 			steelPlace:"",//货物产地
 			quoteList:[],
 			addPriceList:[],
-			showThickness:false,
+			showThickness:true,
 			thicknessList:[],
 			freightQuoteList:[],
 			resListingList:[],
@@ -26,44 +27,44 @@ define(function(require, module, exports) {
 			userConsigneeList:[],//收货地址
 			editAddr:{},//正在编辑的地址
 			currentCity:"",
-			which_to_show: "first",
+			isShow:true,
 			message_title:"请输入"
 		},
 		methods: {
 			 inputFutureWeight:function(e,type){
 			 	var self = this;
 			 	var currentInput = e.target;
-			 	var d = $("#dialog1")[0]; 
-				d["currentInput"] = currentInput;
-				$("#weight").find("input").val($(currentInput).val());
-				var specificationId = $(e.target).attr("specificationId");
-				if (type == "thickness") {
-					self.showThickness = true;
-				} else {
-					self.showThickness = false;
-				}
-				if (self.addPriceList) {
-					self.addPriceList.forEach(function(obj,index){
-						if (obj.specificationId == specificationId) {
-							self.thicknessList = [];
-							self.thicknessList = JSON.parse(JSON.stringify(obj.addPriceList));
-							var other = {};
-							other['thickness'] = '其他';
-							other['thicknessPrice'] = 'other';
-							self.thicknessList.push(other);
-						}
-					});
-				}
-				$("#dialog1").attr("type",type);
-				$("#dialog1").show();
-//				if (type == "thickness") {
-//					$("#weight").find("input").blur();
-//					$("#weight").find("select").focus();
-//				} else {
-//					$("#weight").find("select").blur();
-//					$("#weight").find("input").focus();
-//				}
-				
+			 	if ('width'==type) {
+				 	var d = $("#dialog1")[0]; 
+					d["currentInput"] = currentInput;
+					$("#width").find("input").val($(currentInput).val());
+					$("#dialog1").attr("type",type);
+					$("#dialog1").show();
+			 	} else if ('thickness'==type) {
+				 	var d = $("#dialog3")[0]; 
+					d["currentInput"] = currentInput;
+					var specificationId = $(e.target).attr("specificationId");
+					if (self.addPriceList) {
+						self.addPriceList.forEach(function(obj,index){
+							if (obj.specificationId == specificationId) {
+								self.thicknessList = [];
+								self.thicknessList = JSON.parse(JSON.stringify(obj.addPriceList));
+								var other = {};
+								other['thickness'] = '其他';
+								other['thicknessPrice'] = 'other';
+								self.thicknessList.push(other);
+							}
+						});
+					}
+					$("#dialog3").attr("type",type);
+					$("#dialog3").show();
+			 	} else if ('weight'==type) {
+				 	var d = $("#dialog4")[0]; 
+					d["currentInput"] = currentInput;
+					$("#weight").find("input").val($(currentInput).val());
+					$("#dialog4").attr("type",type);
+					$("#dialog4").show();
+			 	}
 			 },
 			 chooseThickness:function(e){
 			 	var value = $(e.target).val();
@@ -73,41 +74,63 @@ define(function(require, module, exports) {
 			 		this.showThickness = true;
 			 	}
 			 },
-			 cancleWeight:function(e){
-			 	var type = $("#dialog1").attr("type");
+			 cancleWeight:function(type){
 			 	var selectValue = $("#chooseThickness").val();
-			 	if (type == "thickness" && selectValue == "other") {
-			 		this.showThickness = false;
+			 	if (type == "thickness" && selectValue == "其他") {
+			 		this.showThickness = true;
 			 		$("#chooseThickness option").removeAttr("selceted");
 			 		$("#chooseThickness option").eq($("#chooseThickness option").length-1).attr("selected","selected");
 			 	}
-			 	$("#dialog1").hide();
-			 	$("#weight").find("select").blur();
-				$("#weight").find("input").blur();
-			 },
-			 confirmWeight:function(e){
-			 	var self = this;
-			 	var type = $('#dialog1').attr("type");
-			 	var reg = new RegExp("^[0-9]+(.[0-9]{1,3})?$");
-				var value1 = $("#weight").find("input").val();
-				var value2 = $("#weight").find("select").val();
-				var value = "";
-				if (type == "thickness") {
-					if (value1 != "") {
-						value = value1;
-					}
-					if (value2 != "" && value2 != "其他") {
-						value = value2;
-					}
-				} else {
-					value = value1;
-				}
-				//要映射的输入框dom对象
-				var input =$($('#dialog1')[0].currentInput);
-				if(!reg.test(value)){
-					window.alert("只能为非负数，且小数位数不超过3位");
+			 	if ('width' == type) {
+				 	$("#dialog1").hide();
+					$("#width").find("input").focus();
+					$("#width").find("input").select();
+				} else if ('thickness' == type) {
+				 	$("#dialog3").hide();
+				 	$("#thickness").find("select").focus();
+				 	$("#thickness").find("select").select();
+				} else if ('weight' == type) {
+				 	$("#dialog4").hide();
 					$("#weight").find("input").focus();
 					$("#weight").find("input").select();
+				}
+			 },
+			 confirmWeight:function(type){
+			 	var self = this;
+			 	var reg = new RegExp("^[0-9]+(.[0-9]{1,3})?$");
+				var value = "";
+				var input = null;
+			 	if ('width' == type) {
+					value = $("#width").find("input").val();
+					//要映射的输入框dom对象
+					input =$($('#dialog1')[0].currentInput);
+				} else if ('thickness' == type) {
+					var value1 = $("#thickness").find("select").val();
+					var value2 = $("#thickness").find("input").val();
+					if (value1 == "其他") {
+						value = value2;
+					} else {
+						value = value1;
+					}
+					//要映射的输入框dom对象
+					input =$($('#dialog3')[0].currentInput);
+				} else if ('weight' == type) {
+					value = $("#weight").find("input").val();
+					//要映射的输入框dom对象
+					input =$($('#dialog4')[0].currentInput);
+				}
+				if(!reg.test(value)){
+					window.alert("只能为非负数，且小数位数不超过3位");
+					if ('width' == type) {
+						$("#width").find("input").focus();
+						$("#width").find("input").select();
+					} else if ('thickness' == type) {
+						$("#thickness").find("input").focus();
+						$("#thickness").find("input").select();
+					} else if ('weight' == type) {
+						$("#weight").find("input").focus();
+						$("#weight").find("input").select();
+					}
 					return;
 				}
 				input.val(Number(value));
@@ -119,10 +142,7 @@ define(function(require, module, exports) {
 						input.val("");
 						window.alert("超出可购买量！");
 					}
-					$("input[name='futureWeight']").each(function(index,obj){
-						totalWeight += Number($(obj).val()==""?0:$(obj).val());
-					});
-					$("#totalWeight").html(totalWeight.toFixed(3))
+					self.refreshTotalNum();
 			 	} else if (type == "thickness") {
 			 		var specificationId = input.attr("specificationId");
 			 		var quoteId = input.attr("quoteId");
@@ -153,17 +173,50 @@ define(function(require, module, exports) {
 		 				});
 			 			//input.closest("li").find("#quotePrice").html("待定");
 			 		}
+			 	} else if (type == "width") {// 验证宽度
+			 		var avaliableWidth = input.attr("placeholder");
+			 		if (avaliableWidth.indexOf("-")==-1) {
+			 			if (val != avaliableWidth) {
+			 				input.val(avaliableWidth);
+			 				window.alert("宽度超出范围！");
+			 			}
+			 		} else {
+			 			var widths = avaliableWidth.split("-");
+			 			if (Number(widths[0]) <= Number(val) && Number(widths[1]) >= Number(val)) {
+			 			} else {
+			 				input.val('');
+			 				window.alert("宽度超出范围！");
+			 			}
+			 		}
 			 	}
-				$('#dialog1').hide();
+			 	if ('width' == type) {
+					$('#dialog1').hide();
+				} else if ('thickness' == type) {
+					$('#dialog3').hide();
+				} else if ('weight' == type) {
+					$('#dialog4').hide();
+				}
 			 },
 			 deleteRowResource:function(e,id,index){//删除期货资源
 				$("#dialog2").attr("data-index",index);
 				$("#dialog2").attr("data-type","futures");
+				$("#dialog2").attr("delist-type","2");//按重量
+				$("#dialog2").attr("weight",$(e.target).parent().find("input[name='futureWeight']").val());//重量
 				$('#dialog2').show();
 			 },
-			 deleteSpotgoods:function(e,id,index){//删除现货资源
+			 deleteSpotgoods:function(e,id,index,type){//删除现货资源
 				$("#dialog2").attr("data-index",index);
 				$("#dialog2").attr("data-type","spotgoods");
+				$("#dialog2").attr("delist-type",type);//按数量
+				if (type == 1) {
+					var count = $(e.target).parent().find("input[name='futureWeight']").val();
+					var unitWeihgt = $(e.target).parent().find("input[name='futureWeight']").attr("unit-weight");
+					var weight = Number(count==""?0:count)*Number(unitWeihgt);
+					$("#dialog2").attr("count",count);//数量
+					$("#dialog2").attr("weight",weight);//重量
+				} else if (type == 2) {
+					$("#dialog2").attr("weight",$(e.target).parent().find("input[name='futureWeight']").val());//重量
+				}
 				$('#dialog2').show();
 			 },
 			 copyRowResource:function(e,id,d){
@@ -209,25 +262,26 @@ define(function(require, module, exports) {
 				var countSpotgoods = $("#spotgoods").find("li").length;
 				var type = $("#dialog2").attr("data-type");
 				var index = $("#dialog2").attr("data-index");
+				var delistType = $("#dialog2").attr("delist-type");//按重量2，按数量1
+				var weight = $("#dialog2").attr("weight");//扣减数
 				if (type == "spotgoods") {
 					this.resListingList.splice(index,1);
-					/**
-					 * 需要后台删除购物车数据
-					 */
-					var totalWeight = 0;
-					$("input[name='futureWeight']").each(function(index,obj){
-						totalWeight += Number($(obj).val()==""?0:$(obj).val());
-					});
-					$("#totalWeight").html(totalWeight.toFixed(3))
+					if (delistType == 1){
+						var count = $("#dialog2").attr("count");
+						this.refreshTotalNum(delistType,count,weight);
+					}else if (delistType == 2) {
+						this.refreshTotalNum(delistType,0,weight);
+					}
 					$('#dialog2').hide();
 				} else if (type == "futures") {
 					var index = $("#dialog2").attr("data-index");
 					this.quoteList.splice(index,1);
-					var totalWeight = 0;
-					$("input[name='futureWeight']").each(function(index,obj){
-						totalWeight += Number($(obj).val()==""?0:$(obj).val());
-					});
-					$("#totalWeight").html(totalWeight.toFixed(3))
+					if (delistType == 1){
+						var count = $("#dialog2").attr("count");
+						this.refreshTotalNum(delistType,count,weight);
+					}else if (delistType == 2) {
+						this.refreshTotalNum(delistType,0,weight);
+					}
 					$('#dialog2').hide();
 				}
 			 },
@@ -299,7 +353,13 @@ define(function(require, module, exports) {
 			 chooseDistrict:function(){
 			 	var self = this;
 				var data = self.disTricts;
-				var defaultValue = [self.editAddr.province_name,self.editAddr.area_id,self.editAddr.districtId];
+				if (data[0].label =="全部") {
+					data.splice(0,1);
+				}
+				var provinceName = self.editAddr.province_name?self.editAddr.province_name:"天津";
+				var aId = self.editAddr.area_id==""?"10003":self.editAddr.area_id;
+				var dId = self.editAddr.districtId==""?"1357044":self.editAddr.districtId;
+				var defaultValue = [provinceName,aId,dId];
 				weui.picker(data, {
 				     className: 'custom-classname',
 				     defaultValue: defaultValue,
@@ -333,6 +393,15 @@ define(function(require, module, exports) {
 			 	$("#deleteAddrDialog").attr("con-id",id);
 			 	$("#deleteAddrDialog").show();
 			 },
+			 createNewAddr:function(){
+				var addr = {};
+				addr.districtId = "";
+			    addr.districtName = "";
+			    addr.area_id = "";
+			 	this.editAddr = addr;
+			 	$("#editAddress").removeClass("hide");
+				setTimeout(function(){$("#editAddress").children().addClass("m-quote-transportfee-show").removeClass("m-quote-transportfee-close")},10);
+			 },
 			 closeManagerAddrView:function(){
 				$("#managerAddr").children().removeClass("m-quote-transportfee-show").addClass("m-quote-transportfee-close");
 				setTimeout(function(){$("#managerAddr").addClass("hide")},200);
@@ -344,7 +413,7 @@ define(function(require, module, exports) {
 			 		window.alert("请确保数据填写完整！");
 			 		return;
 			 	}
-			 	weui.loading('请稍后...', {className: 'custom-classname'});
+			 	var loading = weui.loading('请稍后...', {className: 'custom-classname'});
 			 	var transportFeeType = "";
 			 	var cureWord = $("#cureWord").val();
 			 	$("#transFee input").each(function(index,obj){
@@ -364,13 +433,30 @@ define(function(require, module, exports) {
 			 		'cureWord':cureWord
 			 		
 			 	},{emulateJSON:true}).then(function(data){
+			 		var orderIds = [];
+			 		var orderBusiIds = [];
+			 		loading.hide();
 			 		if (data.data.success) {
-			 			window.location.href = "success?orderId="+data.data.orderId+"&type=quote";
+			 			orderIds.push(data.data.orderId);
+			 			orderBusiIds.push(data.data.orderBusiId);
 			 		} else {
-						weui.toast('期货订单生成失败!', 3000);
+			 			if (data.data.success != undefined) {
+							weui.toast('期货订单生成失败!', 3000);
+			 			}
+			 		}
+			 		if (data.data.success1) {
+			 			orderIds.push(data.data.orderId1)
+			 			orderBusiIds.push(data.data.orderBusiId1)
+			 		} else {
+			 			if (data.data.success1 != undefined) {
+							weui.toast('现货订单生成失败!', 3000);
+			 			}
+			 		}
+			 		if (orderIds.length > 0) {
+			 			window.location.href = "success?orderIds="+orderIds+"&type=quote&orderBusiIds="+orderBusiIds;
 			 		}
 				}).catch(function(rs){
-					weui.toast('网络异常!', 3000);
+					weui.toast('网络异常,刷新重试!', 3000);
 				});
 			 },
 			 checkInfo:function(){
@@ -446,7 +532,8 @@ define(function(require, module, exports) {
 			 		var quote = {};
 			 		quote['buyQuantity'] = count;
 			 		quote['buyWeight'] = weight;
-			 		quote['listingId'] = listingId;
+			 		quote['listing_id'] = listingId;
+			 		quote['areaSetId'] = areaSetId;
 			 		spotgoodList.push(quote);
 				});
 				data['futureQuoteList'] = futureQuoteList;
@@ -478,6 +565,7 @@ define(function(require, module, exports) {
 					number.val(value);
 				}
 				$(e.target).parent().find("p").html((value * unitWeight).toFixed(3));
+				this.refreshTotalNum();
 			},
 			subNumber:function(unitWeight,e){
 				var number = $(e.target).parent().find("input[type='text']");
@@ -491,13 +579,35 @@ define(function(require, module, exports) {
 					number.val(value);
 				}
 				$(e.target).parent().find("p").html((value * unitWeight).toFixed(3));
+				this.refreshTotalNum();
+			},
+			refreshTotalNum:function(type,number,weight){
+				var totalCount = 0;
+				var totalWeight = 0;
+				$("input[name='futureWeight']").each(function(index,obj){
+					if ($(obj).attr("delist-type") == 1) {
+						totalCount += Number($(obj).val()==""?0:$(obj).val());
+						totalWeight += Number($(obj).val())*Number($(obj).attr("unit-weight"));
+					} else if ($(obj).attr("delist-type") == 2) {
+						totalWeight += Number($(obj).val()==""?0:$(obj).val());
+					}
+				});
+				if (type == 1 && number && weight) {//按数量扣减
+					totalCount -= number;
+					totalWeight -= weight;
+				} else if (type == 2) {
+					totalWeight -= weight;
+				}
+				$("#totalCount").html(totalCount)
+				$("#totalWeight").html(totalWeight.toFixed(3))
 			}
 		},
 		created:function(){
 			var self = this;
 			this.$http.post("getShopcartData",{'quoteIds':quoteIds,'memberId':memberId,'listingIds':listingIds},{emulateJSON:true}).then(function(data){
-				self.quoteList = data.data.quoteList;
-				self.resListingList = data.data.resListingList;
+				self.quoteList = data.data.quoteList;//期货报价资源
+				self.resListingList = data.data.resListingList;//现货报价资源
+				self.wavehouses = data.data.wavehouses;
 				data.data.quoteList.forEach(function(obj,index){
 					var texture = obj.texNames;
 					var widthAndThickness = obj.specificationName.split("*");
@@ -505,9 +615,10 @@ define(function(require, module, exports) {
 					self.quoteList[index].width = widthAndThickness[0];
 					self.quoteList[index].thickness = widthAndThickness[1];
 					self.quoteList[index].quotePrice2 = self.quoteList[index].quotePrice;
-					self.wavehouses = data.data.wavehouses;
 					if (obj.steelWorkName == "唐山东海") {
 						self.steelPlace = "唐山东海";
+					} else {
+						self.steelPlace = "";
 					}
 				});
 				self.addPriceList = data.data.addPriceList;
@@ -515,24 +626,29 @@ define(function(require, module, exports) {
 				self.userConsignee = data.data.userConsignee;
 				self.userConsigneeList = data.data.userConsigneeList;
 				self.memberName = data.data.memberName;
-				var id = "";
+				var id = "ckzt";
 				$("#deliveryType a").each(function(obj,index){
 					if ($(obj).hasClass("weui-btn_primary")) {
 						id = $(obj).attr("data-type");
 					}
 				});
 				if ("gczt" == id) {//如果是工厂自提，则不显示；
-				 	$("#transFee").removeClass("show").addClass("hide");
+					self.isShow = false;
+				 	//$("#transFee").removeClass("show").addClass("hide");
 			 	} else if ("ckzt" == id) {//如果是仓库自提，当业务单位为“天津中拓”，且有货物的产地为“唐山东海”时，则显示
 			 		if ("天津中拓" == self.memberName && self.steelPlace == "唐山东海") {
-					 	$("#transFee").removeClass("hide").addClass("show");
+						self.isShow = true;
+					 	//$("#transFee").removeClass("hide").addClass("show");
 			 		} else {
-					 	$("#transFee").removeClass("show").addClass("hide");
+						self.isShow = false;
+					 	//$("#transFee").removeClass("show").addClass("hide");
 			 		}
 			 	} else if ("bd" == id) {//如果是包到则显示；
-				 	$("#transFee").removeClass("hide").addClass("show");
+					self.isShow = true;
+				 	//$("#transFee").removeClass("hide").addClass("show");
 			 	} else {
-				 	$("#transFee").removeClass("show").addClass("hide");
+					self.isShow = false;
+				 	//$("#transFee").removeClass("show").addClass("hide");
 			 	}
 				
 	        	loading.hide();
@@ -541,79 +657,6 @@ define(function(require, module, exports) {
 			});
 			self.getAreaList();
 		}
-	});
-	$("#g-page").on("click",".u-ipt-min",function(e){
-		var name = $(e.target).attr("name");
-		if (name = "startDate") {
-		 	var date = new Date();
-			var defaultValue = [];
-			defaultValue.push(date.getFullYear());
-			defaultValue.push(date.getMonth()+1);
-			defaultValue.push(date.getDate());
-		 	var endDate = $("#endDate").val();
-			weui.datePicker({
-	            start: new Date(),
-	            end: 2050,
-	            defaultValue: defaultValue,
-	            onChange: function (result) {
-	            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
-	                $(e.target).val(value);
-	            },
-	            onConfirm: function (result) {
-	            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
-	                var dateStart = new Date(value);
-	                if (endDate != "") {
-		            	var dateEnd = new Date(endDate);
-		            	if (dateStart <= dateEnd) {
-			                $(e.target).val(value);
-		            	} else {
-							$("#iosDialog2").show();
-		            	}
-	                } else {
-	                	$(e.target).val(value);
-	                }
-	            }
-	        });
-		} else if (name = "endDate") {
-		 	var date = new Date();
-			var defaultValue = [];
-			defaultValue.push(date.getFullYear());
-			defaultValue.push(date.getMonth()+1);
-			defaultValue.push(date.getDate());
-		 	var startDate = $("#startDate").val();
-			if (startDate == "") {
-				$("#iosDialog2").show();
-				return;
-			} else {
-				weui.datePicker({
-		            start: new Date(),
-		            end: 2050,
-		            defaultValue: defaultValue,
-		            onChange: function (result) {
-		            },
-		            onConfirm: function (result) {
-		            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
-		            	var dateStart = new Date(startDate);
-		            	var dateEnd = new Date(value);
-		            	if (dateStart <= dateEnd) {
-			                $(e.target).val(value);
-		            	} else {
-							$("#iosDialog2").show();
-		            	}
-		            }
-		        });
-			}
-		
-		}
-	});
-	$('#iosDialog2').on('click', '.weui-dialog__btn_primary', function () {
-		$('#iosDialog2').hide();
-	});
-	$('#dialog1').on('click', '.weui-dialog__btn_default', function () {
-		$('#dialog1').hide();
-	});
-	$('#dialog2').on('click', '.weui-dialog__btn_default', function () {
-		$('#dialog2').hide();
 	});
 	function getParams(type){
 		var url = window.location.href;
@@ -624,13 +667,19 @@ define(function(require, module, exports) {
 		var q = m.substring(m.indexOf("=")+1);
 		var memberId = q.substring(0,q.indexOf("&"));
 		
-		var listingIds = q.substring(q.indexOf("=")+1);
+		var l = q.substring(q.indexOf("=")+1);
+		var listingIds = l.substring(0,l.indexOf("&"));
+		
+		var areaSetId = l.substring(l.indexOf("=")+1);
+		
 		if (type == "quoteIds") {
 			return quoteIds
 		} else if (type == "memberId") {
 			return memberId;
 		} else if (type == "listingIds") {
 			return listingIds;
+		} else if (type == "areaSetId") {
+			return areaSetId;
 		}
 	}
 });

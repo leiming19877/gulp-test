@@ -10,7 +10,8 @@ define(function(require, module, exports) {
 	var queryVue = new Vue({
 		el: "#g-page",
 		data: {
-			orderId:"",
+			orderIds:[],
+			orderBusiIds:[],
 			type:""
 		},
 		methods: {
@@ -21,16 +22,26 @@ define(function(require, module, exports) {
 					window.location.href = "../futures/publishDemand";
 				}
 			},
-			viewOrderDetail:function(orderId){
-				window.location.href = "../order/toDetail?orderId="+orderId;
+			viewOrderDetail:function(orderIds){
+				if (orderIds.length > 1) {
+					window.location.href = "../order/toList4wechat";
+				} else {
+					window.location.href = "../order/toDetail?orderId="+orderIds[0];
+				}
 			}
 		},
 		created:function(){
 			var url = window.location.href;
 			var m = url.substring(url.indexOf("=")+1);
-			var orderId = m.substring(0,m.indexOf("&"));
-			var type = m.substring(m.indexOf("=")+1);
-			this.orderId = orderId;
+			var orderIds = m.substring(0,m.indexOf("&"));
+			
+			var typestr = m.substring(m.indexOf("=")+1);
+			var type = typestr.substring(0,typestr.indexOf("&"));
+			
+			var orderBusiIds = typestr.substring(typestr.indexOf("=")+1);
+			
+			this.orderIds = orderIds.split(",");
+			this.orderBusiIds = orderBusiIds.split(",");
 			this.type = type;
 		},
 	});

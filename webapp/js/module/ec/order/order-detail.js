@@ -1,7 +1,7 @@
 define(function(require, module, exports) {
 	//组件样式
-    require("../../../swiper/swiper.min.css");
-    var Swiper = require("../../../swiper/swiper.min");
+    //require("../../../swiper/swiper.min.css");
+    var Swiper = require("swiper");
 	var Vue = require("vue");
 	// weui
 	var weui = require("weui");
@@ -62,9 +62,8 @@ define(function(require, module, exports) {
 			        data: params,
 			        dataType:'json',
 			        success: function(resp){
-			        	orderDetail.orderInfo = resp.orderInfo;//订单信息
-			        	orderDetail.orderInfo.imgList = resp.imgList;//图片信息
-			        	//$('#copy_order_no').attr('data-clipboard-text',orderDetail.orderInfo.orderBusiId);
+			        	self.orderInfo = resp.orderInfo;//订单信息
+			        	self.orderInfo.imgList = resp.imgList;//图片信息
 			        	//DOM 还没有更新
 						Vue.nextTick(function(){
 							 // DOM 更新了

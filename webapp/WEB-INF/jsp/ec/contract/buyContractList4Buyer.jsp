@@ -69,7 +69,9 @@
 	                            <div class="contract-status" v-text="e.contractStatusDesc"></div>
 	                            <button v-cloak v-if="e.contractStatus === 1" class="weui-btn weui-btn_mini contract-sure-btn">确认合同</button>
                             </div>
+                            <div class="blank"></div>
                         </li>
+                        
                     </ul>
                    
 			        <div v-cloak v-if="pendingPage.list.length === 0" class="weui-loadmore weui-loadmore_line">
@@ -135,6 +137,7 @@
                                 </div>
                                 <div class="contract-status" v-text="e.contractStatusDesc"></div>
                             </div>
+                            <div class="blank"></div>
                         </li>
                     </ul>
                    
@@ -215,7 +218,13 @@
                         </div>
                     </div>
                     <div class="weui-cell">
-                        <a @click="queryByBtn();" class="weui-btn weui-btn_mini weui-btn_primary" href="javascript:void(0);">查询</a>
+                        <div style="width: 150px;text-align: center;"  class="weui-cell__hd">
+                           <a @click="queryByBtn();" class="weui-btn weui-btn_mini weui-btn_primary" href="javascript:void(0);">查询</a>
+                        </div>
+                        <div class="weui-cell__bd">    
+                             <a @click="clearByBtn();" class="weui-btn weui-btn_mini weui-btn_primary" href="javascript:void(0);">清除</a>
+                        </div>
+                       
                     </div>
                     
                 </div>

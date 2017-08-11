@@ -19,7 +19,7 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .g-header{-webkit-box-flex:0;flex:none; width:100%;height: 40px; line-height:40px;border-bottom:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
 
 .g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
-.g-footer{-webkit-box-flex:0;flex:none; width:100%;height:50px; border-top:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
+.g-footer{-webkit-box-flex:0;flex:none; width:100%;height:50px; border-top:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #59a538;}
 
 .u-back-left{float:left;margin: 0 5px 0 5px;padding: 0 5px 0 0;}
 .u-back-left:before{display:block; font-size:20px;content: "<";}
@@ -66,32 +66,34 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-thickness-price .table-add-price td{border-bottom: 1px solid #C8C8CD; }
 
 /** 购物车模块  **/
-.m-shop-car{position:absolute;top:8px;right:20px; display:inline-block; width: 30px;height: 30px;background: url(../../../../images/icons/icon_gwc_w.png) no-repeat;background-size:30px 30px;}
+.m-shop-car{position:absolute;top:8px;right:20px; display:inline-block; width: 30px;height: 30px;background: url(../../../../images/icons/icon_gwc.png) no-repeat;background-size:30px 30px;}
 .m-shop-car .num{position: absolute;right:-8px;top:-3px; width:18px;height:18px;border-radius:50%;font-size:13px;line-height:18px; text-align:center;color:#ffffff; background-color: #FF0000; }
 .m-shop-car .num2{position: absolute;right:-8px;top:-5px; width:14px;height:14px;border-radius:50%;font-size:9px;line-height:14px; text-align:center;color:#ffffff; background-color: #FF0000; }
 
 .m-quote-search-icon{float: right;position: absolute;top: 40%;right: 15px;}
-.m-quote{position:relative;}
+.m-quote{position:relative;background:#fff;}
 .m-quote .txt-line{line-height: 30px;padding-top: 10px;}
-.m-quote .txt-a{color:blue;padding-left:5%;line-height: 30px;padding-top: 10px;}
+.m-quote .txt-a{color:blue;padding-left:6%;line-height: 30px;padding-top: 10px; margin-top:10px;display:block; float:left;}
 .m-quote .lab{font-weight:bold;}
 .m-quote .txt{vertical-align:middle;}
-.m-quote .txt-head{background: darkgray;height: 50px;}
-.m-quote .txt-head .left{position: relative;width: 70%;padding-top: 3px;}
+.m-quote .txt-head{background:#ebebeb;height:40px; padding:5px;}
+
+.m-quote .txt-head .left{position: relative;width: 70%;padding-top: 3px; line-height:18px;}
 .m-quote .txt-head .right{float: right;width: 40%;line-height: 0px;font-weight: bold;position: relative;top: -25px;}
+.m-quote ul li{margin: 5px;}
 /** 报价单名细信息  **/
-.m-quote-list{table-layout: fixed;border-collapse: collapse; margin-top:4px; width:100%; font-size: 12px;}
-.m-quote-list thead{text-align: center;border-bottom: 1px solid lightgray;}
+.m-quote-list{table-layout: fixed;border-collapse: collapse; margin-top:-2px; width:100%; font-size: 12px;border: 1px solid #ebebeb;}
+.m-quote-list thead{text-align: center;border-bottom: 1px solid #ebebeb;}
 .m-quote-list tr{text-align: center;}
-.m-quote-list th{font-weight: bold;text-align: center;border-right: 1px solid lightgray;}
-.m-quote-list td,.m-quote-detail th{border-bottom: 1px solid #ccc;padding: 5px 5px;border-right: 1px solid lightgray;}
+.m-quote-list th{font-weight: bold;text-align: center;border-right: 1px solid #ebebeb;font-weight: normal;background:#fafafa; padding:5px 0px;}
+.m-quote-list td,.m-quote-detail th{border-bottom: 1px solid #ebebeb;padding: 5px 5px;border-right: 1px solid #ebebeb;}
 .m-quote-list .place-steel{color:#F40; }
 .m-quote-list .show{}
 .m-quote-list .hide{display:none;}
 .m-quote-list .add-show{width: 10em;}
 .m-order-list .copy-steel-btn{width: 5em;height: 1.7em;}
 
-.m-quote-footer{height:50px; padding-right:10px; text-align: right;}
+.m-quote-footer{height:50px;  text-align: right;}{padding-right:10px;}
 .m-quote-footer .quote-btn{width:100%; margin:9px 0 0 8px; padding-top: 3px;padding-bottom: 3px;}
 
 .m-quote-addprice{float: right;position: absolute;top: 0px;width: 100%;height: 100%;background: rgba(80, 78, 88, 0.5)}
@@ -99,11 +101,12 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .hide{display:none;}
 .m-quote-addprice-show{transform: translate(-100%,0px);-ms-transform: translate(-100%,0px);-webkit-transform: translate(-100%,0px);transition: transform 0.35s;-ms-transition: transform 0.35s;-webkit-transition: transform 0.35s;}
 .m-quote-addprice-close{transform: translate(100%,0px);-ms-transform: translate(100%,0px);-webkit-transform: translate(100%,0px);transition: transform 0.35s;-ms-transition: transform 0.35s;-webkit-transition: transform 0.35s;}
-.m-quote-addprice .m-quote-price{overflow: auto;background: white;width: 90%;height: 100%;position: absolute;top: 0;left: 100%;}
+.m-quote-addprice .m-quote-price{overflow: auto;background: white;width: 90%;height: 100%;position: fixed;top: 0;left: 100%;}
 .m-quote-addprice .m-quote-price .txt-line{line-height: 30px;padding-top: 5px;padding-bottom: 5px;}
 .m-quote-addprice .m-quote-price .txt-line select{width: 60%;height: 30px;}
 .m-quote-addprice .m-quote-price .lab{padding-left: 10px;font-weight:bold;}
 .m-quote-addprice .m-quote-price .txt{vertical-align:middle;}
+.m-quote-addprice .m-quote-price .left{position: absolute;left: 3px;top: 10px;font-size: 16px;}
 .m-quote-addprice table{width: 100%;}
 .m-quote-addprice tr{height: 35px; text-align: center;border-bottom: 1px solid darkgray;}
 .m-quote-addprice th{height: 35px; text-align: center;border-right: 1px solid darkgray;}
@@ -112,7 +115,7 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-quote-transportfee{float: right;position: absolute;top: 0px;width: 100%;height: 100%;background: rgba(80, 78, 88, 0.5)}
 .m-quote-transportfee-show{transform: translate(-100%,0px);transition: transform 0.35s;-ms-transform: translate(-100%,0px);-ms-transition: transform 0.35s;-webkit-transform: translate(-100%,0px);-webkit-transition: transform 0.35s;}
 .m-quote-transportfee-close{transform: translate(100%,0px);transition: transform 0.35s;-ms-transform: translate(100%,0px);-ms-transition: transform 0.35s;-webkit-transform: translate(100%,0px);-webkit-transition: transform 0.35s;}
-.m-quote-transportfee .m-quote-fee{overflow: auto;background: white;width: 90%;height: 100%;position: absolute;top: 0;left: 100%;}
+.m-quote-transportfee .m-quote-fee{overflow: auto;background: white;width: 90%;height: 100%;position: fixed;top: 0;left: 100%;}
 .m-quote-transportfee .m-quote-fee .txt-line{padding-left: 15px;line-height: 30px;padding-top: 5px;padding-bottom: 5px;}
 .m-quote-transportfee .m-quote-fee .txt-line select{width: 60%;height: 30px;}
 .m-quote-transportfee .m-quote-fee .lab{padding-left: 10px;font-weight:bold;}
@@ -122,7 +125,7 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-quote-transportfee tr{height: 35px; text-align: center;border-bottom: 1px solid darkgray;}
 .m-quote-transportfee th{height: 35px; text-align: center;border-right: 1px solid darkgray;}
 .m-quote-transportfee td{height: 35px; text-align: center;border-right: 1px solid darkgray;}
-.m-quote-transportfee .m-quote-search{overflow: auto;background: white;width: 95%;height: 100%;position: absolute;top: 0;left: 100%;}
+.m-quote-transportfee .m-quote-search{overflow: auto;background: white;width: 95%;height: 100%;position: fixed;top: 0;left: 100%;}
 .m-quote-transportfee .m-quote-search li{height: 40px;line-height: 40px;border-bottom: 1px solid darkgray;}
 .m-quote-transportfee .m-quote-search .title{text-align: center;font-size: 20px;font-weight: bold;}
 .m-quote-transportfee .m-quote-search .lab{width: 20%;padding-left: 10px;}
@@ -183,4 +186,17 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-quote-detail .th5{width: 4em;}
 .m-quote-detail .th6{width: 38%;border-right: none;}
 .m-quote-detail .td-span{position: relative;top: 30px;}
-}
+/*zy*/
+.weui-cells__title {margin: 0 0; padding:10px 15px; border-bottom: 1px solid #ebebeb;}
+.weui-btn_warn{background-color:#ff9b0b; color:#fff;}
+.weui-btn_default{background-color:#fff;}
+.weui-btn-area{ padding:10px 0px;}
+.weui-cells{margin-top:1em；}
+.weui-cell_access{border-bottom: 1px solid #ebebeb;}
+.weui-navbar__item{background-color:#ebebeb;}
+.weui-navbar__item.weui-bar__item_on{background-color:#fff;}
+.m-thickness-price .table-add-price{width:100%; border-collapse: separate;border-left: 1px solid #ebebeb; border-top: 1px solid #ebebeb;text-align: center; margin-top:10px; line-height:28px;}
+.bjhui{width:100%; height:10px;display:block; background-color:#ebebeb; }
+.weui-btn_primary{background-color:#5fb13b}
+.g-header {line-height: normal;}
+.weui-btn_primary {background-color: #5fb13b;}

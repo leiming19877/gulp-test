@@ -35,7 +35,7 @@
      <!-- end 加入成功提示  -->
       
      <!-- 加载提示  -->
-     <div id="loading-toast" class="weui_loading_toast" style="z-index: 3;">
+     <div id="loading-toast"  class="weui_loading_toast" style="z-index: 3;">
           <div class="weui_mask_transparent"></div>
           <div class="weui_toast">
               <div class="weui_loading">

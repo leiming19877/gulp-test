@@ -22,8 +22,8 @@
 						<span class="order_detail_sta" v-text='ladingInfo.ladingStatusDesc'></span>
                   </div>
                   <div v-cloak class="height_30">
-						<span v-text='ladingInfo.ecLadingCode'></span>
-		             	<a href="javascript:;" v-bind:data-clipboard-text="ladingInfo.ecLadingCode" class="weui-btn weui-btn_mini weui-btn_default detail_copy" id="copy_lading_code">复制</a>
+						<span v-text='ladingInfo.ladingCode === null ? ladingInfo.ecLadingCode:ladingInfo.ladingCode'></span>
+		             	<a href="javascript:;" v-bind:data-clipboard-text="ladingInfo.ladingCode === null ? ladingInfo.ecLadingCode:ladingInfo.ladingCode" class="weui-btn weui-btn_mini weui-btn_default detail_copy" id="copy_lading_code">复制</a>
                   </div>
               </div>
          </div>
@@ -50,7 +50,7 @@
                   </div>
 	          </div>
 	          <div class="page__category-content" style='font-size:14px;'>
-	             <div class="weui-cell__bd border_bottom">
+	             <div class="weui-cell__bd border_bottom" v-if="ladingInfo.ladingComment != null && ladingInfo.ladingComment != ''">
                       <div class="height_30">
                       	<span class='lable_l'>提单备注</span>
                       	<span class='lable_r' v-text='ladingInfo.ladingComment'></span>
@@ -92,10 +92,10 @@
                       	<span class='lable_r' v-text="ladingInfo.projectText"></span>
                       </div>
 	              </div>
-	              <div class="weui-cell__bd border_bottom">
-                      <div class="height_30">
+	              <div v-cloak class="weui-cell__bd border_bottom">
+                      <div class="height_30" v-if="ladingInfo.createdDatetime != null">
                       	<span class="lable_l">开单时间</span>
-                      	<span class='lable_r' v-if="ladingInfo.createdDatetime != null" v-text="new Date(ladingInfo.createdDatetime).formatDate('yyyy-MM-dd')"></span>
+                      	<span class='lable_r' v-text="new Date(ladingInfo.createdDatetime).formatDate('yyyy-MM-dd')"></span>
                       </div>
 	              </div>
 	               <div class="weui-cell__bd border_bottom">

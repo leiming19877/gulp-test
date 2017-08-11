@@ -1,5 +1,5 @@
 @CHARSET "UTF-8";
-html,body,.g-page{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
+html,body,.g-page{ height: 100%; overflow:hidden; background-color: #fff;}
 
 .g-page{display:-webkit-box; display:flex; -webkit-box-orient:vertical;flex-direction:column ; height: 100%;}
 /* .g-page.gp1{left:100%; right:-100%;}
@@ -27,21 +27,24 @@ html,body,.g-page{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
     text-align: center;
     font-size: 15px;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background-color: #ededed;
     
 }
 
 .f-show{display: block;}
 .f-hide{display: none;}
 
-.m-list{padding: 10px 0 0 0;line-height:28px; background-color: rgba(228, 228, 228, 1);}
+.m-list{padding: 0;line-height:28px; background-color:#fff;}
 
 .m-list .item{margin-top: 5px;padding:0 10px; background-color: rgba(255, 255, 255, 1);}
 
-.m-list .res{border-bottom: 1px solid #ccc;}
+.m-list .res{border-bottom: 1px solid #ebebeb; line-height:20px; padding:10px 5px;}
 .m-list .res:after{display:block; height: 0;clear: both;content: '.';visibility: hidden;}
 .m-list .res .lf{margin-right: 150px;}
 .m-list .res .rg{float: right;margin-left:-150px;padding-left:10px; width: 140px;}
 .m-list .contrat-info{position:relative; }
+.m-list .contrat-info div{ height:20px; padding:0px 5px; clear:both;}
+.m-list .contrat-info div span{ width:78px; height:20px;display:block; float:left;}
 
 .m-list .contract-status{position:absolute;top: 10px;right: 10px; color: #0068c9;}
 .m-list .contract-sure-btn{position:absolute;top: 45px;right: 10px;color:#fff; background-color: #0068c9;}
@@ -54,11 +57,15 @@ html,body,.g-page{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
     bottom:0;
     background-color:#FFFFFF;
     border-radius: 3px;
+    -ms-transform:translateX(100%);
+    -webkit-transform:translateX(100%);
     transform:translateX(100%);
     transition:transform .3s;
+    -ms-transition:transform .3s;
+    -webkit-transition:transform .3s;
     overflow: hidden;
 }
-.m-search-panel.show {transform:translateX(0);}
+.m-search-panel.show {-ms-transform:translateX(0);-webkit-transform:translateX(0);transform:translateX(0);}
 .m-search-panel .hd{text-align: center;}
 .m-search-panel .bd{margin-top: 0;}
 .m-search-panel .st-ipt{
@@ -74,5 +81,11 @@ html,body,.g-page{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
     border:1px solid #b6b6b6;
     outline: 0;
     color: #000
+}
+.blank {
+    height:10px;
+    background: #ebebeb;
+    margin:15px -15px;
+    width:110%;
 }
 

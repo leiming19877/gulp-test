@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	//组件样式
-    require("../../../swiper/swiper.min.css");
-    var Swiper = require("../../../swiper/swiper.min");
+    //require("../../../swiper/swiper.min.css");
+    var Swiper = require("swiper");
     //引用zepto模块
 	var $ = require("zepto");
 	var Vue = require("vue");
@@ -18,28 +18,34 @@ define(function(require, exports, module) {
 		data:{
 			sellerMemberId:null,//卖家会员号
 			shopingCartCount:0,//购物车数量
+			shopingCartList:[],//购物车数据
 			brand:null,//当前选择的品名
 			steelWork:null,//当前选择的钢厂
-			otherSteelWork:null,//当选择其它钢厂时输入的钢厂名
+			
 			specification:null,//当前选择的规格
-			otherSpecification:null,//当选择其他规格
+			
 			texture:null,//当前选择的材质
-			otherTexture:null,//当选择其他材质
+			
 			width:null,//宽度
 			thickness:null,//厚度
 			buyWeight:null,//购买重量
 			listSellers:[],//卖家会员列表
 			listBigBrands:[],//品名复合列表对象
-			sellerPlaceSteelList:[],//卖家所有金钢厂
-			sellerSpecificationList:[],//卖家所有规格
-			sellerTextureList:[],//卖家所有材质
+			
 			thicknessBrand:null,//查看厚度加价时选择的品名
 			thicknessSteelWork:null,//查看厚度加价时选择的钢厂
 			thicknessSpecification:null,//查看厚度加价时选择的规格
 			isShowAddPrice:false,//是否显示厚度加价
 			recentlyBuyRecordList:[],//最近购物记录
 			isFullHideRecentlyBuyRecord:false,//是否完全隐藏最近购买记录，当没有最近购物记录时隐藏
-			isShowRecentlyBuyRecord:false//是否显示最近购买记录
+			isShowRecentlyBuyRecord:false,//是否显示最近购买记录
+		
+			//厚度输入对话框填充值
+		    thicknessInputDialog:{
+		    	isShowThicknessInputDialog:false,//是否显示厚度输入对话框
+		    	selectedVal:'',//选择的值
+		    	inputVal:''//输入的值
+		    }
 		},
 		computed:{
 			//品名列表
@@ -66,30 +72,15 @@ define(function(require, exports, module) {
 								 'steelWorkName':e.steelWorkName
 							 });
 						 });
-						 list.push({
+						/* list.push({
 							 'id':null,
 							 'steelWorkId':null,
 							 'steelWorkName':'其他'
-						 });
+						 });*/
 					}
 					return list;
 			},
-			listOtherSteelWorks:function(){
-				var list = [];
-				list.push({
-					'id':null,
-					'steelWorkId':null,
-					'steelWorkName':'请选择'
-				});
-				this.sellerPlaceSteelList.forEach(function(e,index){
-					list.push({
-						'id':index,
-						'steelWorkId':e.placeSteelId,
-						'steelWorkName':e.placeSteelName
-					});
-				});
-				return list;
-			},
+			
 			//硬度加价钢厂
 			listThicknessSteelWorks:function(){
 					var list = [];
@@ -117,34 +108,11 @@ define(function(require, exports, module) {
 								  'specificationName':e.specificationName  
 							 });
 						 });
-						list.push({
-							  'specificationId':null,
-							  'specificationName':'其他'  
-						 });
+					
 					}
 					return list;	
 			},
-			//卖家其他规格列表
-			listOtherSpecifications:function(){
-					var list = [];
-					var self = this;
-					if(this.brand){
-						list.push({
-							  'specificationId':null,
-							  'specificationName':'请选择' 
-						 });
-						this.sellerSpecificationList.forEach(function(e){
-							if(self.brand.brandId.valueOf() === Number(e.brandId).valueOf() ){
-								list.push({
-									  'specificationId':e.specificationId,
-									  'specificationName':e.specificationName  
-								 });
-							}
-						});
-						
-					}
-					return list;	
-			},
+			
 			//规格列表
 			listThicknessSpecifications:function(){
 					var list = [];
@@ -175,41 +143,30 @@ define(function(require, exports, module) {
 								  'specificationId':e.specificationId
 							 });
 						 });
-						list.push({
-							  'id':null,
-							  'textureId':null,
-							  'textureName':'其他',
-							  'specificationId':null
-						 });
+						
 					}
 					return list;
 			},
-			//材质
-			listOtherTextures:function(){
+			
+			//当前厚度加价
+			currentListThicknessAddPrices:function(){
 					var list = [];
-					var self = this;
-					if(this.brand){
-						list.push({
-							  'id':null,
-							  'textureId':null,
-							  'textureName':'请选择',
-							  'specificationId':null
-						 });
-						this.sellerTextureList.forEach(function(e,index){
-							 if(self.brand.brandId.valueOf() == Number(e.barndCode).valueOf() ){
-								 list.push({
-									  'id':index,
-									  'textureId':e.textureId,
-									  'textureName':e.textureName,
-									  'specificationId':null
-								 });
-							 }
+					if(this.brand && this.steelWork && this.specification){
+						var steelList = this.getListSteelWorksByBrandId(this.brand.id);
+						var specificationList = this.getListSpecificationsBySteelWorkId(this.steelWork.id,steelList);
+						var addPriceList = this.getListAddPriceBySpecificationId(this.specification.specificationId,specificationList);
+						addPriceList.forEach(function(e){
+							 list.push({
+								  'id':e.id,
+								  'thickness':e.thickness,
+								  'thicknessPrice':e.thicknessPrice
+							 });
 						 });
 						
 					}
 					return list;
 			},
-			//材质
+			//厚度加价
 			listThicknessAddPrices:function(){
 					var list = [];
 					if(this.thicknessBrand && this.thicknessSteelWork && this.thicknessSpecification){
@@ -231,7 +188,7 @@ define(function(require, exports, module) {
 		watch:{
 			sellerMemberId:function(newSellerMemberId){
 				this.getSellerBrandListAndShopingCart(newSellerMemberId);
-				this.getRecentlyBuyRecordList(newSellerMemberId);
+				//this.getRecentlyBuyRecordList(newSellerMemberId);
 			},
 			brand:function(/*newBrand*/){
 				this.steelWork = null;
@@ -323,6 +280,26 @@ define(function(require, exports, module) {
 				var sellerId = this.sellerMemberId;
 				window.location.href="../shopcart/view?sellerId="+sellerId
 			},
+			/**
+			 * 是否购买过指定资源
+			 * @param {o} 订单资源
+			 * @parma {s} 购物车资源
+			 */
+			isBuyed:function(o,s){
+				
+				if(!o || !s ){
+					return false;
+				}
+				//d.brandName,d.brandNameDesc,d.placeSteel,d.placeSteelDesc,d.specification,d.texture,d.textureDesc
+				if(o.brandName == s.brandId
+						&& o.texture == s.textureId
+						&& o.specification == s.specificationName
+						&& o.placeSteel == s.steelWorkId
+					){
+					return true;
+				}
+				return false;
+			},
 			//获取卖家列表
 			getListSellers:function(){
 			   var self = this;
@@ -351,14 +328,43 @@ define(function(require, exports, module) {
 				 this.$http.post("../../ec/futures/getSellerBrandListAndShopingCart",{'sellerId':sellerId}).then(function(rs){
 					 loading.hide(); 
 					 var data = rs.data;
-
+					 data.recentlyBuyRecordList.forEach(function(listItem){
+						 listItem.forEach(function(e){
+							 var isBuyed = false;
+							 for(var i=0;i<data.shopingCartList.length;i++){
+								 if(self.isBuyed(e,data.shopingCartList[i])){
+									 isBuyed = true;
+									 break;
+								 }
+							 }
+							 e.isBuyed = isBuyed;
+						 });
+					 });
 					 self.shopingCartCount = data.shopingCartCount;
+					 self.shopingCartList= data.shopingCartList;
 					 self.listBigBrands = data.brandList;
-					 self.sellerPlaceSteelList = data.sellerPlaceSteelList;
-					 self.sellerSpecificationList = data.sellerSpecificationList;
-					 self.sellerTextureList = data.sellerTextureList;
+					 self.recentlyBuyRecordList = data.recentlyBuyRecordList;
+					 
+					
+					 //self.sellerPlaceSteelList = data.sellerPlaceSteelList;
+					 //self.sellerSpecificationList = data.sellerSpecificationList;
+					 //self.sellerTextureList = data.sellerTextureList;
 					 self.setDefaultBrand();
 					  
+					 //没有最近购买数据就隐藏
+					 if(data.recentlyBuyRecordList.length == 0){
+						 self.isFullHideRecentlyBuyRecord = true;
+						 return ;
+					 }else{
+						 self.isFullHideRecentlyBuyRecord = false;
+					 }
+				
+					//DOM 还没有更新
+					 Vue.nextTick(function(){
+						 // DOM 更新了
+						 self.initSwiper();
+					 });
+					 
 					  return ;
 				  }).catch(function(rs){
 					  loading.hide();
@@ -387,11 +393,7 @@ define(function(require, exports, module) {
 				this.steelWork = steelWork;
 				this.thicknessSteelWork = steelWork;
 			},
-			setOtherSteelWork:function(event){
-				var target = event.target;
-				var steelWork  = JSON.parse(target.value);
-				this.otherSteelWork = steelWork;
-			},
+		
 			setThicknessSteelWork:function(event){
 				 var t = event.target;
 				 var steelWork = JSON.parse(t.value);
@@ -401,11 +403,7 @@ define(function(require, exports, module) {
 				this.specification = specification;
 				this.thicknessSpecification = specification;
 			},
-			setOtherSpecification:function(event){
-				 var t = event.target;
-				 var specification = JSON.parse(t.value);
-				 this.otherSpecification = specification;
-			},
+			
 			setThicknessSpecification:function(event){
 				var specification = JSON.parse(event.target.value);
 				this.thicknessSpecification = specification;
@@ -413,11 +411,7 @@ define(function(require, exports, module) {
 			setTexture:function(texture){
 				this.texture = texture;
 			},
-			setOhterTexture:function(event){
-				 var t = event.target;
-				 var texture = JSON.parse(t.value);
-				 this.ohterTexture = texture;
-			},
+			
 			//通过品名id获取钢厂列表
 			getListSteelWorksByBrandId:function(brandId){
 				for(var i=0;i<this.listBigBrands.length;i++){
@@ -461,17 +455,15 @@ define(function(require, exports, module) {
 			//获取选择的规格
 			getSepecification:function(){
 				var sp = null;
-				if(this.specification && this.specification.specificationName !== '其他' ){
+				if(this.specification ){
 					sp = this.specification;
-				}else {
-					sp = this.otherSpecification;
 				}
 				return sp;
 			},
 			//获取规格名称
 			getSpecificationName:function(){
 				var sp = this.getSepecification();
-				if(!sp || sp.specificationName=== '请选择'){
+				if(!sp){
 					return '';
 				}
 				return sp.specificationName;
@@ -492,57 +484,30 @@ define(function(require, exports, module) {
 				if(!this.steelWork){
 					weui.alert("请选择钢厂！");
 					return ;
-				}else if(this.steelWork && this.steelWork.steelWorkName === '其他' 
-					&& (!this.otherSteelWork 
-							|| this.otherSteelWork.steelWorkName === '请选择'
-							|| this.otherSteelWork.steelWorkName === '')){
-					weui.alert("请选择其他钢厂！");
-					return ;
 				}
-				if(this.steelWork && this.steelWork.steelWorkName !== '其他' ){
+				if(this.steelWork){
 					params['steelWorkId'] = this.steelWork.steelWorkId;
 					params['steelWorkName'] = this.steelWork.steelWorkName;
-	
-				}else {
-					params['steelWorkId'] = this.otherSteelWork.steelWorkId;
-					params['steelWorkName'] = this.otherSteelWork.steelWorkName;
 				}
 				
 				if(!this.specification){
 					weui.alert("请选择规格！");
 					return ;
-				}else if(this.specification && this.specification.specificationName === '其他' 
-					&& (!this.otherSpecification ||this.otherSpecification.specificationName === ''
-						|| this.otherSpecification.specificationName === '请选择')){
-					weui.alert("请选择其他规格！");
-					return ;
 				}
 				
-				if(this.specification && this.specification.specificationName !== '其他' ){
+				if(this.specification ){
 					params['specificationId'] = this.specification.specificationId;
 					params['specificationName'] = this.specification.specificationName;
-				}else {
-					params['specificationId'] = this.otherSpecification.specificationId;
-					params['specificationName'] = this.otherSpecification.specificationName;
 				}
 				
 				if(!this.texture){
 					weui.alert("请选择材质或者输入材质！");
 					return ;
-				}else if(this.texture && this.texture.textureName === '其他' 
-					&& (!this.otherTexture 
-						|| this.otherTexture.textureName === ''
-						||this.otherTexture.textureName === '请选择')){
-					weui.alert("请选择其他材质！");
-					return ;
 				}
 				
-				if(this.texture && this.texture.textureName !== '其他' ){
+				if(this.texture  ){
 					params['textureId'] = this.texture.textureId;
 					params['textureName'] = this.texture.textureName;
-				}else {
-					params['textureId'] = this.otherTexture.textureId;
-					params['textureName'] = this.otherTexture.textureName;
 				}
 				
 				if(this.width === null || this.width <= 0){
@@ -583,11 +548,38 @@ define(function(require, exports, module) {
 			hideAddPrice:function(){
 				this.isShowAddPrice = false;
 			},
+			//隐藏厚度加价输入对话框
+			hideThicknessInputDialog:function(){
+				this.thicknessInputDialog.isShowThicknessInputDialog = false;
+			},
+			//显示厚度加价输入对话框
+			showThicknessInputDialog:function(){
+				this.thicknessInputDialog.isShowThicknessInputDialog = true;
+				this.thicknessInputDialog.selectedVal = '';
+				this.thicknessInputDialog.inputVal = this.thickness;
+			},
+			//显示厚度加价输入对话框确定
+			thicknessInputDialogOkBtn:function(){
+				var check = this.checkThicknessVal();
+				if(!check){
+					return ;
+				}
+				
+				this.thicknessInputDialog.isShowThicknessInputDialog = false;
+				
+				if(this.thicknessInputDialog.selectedVal && this.thicknessInputDialog.selectedVal != -1){
+					this.thickness = this.thicknessInputDialog.selectedVal;
+				}else{
+					this.thickness = this.thicknessInputDialog.inputVal;
+				}
+				return ;
+			},
 			//校验宽度
 			checkWidthVal:function(){
 				var spn = this.getSpecificationName();
 				if(!spn){
 					weui.toast('请选择具体规格',3000);
+					return ;
 				}
 				var width =this['width'];
 				if(width === null){
@@ -628,6 +620,18 @@ define(function(require, exports, module) {
 							return ;
 						}
 					}
+					  
+					cwVal = cVal.split("-");
+					//如果规格格式不是12-14这样的格式，就不校验
+					if(cwVal.length !== 2 || isNaN(cwVal[0]) ||  isNaN(cwVal[1])){
+						return ;
+					}
+					
+					if(width < cwVal[0] || width > cwVal[1]){
+						this['width'] = null;
+						weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);
+						return ;
+					}
 				}else if(width != cVal){
 					this['width'] = null;
 					weui.toast('宽度必须按选择的规格输入，规格要求'+cVal, 3000);
@@ -636,29 +640,30 @@ define(function(require, exports, module) {
 				
 				return ;
 			},
-			//校验宽度
+			//校验厚度
 			checkThicknessVal:function(){
 				var spn = this.getSpecificationName();
 				if(!spn){
 					weui.toast('请选择具体规格',3000);
+					return false;
 				}
-				var thickness =this['thickness'];
+				var thickness =this.thicknessInputDialog.inputVal;
 				if(thickness === null){
-					return ;
+					return true;
 				}
 				var  str = thickness.toString();
 				var t = str.split("\.");
 				if(t.length >1 && t[1].length > 2){
-					this['thickness'] = this['thickness'].toFixed(2);
+					this.thicknessInputDialog.inputVal = this.thicknessInputDialog.inputVal.toFixed(2);
 				}else if(str === ''){
-					this['thickness'] = null;
+					this.thicknessInputDialog.inputVal = null;
 					weui.toast('请输入合法数字!', 3000);
-					return ;
+					return false;
 				}
 				
 				var sp = spn.split("\*");
 				if(sp.length !== 2){
-					return ;
+					return true;
 				}
 				var cVal = sp[1];
 				//如果宽度是非数字
@@ -666,21 +671,21 @@ define(function(require, exports, module) {
 					var  cwVal = cVal.split("-");
 					//如果规格格式不是12-14这样的格式，就不校验
 					if(cwVal.length !== 2 || isNaN(cwVal[0]) ||  isNaN(cwVal[1])){
-						return ;
+						return true;
 					}
 					
 					if(thickness < cwVal[0] || thickness > cwVal[1]){
-						this['thickness'] = null;
+						this.thicknessInputDialog.inputVal = null;
 						weui.toast('厚度必须按选择的规格输入，规格要求'+cVal, 3000);
-						return ;
+						return false;
 					}
 				}else if(thickness != cVal){
-					this['thickness'] = null;
+					this.thicknessInputDialog.inputVal = null;
 					weui.toast('厚度必须按选择的规格输入，规格要求'+cVal, 3000);
-					return ;
+					return false;
 				}
 				
-				return ;
+				return true;
 			},
 			checkNumberVal:function(prop,decimal){
 				if(this[prop] === null ){
@@ -734,33 +739,36 @@ define(function(require, exports, module) {
 				  });
 			},
 			//最近买记录加到购物车
-			recentAddShopCart:function(brandId,brandName,steelWorkId,steelWorkName,
-					specificationName,textureId,textureName,
-					buyWeight){
-			
+			recentAddShopCart:function(/*brandId,brandName,steelWorkId,steelWorkName,
+					specificationName,textureId,textureName*/
+					item){
+				
 				var params = {};
 				if(!this.sellerMemberId){
 					weui.alert("请选择卖家！");
 					return ;
 				}
+				//d.brandName,d.brandNameDesc,d.placeSteel,d.placeSteelDesc,d.specification,d.texture,d.textureDesc
 				params['sellerId'] = this.sellerMemberId;
 				
-				params['brandId'] = brandId;
-				params['brandName'] = brandName;
+				params['brandId'] = item.brandName;
+				params['brandName'] = item.brandNameDesc;
 			
-				params['steelWorkId'] = steelWorkId;
-				params['steelWorkName'] = steelWorkName;
-			
-				params['specificationName'] = specificationName;
+				params['steelWorkId'] = item.placeSteel;
+				params['steelWorkName'] = item.placeSteelDesc;
 				
-			    var  sp = specificationName.split('\*');
-			    if(sp.length == 2){
+				params['specificationName'] = item.specification;
+				
+			   /* var  sp = specificationName.split('\*');
+			    if(sp.length === 2  && !isNaN(sp[0]) && !isNaN(sp[1])){
 			    	params['width'] = sp[0];
 			    	params['thickness'] = sp[1];
-			    }
+			    }else if(sp.length === 1 && !isNaN(sp[0]) ){
+			    	params['width'] = sp[0];
+			    }*/
 		
-				params['textureId'] = textureId;
-				params['textureName'] = textureName;
+				params['textureId'] = item.texture;
+				params['textureName'] = item.textureDesc;
 				
 				//params['buyWeight'] = buyWeight;
 				
@@ -770,6 +778,7 @@ define(function(require, exports, module) {
 				var self = this;
 				this.$http.post("../../ec/futures/addShopingCart",params).then(function(rs){
 					 loading.hide(); 
+					 item.isBuyed = true;
 					 var data = rs.data;
 					 self.shopingCartCount = data.shopingCartCount;
 					 weui.alert(data.msg);

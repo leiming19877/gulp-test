@@ -7,7 +7,8 @@
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>报价单</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/quote/quoteList.css" />
 <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 <script type="text/javascript">
@@ -18,12 +19,12 @@
 		<div id="g-page" class="g-page" v-cloak>
 			<div class="g-header">
 				<div class="weui-navbar" style="z-index: 0;">
-                <div class="weui-navbar__item weui-bar__item_on" style="background: white;padding: 0px;">
+                <div class="weui-navbar__item weui-bar__item_on">
                                          报价单
                     <a href="javascript:void(0)" @click="searchQuoteList" class="weui-icon-search m-quote-search-icon"></a>
                 </div>
-                <div @click="showPublishDemand" class="weui-navbar__item" style="padding: 0px;background: lightgray;">
-                                    发布需求
+                <div @click="showPublishDemand" class="weui-navbar__item" >
+                                      发布需求
                     <a href="javascript:void(0)"@click="showPublishDemand" class="m-shop-car"  >
                             <span class="num">0</span>
                     </a>
@@ -33,16 +34,17 @@
 			<div id="g-content" class="g-content">
 				<div class="m-quote">
 					
-					<ul v-for="futures in futuresList" v-cloak>
+					<ul v-for="(futures,index) in futuresList" v-cloak>
 						<li>
-							<div>
-								<a class="txt-a" @click=showAddPrice(futures[0].memberId) href="javascript:void(0);">查看厚度加价</a>
-								<a class="txt-a" @click=showTransportFeeView(futures[0].memberId) href="javascript:void(0);">查看运费加价</a>
+							<div class="mt10" style="clear: both;">
+								<a v-if="addPrice[index].addPriceList.length >0" class="txt-a" @click=showAddPrice(futures[0].memberId) href="javascript:void(0);">查看厚度加价</a>
+								<a v-if="addPrice[index].freightQuoteList.length >0" class="txt-a" @click=showTransportFeeView(futures[0].memberId) href="javascript:void(0);">查看运费加价</a>
 								<a hidden class="txt-a" href="javascript:void(0);">查看仓储费报价</a>
 							</div>
-							<div>
-								<span v-if="futures[0].cueWord" style="color:red;padding-left: 18px;" v-text="'提示：'+futures[0].cueWord"></span>
+							<div class="info" style="clear: both;">
+								<span v-if="futures[0].cueWord" style="color:red;padding-left: 18px; display:block; margin:10px; padding:5px; border: 1px solid #ebebeb;" v-text="'提示：'+futures[0].cueWord"></span>
 							</div>
+							
 							<ul>
 								<li v-for="e in futures">
 									<div >
@@ -59,7 +61,7 @@
 										</div>
 										<table class="m-quote-list">
 											<thead>
-												<tr v-if="e.quoteLists.length > 0" ><th>规格</th><th>报价</th><th>重量(吨)</th><th>交货期</th><th style="width: 3em;">选购</th></tr>
+												<tr v-if="e.quoteLists.length > 0" ><th style="width: 10em;">规格</th><th>报价</th><th>重量(吨)</th><th>交货期</th><th style="width: 3em;">选购</th></tr>
 												<tr v-if="e.spotgoods.length > 0" ><th>材质</th><th>规格</th><th>报价</th><th>重量(吨)</th><th style="width: 3em;">选购</th></tr>
 											</thead>
 											<tbody>
@@ -100,7 +102,7 @@
 			</div>
 			<div id="g-footer" class="g-footer">
 				<div class="m-quote-footer">
-					<a @click="toPreOrder" href="javascript:;"class="quote-btn weui-btn weui-btn_mini weui-btn_warn">立&emsp;即&emsp;下&emsp;单</a>
+					<a @click="toPreOrder" href="javascript:;"class="weui-btn weui-btn_primary">立&emsp;即&emsp;下&emsp;单</a>
 				</div>
 			</div>
 			
@@ -109,6 +111,7 @@
 			<div id="addprice" @click="closeAddPriceView" class="m-quote-addprice hide">
 				<div class="m-quote-price" @click="stopCloseAddPriceView" >
 					<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="left" @click="closeAddPriceView"><</div>
 						<div class="weui-cell__hd">
 							<label for="" class="weui-label">品名</label>
 						</div>
@@ -184,10 +187,10 @@
 					       </div>
 					       <table>
 					       	<thead>
-					       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>一票含税报价</th></tr>
+					       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>含税报价</th></tr>
 					       	</thead>
 					       	<tbody>
-					       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.TaxFee"></td></tr>
+					       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
 					       	</tbody>
 					       </table>
 				       	</li>

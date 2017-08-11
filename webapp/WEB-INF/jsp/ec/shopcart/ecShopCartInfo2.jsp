@@ -27,7 +27,9 @@
 					<tbody>
 						<tr v-for="e in shoppingCartList">
 							<td class="td1">
-								<span v-text="e.steelWorkName+' '+e.brandName+e.textureName+' '+e.width+'*'+e.thickness"></span>
+								<span v-if="e.thickness=='0' && e.width!='0'" v-text="e.steelWorkName+' '+e.brandName+e.textureName+' '+e.width"></span>
+								<span v-if="e.thickness=='0' && e.width=='0'" v-text="e.steelWorkName+' '+e.brandName+e.textureName+' '+e.specificationName"></span>
+								<span v-if="e.thickness!='0' && e.width!='0'" v-text="e.steelWorkName+' '+e.brandName+e.textureName+' '+e.width+'*'+e.thickness"></span>
 							</td>
 							<td class="td2">
 								<input @tap="inputFutureWeight" class="u-ipt-min u-ipt-mmin" name="futureWeight" v-bind:value="e.buyWeight" v-bind:data-id="e.id"/>吨
@@ -42,16 +44,11 @@
 				<div class="txt-line" style="height: 40px;">
 					<label class="lab ">交货期：</label>
 					<span class="txt">
-						<input readonly="readonly" unselectable="on" onfocus="this.blur()" id="startDate" @click="pickStartDate($event)" class="u-ipt-min" name="startDate" style="width: 8em; text-align: center;" value="" />&nbsp;-&nbsp;
-						<input readonly="readonly" unselectable="on" onfocus="this.blur()" id="endDate" @click="pickEndDate($event)" class="u-ipt-min" name="endDate" style="width: 8em; text-align: center;" value="" /></span>
+						<input readonly="readonly" unselectable="on" onfocus="this.blur()" id="startDate" @click="pickStartDate($event)" class="u-ipt-min" name="startDate" style="width: 8em; text-align: center;" value="" /><span style="color: red;">*</span>&nbsp;-&nbsp;
+						<input readonly="readonly" unselectable="on" onfocus="this.blur()" id="endDate" @click="pickEndDate($event)" class="u-ipt-min" name="endDate" style="width: 8em; text-align: center;" value="" /><span style="color: red;">*</span>
+						</span>
 				</div>
 				<div class="txt-blank"></div>
-				<!-- <div class="txt-line" style="border-bottom: 1px solid lightgray;">
-					<label class="lab ">交货期：</label>
-					<span class="txt">
-						<input id="startDate" class="u-ipt-min" name="startDate" style="width: 8em; text-align: center;" value="" />&nbsp;-&nbsp;
-						<input id="endDate" class="u-ipt-min" name="endDate" style="width: 8em; text-align: center;" value="" /></span>
-				</div> -->
 				<div id="deliveryType" class="txt-line" style="border-bottom: 1px solid lightgray;">
 					<label class="lab" style="vertical-align:text-bottom;">交货方式：</label>
 					<a data-type="ckzt" href="javascript:void(0);" @click="chooseDeliveryType($event,'ckzt')" class="weui-btn weui-btn_mini weui-btn_primary">仓库自提</a>
@@ -77,7 +74,7 @@
 				</div>
 				<div class="txt-line show" id="transFee">
 					<label class="lab">运输费用承担：</label><br>
-					<div><input type="radio" checked="true" style="margin-left: 2em;" data-transfee="1" name="transportFee"><span @click="chooseTransportFeeType" class="txt">供方负责运输，含税运费，一票结算</span></div>
+					<div><input type="radio" checked="true" style="margin-left: 2em;" data-transfee="1" name="transportFee"><span @click="chooseTransportFeeType" class="txt">供方负责运输，一票结算</span></div>
 					<div><input type="radio" style="margin-left: 2em;" data-transfee="2" name="transportFee"><span @click="chooseTransportFeeType" class="txt">供方代办运输，两票结算</span></div>
 				</div>
 				<div class="txt-blank"></div>
@@ -112,10 +109,10 @@
 			       </div>
 			       <table>
 			       	<thead>
-			       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>一票含税报价</th></tr>
+			       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>含税报价</th></tr>
 			       	</thead>
 			       	<tbody>
-			       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.TaxFee"></td></tr>
+			       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
 			       	</tbody>
 			       </table>
 		       	</li>
@@ -156,6 +153,9 @@
 		       		</div>
 		       	</li>
 		       </ul>
+		       <div class="bottons">
+	       		<a href="javascript:void(0)" @click="createNewAddr" class="insert">新增收货地址</a>
+	       	   </div>
 			</div>
 		</div>
 		
@@ -214,6 +214,16 @@
 		        <div class="weui-dialog__bd">请先输入交货起始日期，起始日期须大于结束日期！</div>
 		        <div class="weui-dialog__ft">
 		            <a href="javascript:;" @click="doneClose($event)" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+		        </div>
+		    </div>
+		</div>
+		<div class="js_dialog" id="deleteAddrDialog" style="display: none;">
+		    <div class="weui-mask"></div>
+		    <div class="weui-dialog">
+		        <div class="weui-dialog__hd"><strong class="weui-dialog__title" style="font-size: 16px;">是否确认删除？</strong></div>
+		        <div class="weui-dialog__ft">
+		            <a href="javascript:;" @click="cancleAddrDelete($event)" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+		            <a href="javascript:;" @click="confirmAddrDelete($event)" class="weui-dialog__btn weui-dialog__btn_primary">删除</a>
 		        </div>
 		    </div>
 		</div>

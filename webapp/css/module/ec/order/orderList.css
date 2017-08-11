@@ -22,8 +22,8 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
 .g-footer{-webkit-box-flex:0;flex:none; width:100%;height:50px; border-top:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
 
-.u-back-left{float:left;margin: 0 5px 0 5px;padding: 0 5px 0 0;}
-.u-back-left:before{display:block; font-size:20px;content: "\e604";}
+.u-back-left{float:left;margin: 5px 5px 5px 5px;padding: 0 5px;}
+.u-back-left:before{display:block; font-size:22px;content: "\e604";}
 
 .u-title{height: 40px; line-height:40px;font-weight: bold;font-size: 14px;overflow: hidden;}
 
@@ -37,14 +37,15 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .show{display: block;}
 .m-order-content{display: none;padding-top: 50px;height: 100%;background: white;width: 100%;font-size: 14px;}
 
-.blank{height: 1px;background: lightgray;margin-left: 15px; margin-right: 15px;}
-.line-blank{height: 10px;background: lightgray;}
-.m-order{}
-.m-order .m-order-info1{height: 30px;line-height: 30px;}
+.blank{height: 1px;background:#ebebeb;margin-left: 15px; margin-right: 15px;}
+.m-order .blank{margin:0px 0px 10px 0px;}
+.line-blank{height: 10px;background:#ebebeb; margin-top:10px;}
+.m-order{ padding:5px 12px;}
+.m-order .m-order-info1{height:18px;line-height:18px;}
 .m-order .m-order-info1 .right{position: absolute;right: 12px;}
-.m-order .m-order-info1 .blue{color:blue;}
+.m-order .m-order-info1 .blue{color:#3879d9;}
 .m-order .m-order-info1 .info{padding-left: 5px;}
-.m-order .right-button{float: right;position: relative;right: 10px;bottom: 50px;}
+.m-order .right-button{float: right;position: relative;right: 10px;bottom:30px;}
 
 .m-quote{position:relative;}
 .m-quote .txt-line{line-height: 30px;padding-top: 10px;}
@@ -54,6 +55,7 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .m-quote .txt-head{background: darkgray;height: 50px;}
 .m-quote .txt-head .left{position: relative;width: 70%;padding-top: 3px;}
 .m-quote .txt-head .right{float: right;width: 30%;line-height: 0px;font-weight: bold;position: relative;top: -25px;}
+#orderList li{padding-top:10px; }
 /** 报价单名细信息  **/
 .m-quote-list{table-layout: fixed;border-collapse: collapse; margin-top:4px; width:100%; font-size: 12px;}
 .m-quote-list thead{text-align: center;border-bottom: 1px solid lightgray;}
@@ -92,13 +94,9 @@ div.no-order{
 	margin-left:30%
 }
 .qryBtn{	
-    position: relative;
-    top: 50px;
-    left: -30%;
+    
 }
 .clearBtn{
-    position: absolute;
-    top: 282px;
-    left: 50%;
+   
 	
 }

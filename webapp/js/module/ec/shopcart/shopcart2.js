@@ -98,10 +98,12 @@ define(function(require, module, exports) {
 			 	var self = this;
 			 	var length = this.shoppingCartList.length;//用于判断是否最后一条资源数
 				var id = $("#dialog2").attr("data-id");
+				$('#dialog2').hide();
+				var loading = weui.loading('正在删除...', {className: 'custom-classname'});
 				self.$http.post("deleteShoppingCartData",{
 					'id':id
 			 	},{emulateJSON:true}).then(function(data){
-					$('#dialog2').hide();
+			 		loading.hide();
 			 		if (data.data.result) {
 						self.shoppingCartList.forEach(function(obj,index){
 							if (obj.id == id) {
@@ -117,7 +119,7 @@ define(function(require, module, exports) {
 						weui.toast('删除失败!', 3000);
 			 		}
 				}).catch(function(rs){
-					$('#dialog2').hide();
+			 		loading.hide();
 					weui.toast('网络异常!', 3000);
 				});
 			 },
@@ -171,7 +173,13 @@ define(function(require, module, exports) {
 			 chooseDistrict:function(){
 			 	var self = this;
 				var data = self.disTricts;
-				var defaultValue = [self.editAddr.province_name,self.editAddr.area_id,self.editAddr.districtId];
+				if (data[0].label =="全部") {
+					data.splice(0,1);
+				}
+				var provinceName = self.editAddr.province_name?self.editAddr.province_name:"天津";
+				var aId = self.editAddr.area_id==""?"10003":self.editAddr.area_id;
+				var dId = self.editAddr.districtId==""?"1357044":self.editAddr.districtId;
+				var defaultValue = [provinceName,aId,dId];
 				weui.picker(data, {
 				     className: 'custom-classname',
 				     defaultValue: defaultValue,
@@ -204,6 +212,33 @@ define(function(require, module, exports) {
 			 deleteAddr:function(id,e){
 			 	$("#deleteAddrDialog").attr("con-id",id);
 			 	$("#deleteAddrDialog").show();
+			 },
+			 cancleAddrDelete:function(e){
+			 	$("#deleteAddrDialog").hide();
+			 },
+			 confirmAddrDelete:function(e){
+			 	var conId = $("#deleteAddrDialog").attr("con-id");
+			 	var self = this;
+			 	$("#deleteAddrDialog").hide();
+			 	var loading = weui.loading('正在删除...', {className: 'custom-classname'});
+			 	self.$http.post("deleteAddrById",{'conId':conId},{emulateJSON:true}).then(function(data){
+			 		loading.hide();
+			 		weui.toast("删除成功",1500);
+			 		self.userConsigneeList.forEach(function(obj,index){
+			 			if (conId == obj.con_id) {
+			 				self.userConsigneeList.splice(index,1);
+			 			}
+			 		});
+			 	});
+			 },
+			 createNewAddr:function(){
+				var addr = {};
+				addr.districtId = "";
+			    addr.districtName = "";
+			    addr.area_id = "";
+			 	this.editAddr = addr;
+			 	$("#editAddr").removeClass("hide");
+				setTimeout(function(){$("#editAddr").children().addClass("m-quote-transportfee-show").removeClass("m-quote-transportfee-close")},10);
 			 },
 			 closeManagerAddrView:function(){
 				$("#managerAddr").children().removeClass("m-quote-transportfee-show").addClass("m-quote-transportfee-close");
@@ -238,7 +273,7 @@ define(function(require, module, exports) {
 			 		
 			 	},{emulateJSON:true}).then(function(data){
 			 		if (data.data.success) {
-			 			window.location.href = "success?orderId="+data.data.orderId+"&type=shopcart";
+			 			window.location.href = "success?orderIds="+data.data.orderId+"&type=shopcart&orderBusiIds="+data.data.orderBusiId;
 			 		} else {
 						weui.toast('期货订单生成失败!', 3000);
 			 		}
@@ -250,7 +285,7 @@ define(function(require, module, exports) {
 			 	var result = false;
 				var reg = /^[0-9]+(.[0-9]{1,3})?$/;
 				$("table input[name='futureWeight']").each(function(index,obj){
-					if ($(obj).val() == "" || !reg.test($(obj).val())) {
+					if ($(obj).val() == "" || Number($(obj).val()) == 0 || !reg.test($(obj).val())) {
 						result = true;
 					}
 				});

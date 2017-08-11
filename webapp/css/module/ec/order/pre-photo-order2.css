@@ -37,7 +37,7 @@ html,body{width: 100%;height: 100%; background-color: #fbf9fe;}
 .g-header{-webkit-box-flex:0;flex:none; width:100%;height: 40px; line-height:40px;border-bottom:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
 
 .g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
-.g-footer{-webkit-box-flex:0;flex:none; width:100%;height:120px; border-top:1px solid #ddd;background-color: #e9e9e9; text-shadow: 0 1px 0 #eee;}
+.g-footer{-webkit-box-flex:0;flex:none; width:100%;height:120px; border-top:0px solid #ddd;background: rgba(0,0,0,0.2);  position: absolute; bottom: 0px;}
 
 [v-cloak]{
 	display: none;
@@ -63,6 +63,7 @@ html,body{width: 100%;height: 100%; background-color: #fbf9fe;}
     color: #fff;
     text-align:left;
     background-color: #3385ff;
+    margin:10px auto; margin-bottom:0px;
 }
 
 
@@ -87,12 +88,12 @@ html,body{width: 100%;height: 100%; background-color: #fbf9fe;}
     line-height:40px;
     font-size:15px;
     text-align:center;
-    background:#3385ff;
+    background:#5fb13b;
     color:#FFF;
 }
 .u-submit-btn.ing{background-color: #999999;}
 
-.m-photoList{
+.m-photoList{b
     margin-top: 0px;
     background: transparent;
 }

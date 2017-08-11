@@ -95,6 +95,7 @@ define(function(require, module, exports) {
 				e.stopPropagation();
 			},
 			clearBtn:function(){
+				$('#orderBusiId').val("");
 				 $('#startDate').val("");
 				 $('#endDate').val("");
 				 $('#sellerName').val("");
@@ -127,6 +128,7 @@ define(function(require, module, exports) {
 				default:
 				  sta = "-1";
 				}
+				var orderBusiId = $('#orderBusiId').val();
 				var orderBeginDate = $('#startDate').val();
 				var orderEndDate = $('#endDate').val();
 				var sellerName = $('#sellerName').val();
@@ -143,6 +145,7 @@ define(function(require, module, exports) {
 						sellerName:sellerName,
 						projectName:projectName,
 						agentName:agentName,
+						orderBusiId:orderBusiId
 				};
 				$.ajax({
 			        type: 'POST',
@@ -159,6 +162,7 @@ define(function(require, module, exports) {
 				        		$("#loadMore").addClass("hide");
 				        	}
 		        		}else{
+		        			queryVue.dataList = resp;
 		        			$("#loadMore").addClass("hide");
 		        		}
 			        	loading.hide(); 
@@ -191,6 +195,7 @@ define(function(require, module, exports) {
 					default:
 					  sta = "-1";
 				}
+				var orderBusiId = $('#orderBusiId').val();
 				var orderBeginDate = $('#startDate').val();
 				var orderEndDate = $('#endDate').val();
 				var sellerName = $('#sellerName').val();
@@ -207,6 +212,7 @@ define(function(require, module, exports) {
 						sellerName:sellerName,
 						projectName:projectName,
 						agentName:agentName,
+						orderBusiId:orderBusiId
 				};
 				$.ajax({
 			        type: 'POST',
@@ -327,7 +333,97 @@ define(function(require, module, exports) {
 			        	$('#androidDialog1').css('display','block');
 			        }
 		      });
-			}
+			},
+			pickStartDate:function(e){
+				var defaultValue = [];
+			 	if ($(e.target).val() == "") {
+				 	var date = new Date();
+				 	defaultValue.push(date.getFullYear());
+					defaultValue.push(date.getMonth()+1);
+					defaultValue.push(date.getDate());
+			 	} else {
+			 		var sta = $(e.target).val().split("-");
+					defaultValue.push(sta[0]);
+					defaultValue.push(sta[1]);
+					defaultValue.push(sta[2]);
+			 	}
+			 	var endDate = $("#endDate").val();
+				weui.datePicker({
+		            start: 2000,
+		            end: 2050,
+		            defaultValue: defaultValue,
+		            onChange: function (result) {
+		            	//var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
+		                //$(e.target).val(value);
+		            },
+		            onConfirm: function (result) {
+		            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
+		                var dateStart = new Date();
+		                dateStart.setFullYear(result[0].value);
+		                dateStart.setMonth(result[1].value-1);
+		                dateStart.setDate(result[2].value);
+		                if (endDate != "") {
+			            	var dateEnd = new Date();
+			            	var st = endDate.split("-");
+			            	dateEnd.setFullYear(st[0]);
+			            	dateEnd.setMonth(st[1]-1);
+			            	dateEnd.setDate(st[2]);
+			            	if (dateStart <= dateEnd) {
+				                $(e.target).val(value);
+			            	} else {
+				                $(e.target).val(defaultValue[0]+"-"+defaultValue[1]+"-"+defaultValue[2]);
+								$("#iosDialog2").show();
+			            	}
+		                } else {
+		                	$(e.target).val(value);
+		                }
+		            }
+		        });
+			 },
+			 pickEndDate:function(e){
+			 	var date = new Date();
+				var defaultValue = [];
+				defaultValue.push(date.getFullYear());
+				defaultValue.push(date.getMonth()+1);
+				defaultValue.push(date.getDate());
+			 	var startDateStr = $("#startDate").val();
+				if (startDateStr == "") {
+					$("#iosDialog2").show();
+					return;
+				} else {
+					weui.datePicker({
+			            start: 2000,
+			            end: 2050,
+			            defaultValue: defaultValue,
+			            onChange: function (result) {
+			            },
+			            onConfirm: function (result) {
+			            
+			            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
+			            	var dateStart = new Date();
+			            	var st = startDateStr.split("-");
+			            	dateStart.setFullYear(st[0]);
+			            	dateStart.setMonth(st[1]-1);
+			            	dateStart.setDate(st[2]);
+			            	
+			            	var dateEnd = new Date();
+			            	dateEnd.setFullYear(result[0].value);
+			            	dateEnd.setMonth(result[1].value-1);
+			            	dateEnd.setDate(result[2].value);
+			            
+			            	
+			            	if (dateStart <= dateEnd) {
+				                $(e.target).val(value);
+			            	} else {
+								$("#iosDialog2").show();
+			            	}
+			            }
+			        });
+				}
+			 },
+			 doneClose:function(e){
+			 	$("#iosDialog2").hide();
+			 }
 		}
 	});
 	
@@ -341,13 +437,13 @@ define(function(require, module, exports) {
             value: '-1'
         }, {
             label: '仓库自提',
-            value: 'ckzt'
+            value: 'zt'
         }, {
             label: '工厂自提',
             value: 'gczt'
         }, {
             label: '包到',
-            value: 'bd'
+            value: 'bps'
         }], {
         	defaultValue:[-1],
             onChange: function (result) {
@@ -367,31 +463,6 @@ define(function(require, module, exports) {
             },
             onConfirm: function (result) {
             	$('#showPicker_thdw').text(result[0].label);
-            }
-        });
-    });
-    
-	$('#startDate').on('click', function () {
-        weui.datePicker({
-            start: 1990,
-            end: new Date().getFullYear(),
-            onChange: function (result) {
-            },
-            onConfirm: function (result) {
-            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
-                $('#startDate').val(value);
-            }
-        });
-    });
-	 $('#endDate').on('click', function () {
-        weui.datePicker({
-            start: 1990,
-            end: new Date().getFullYear(),
-            onChange: function (result) {
-            },
-            onConfirm: function (result) {
-            	var value = result[0].value + "-" + result[1].value + "-" + result[2].value;
-                $('#endDate').val(value);
             }
         });
     });

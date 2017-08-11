@@ -33,10 +33,10 @@ define(function(require, exports, module) {
 		$toast.show();
 		window.setTimeout(function(){
 			$toast.hide();
-		}, delay);
+		}, delay)
 	}
 	
 	module.exports ={
 			"toast":toast
-	};
+	}
 });

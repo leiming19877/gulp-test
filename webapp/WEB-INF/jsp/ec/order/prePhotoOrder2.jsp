@@ -27,8 +27,8 @@
 
 	    <div id="app"  class="g-pages">
 	    
-	        <div id="gp-main" class="g-page gp-main">
-	               <div class=" " v-bind:class="['g-content',{'g-photo-bg1':pictures.length === 0},{'g-photo-bg2':pictures.length > 0}]">
+	        <div id="gp-main" class="g-page gp-main" v-bind:class="['g-content',{'g-photo-bg1':pictures.length === 0},{'g-photo-bg2':pictures.length > 0}]">
+	               <div class=" " ><!--  <v-bind:class="['g-content',{'g-photo-bg1':pictures.length === 0},{'g-photo-bg2':pictures.length > 0}]">-->
 			             <!-- 照片清单 -->
 		                  <div class="weui-cells weui-cells_form m-photoList">
 				            <div class="weui-cell">

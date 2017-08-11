@@ -23,10 +23,8 @@
 		</div>
 		<div id="g-content" class="g-content">
 			<div class="m-order">
-			<div class="txt-blank"></div>
-				<div class="txt-title">
-					<label>期货资源：</label>
-				</div>
+			<div v-if="quoteList.length > 0" class="txt-blank" v-cloak></div>
+				<div v-if="quoteList.length > 0" class="txt-title" v-cloak><label>期货资源：</label></div>
 				<div id="futures" v-cloak>
 					<ul id="futures-list">
 						<li v-for="(e,index) in quoteList" class="m-order-futures">
@@ -38,19 +36,18 @@
 								<a name="textures" v-for="(ee,d) in e.texNames" v-bind:data-texture="ee" v-text="ee" href="javascript:void(0);" @click="chooseTexture" v-bind:class="d===0?'weui-btn weui-btn_mini weui-btn_warn':'weui-btn weui-btn_mini weui-btn_default default'"></a>
 							</div>
 							<div class="info3">
-								<input  readonly="readonly" unselectable="on" onfocus="this.blur()"  type="number" class="ipt1" name="width" @click="inputFutureWeight($event,'width')" v-bind:placeholder="e.width" v-bind:specificationId="e.specificationId"/>*
+								<input v-if="e.width.indexOf('-')==-1" v-bind:value="e.width"  readonly="readonly" unselectable="on" onfocus="this.blur()"  type="number" class="ipt1" name="width" @click="inputFutureWeight($event,'width')" v-bind:placeholder="e.width" v-bind:specificationId="e.specificationId"/>
+								<input v-if="e.width.indexOf('-')!=-1" readonly="readonly" unselectable="on" onfocus="this.blur()"  type="number" class="ipt1" name="width" @click="inputFutureWeight($event,'width')" v-bind:placeholder="e.width" v-bind:specificationId="e.specificationId"/>*
 								<input  readonly="readonly" unselectable="on" onfocus="this.blur()" type="number" class="ipt1" name="thickness" @click="inputFutureWeight($event,'thickness')" v-bind:placeholder="e.thickness"  v-bind:specificationId="e.specificationId" v-bind:quoteId="e.id" v-bind:quotePrice="e.quotePrice2"/>
-								<input  readonly="readonly" unselectable="on" onfocus="this.blur()"  type="number" name="futureWeight" @click="inputFutureWeight($event,'weight')" class="ipt2" value="" v-bind:availableQuantity="e.availableQuantity" v-bind:placeholder="'可售'+e.availableQuantity" />&nbsp;吨
+								<input  readonly="readonly" unselectable="on" onfocus="this.blur()"  type="number" name="futureWeight" v-bind:delist-type="2" @click="inputFutureWeight($event,'weight')" class="ipt2" value="" v-bind:availableQuantity="e.availableQuantity" v-bind:placeholder="'可售'+e.availableQuantity" />&nbsp;吨
 								<a href="javascript:void(0);" class="weui-icon-cancel" @click="deleteRowResource($event,e.id,index)"></a>
-								<a href="javascript:void(0);" class="copy" @click="copyRowResource($event,e.id,index)">复制</a>
+								<a href="javascript:void(0);" class="copy" @click="copyRowResource($event,e.id,index)">新增</a>
 							</div>
 						</li>				
 					</ul>
 				</div>
-				<div class="txt-blank"></div>
-				<div class="txt-title">
-					<label>现货资源：</label>
-				</div>
+				<div v-if="resListingList.length > 0" class="txt-blank" v-cloak></div>
+				<div v-if="resListingList.length > 0" class="txt-title" v-cloak><label>现货资源：</label></div>
 				<div id="spotgoods" v-cloak>
 					<ul>
 						<li class="m-order-spotgoods" v-for="(e,index) in resListingList">
@@ -65,12 +62,11 @@
 									<span v-if="e.isDeliver==0" v-text="'配送  '"></span><span v-if="e.isDeliver==1" v-text="'自提  '"></span><span v-text="e.province+e.city"></span>
 								</div>
 								<div class="info3">
-									<input v-if="e.delistType == 1" @click="subNumber(e.unitWeight,$event)" class="sub" type="button" value="-"><input v-if="e.delistType == 1" readonly="readonly" v-bind:delist-type="e.delistType" name="futureWeight" class="number" type="text" value="1" v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingQuantity"><input v-if="e.delistType == 1" @click="addNumber(e.listingQuantity,e.unitWeight,$event)" class="add" type="button" value="+">
+									<input v-if="e.delistType == 1" @click="subNumber(e.unitWeight,$event)" class="sub" type="button" value="-"><input readonly="readonly" unselectable="on" onfocus="this.blur()" v-if="e.delistType == 1" v-bind:delist-type="e.delistType" name="futureWeight" class="number" type="text" value="" v-bind:unit-weight="e.unitWeight" v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingQuantity"><input v-if="e.delistType == 1" @click="addNumber(e.listingQuantity,e.unitWeight,$event)" class="add" type="button" value="+">
+									<input readonly="readonly" unselectable="on" onfocus="this.blur()" v-if="e.delistType == 2" v-bind:delist-type="e.delistType" name="futureWeight" @click="inputFutureWeight($event,'weight')" v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingWeight" type="text" style="" value="" v-bind:placeholder="'限'+e.listingQuantityShow"/>
 									<p v-if="e.delistType == 1"  v-text="e.unitWeight"></p>&nbsp;吨 
-									
-									<input v-if="e.delistType == 2" v-bind:delist-type="e.delistType" name="futureWeight" @click="inputFutureWeight($event,'weight')" v-bind:listingId="e.listingId" v-bind:availableQuantity="e.listingWeight" type="text" style="" value="" v-bind:placeholder="'限'+e.listingQuantityShow"/>
 									<span v-if="e.resStatus==0" v-text="'已撤牌'"></span>
-									<a href="javascript:void(0);" @click="deleteSpotgoods($event,e.listingId,index)" class="weui-icon-cancel"></a>
+									<a href="javascript:void(0);" @click="deleteSpotgoods($event,e.listingId,index,e.delistType)" class="weui-icon-cancel"></a>
 								</div>
 							</div>
 						</li>				
@@ -86,18 +82,18 @@
 						<input id="endDate" class="u-ipt-min" name="endDate" style="width: 8em; text-align: center;" value="" /></span>
 				</div> -->
 				
-				<div v-if="quoteList.length > 0" v-cloak>
+				<div v-if="quoteList.length > 0 || resListingList.length > 0" v-cloak>
 				<div id="deliveryType" class="txt-line" style="border-bottom: 1px solid lightgray;">
 					<label class="lab" style="vertical-align:text-bottom;">交货方式：</label>
 					<a data-type="ckzt" href="javascript:void(0);" @click="chooseDeliveryType($event,'ckzt')" class="weui-btn weui-btn_mini weui-btn_primary">仓库自提</a>
-					<a data-type="gczt" href="javascript:void(0);" @click="chooseDeliveryType($event,'gczt')" class="weui-btn weui-btn_mini weui-btn_default">工厂自提</a>
+					<a v-if="quoteList.length > 0" data-type="gczt" href="javascript:void(0);" @click="chooseDeliveryType($event,'gczt')" class="weui-btn weui-btn_mini weui-btn_default">工厂自提</a>
 					<a data-type="bd" href="javascript:void(0);" @click="chooseDeliveryType($event,'bd')" class="weui-btn weui-btn_mini weui-btn_default">包到</a>
 				</div>
 				<div name="delivery" id="ckzt" class="txt-line show">
 					<div>自提仓库</div>
 					<div v-for="e in wavehouses" style="padding-left: 40px;" v-text="e"></div>
 				</div>
-				<div name="delivery" id="gczt" class="txt-line hide">
+				<div v-if="quoteList.length > 0 " name="delivery" id="gczt" class="txt-line hide">
 				</div>
 				<div name="delivery" id="bd" v-bind:addrId="userConsignee.con_id" class="txt-line hide">
 					<div style="width: 90%;">
@@ -110,9 +106,9 @@
 					</div>
 					<div class="addr-right" @click="managerAddr">></div>
 				</div>
-				<div class="txt-line show" id="transFee">
+				<div v-bind:class="[{'txt-line show':isShow},{'txt-line hide':!isShow}]" id="transFee">
 					<label class="lab">运输费用承担：</label><br>
-					<div><input type="radio" checked style="margin-left: 2em;" data-transfee="1" name="transportFee"><span @click="chooseTransportFeeType" class="txt">供方负责运输，含税运费，一票结算</span></div>
+					<div><input type="radio" checked style="margin-left: 2em;" data-transfee="1" name="transportFee"><span @click="chooseTransportFeeType" class="txt">供方负责运输，一票结算</span></div>
 					<div><input type="radio" style="margin-left: 2em;" data-transfee="2" name="transportFee"><span @click="chooseTransportFeeType" class="txt">供方代办运输，两票结算</span></div>
 				</div>
 				<div class="txt-blank"></div>
@@ -144,10 +140,10 @@
 			       </div>
 			       <table>
 			       	<thead>
-			       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>一票含税报价</th></tr>
+			       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>含税报价</th></tr>
 			       	</thead>
 			       	<tbody>
-			       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.TaxFee"></td></tr>
+			       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
 			       	</tbody>
 			       </table>
 		       	</li>
@@ -189,6 +185,9 @@
 		       		</div>
 		       	</li>
 		       </ul>
+		       <div class="bottons">
+	       		<a href="javascript:void(0)" @click="createNewAddr" class="insert">新增收货地址</a>
+	       	   </div>
 			</div>
 		</div>
 		
@@ -201,7 +200,7 @@
 				</div>
 				
 				<div class="edit-txt-line"><label>收货单位</label><input v-model="editAddr.consignee_company" placeholder="必填"/></div>
-				<div class="edit-txt-line"><label>收货地区</label><input  readonly="readonly" unselectable="on" onfocus="this.blur()"  id="city" @click="chooseDistrict" v-model="editAddr.districtName" placeholder="必填"/></div>
+				<div class="edit-txt-line"><label>收货地区</label><input  readonly="readonly" unselectable="on" onfocus="this.blur()"  id="city" @click="chooseDistrict" v-bind:value="editAddr.districtName" v-model="editAddr.districtName" placeholder="必填"/></div>
 				<div class="edit-txt-line"><label>详细地址</label><input v-model="editAddr.address" placeholder="必填"/></div>
 				<div class="txt-line-default">第一收货人</div>
 				<div class="edit-txt-line"><label>&emsp;姓名&emsp;</label><input v-model="editAddr.name1" placeholder="必填"/></div>
@@ -220,17 +219,44 @@
 		<div class="js_dialog" id="dialog1" v-bind:style="'display: none;'" v-cloak>
 		    <div class="weui-mask"></div>
 		    <div class="weui-dialog">
-		        <div class="weui-dialog__hd"><strong class="weui-dialog__title"><strong v-text="message_title"></strong></strong></div>
-		        <div id="weight" class="weui-dialog__bd">
-		        	<select style="-webkit-appearance:none;position: fixed;z-index: 1;font-size:1.8em;width: 60%; margin-left: -30%;" id="chooseThickness" onmousedown="if(this.options.length>2){this.size=3}" onblur="this.size=0" onchange="this.size=0" v-show="showThickness" @change="chooseThickness" style="width: 70%;height: 40px;font-size: 18px;">
+		        <div class="weui-dialog__hd"><strong class="weui-dialog__title"><strong>请输入宽度</strong></strong></div>
+		        <div id="width" class="weui-dialog__bd">
+		        	<input class="u-dialog-money-ipt" style="margin-top: 1px;" min="0" max="10000" maxlength="6" type="number" placeholder="请输入"name="width" />
+		        </div>
+		        <div class="weui-dialog__ft">
+		            <a href="javascript:;" @click="cancleWeight('width')" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+		            <a href="javascript:;" @click="confirmWeight('width')" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+		        </div>
+		    </div>
+		</div>
+		
+		<div class="js_dialog" id="dialog3" v-bind:style="'display: none;'" v-cloak>
+		    <div class="weui-mask"></div>
+		    <div class="weui-dialog">
+		        <div class="weui-dialog__hd"><strong class="weui-dialog__title"><strong>请选择或输入厚度</strong></strong></div>
+		        <div id="thickness" class="weui-dialog__bd">
+		        	<select v-show="showThickness" style="-webkit-appearance:none;position: fixed;z-index: 1;font-size:1.8em;width: 60%; margin-left: -30%;" id="chooseThickness" onmousedown="if(this.options.length>2){this.size=3}" onblur="this.size=0" onchange="this.size=0" @change="chooseThickness" style="width: 70%;height: 40px;font-size: 18px;">
 		        		<option v-for="e in thicknessList" v-bind:label="e.thickness" v-text="e.thickness" v-bind:value="e.thickness"></option>
 		        		<option label="" value="" v-text="" v-bind:selected="showThickness"></option>
 		        	</select>
 		        	<input v-show="!showThickness" class="u-dialog-money-ipt" style="margin-top: 1px;" min="0" max="10000" maxlength="6" type="number" placeholder="请输入"name="weight" />
 		        </div>
 		        <div class="weui-dialog__ft">
-		            <a href="javascript:;" @click="cancleWeight($event)" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
-		            <a href="javascript:;" @click="confirmWeight($event)" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+		            <a href="javascript:;" @click="cancleWeight('thickness')" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+		            <a href="javascript:;" @click="confirmWeight('thickness')" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+		        </div>
+		    </div>
+		</div>
+		<div class="js_dialog" id="dialog4" v-bind:style="'display: none;'" v-cloak>
+		    <div class="weui-mask"></div>
+		    <div class="weui-dialog">
+		        <div class="weui-dialog__hd"><strong class="weui-dialog__title"><strong>请输入购买重量</strong></strong></div>
+		        <div id="weight" class="weui-dialog__bd">
+		        	<input class="u-dialog-money-ipt" style="margin-top: 1px;" min="0" max="10000" maxlength="6" type="number" placeholder="请输入"name="weight" />
+		        </div>
+		        <div class="weui-dialog__ft">
+		            <a href="javascript:;" @click="cancleWeight('weight')" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+		            <a href="javascript:;" @click="confirmWeight('weight')" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
 		        </div>
 		    </div>
 		</div>

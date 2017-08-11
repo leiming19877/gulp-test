@@ -8,12 +8,9 @@
 <title>订单详情</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/js/swiper/swiper.min.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/order/orderDetail.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
-
-<script type="text/javascript">
-    //加载本模块样式
-    seajs.use("${ctx}/css/module/ec/order/orderDetail.css");
-</script>
 <body>
 	<div id="order-detail" class="weui-tab g-page">
          <div class="weui-navbar">
@@ -26,31 +23,31 @@
          </div>
          
          <div style="margin-top:40px;">
-	         <div class="weui-cells page__category-content" style='font-size:14px;margin-right:10px;'>
+	         <div class="weui-cells page__category-content" style='font-size:14px;margin-right:0px;'>
 	              <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
 	                  <div class="weui-cell__bd border_bottom">
 	                      <p style='float:left;'>货物明细</p>
 	                  </div>
 	              </a>
-	             <div class="weui-cell__bd border_bottom" v-for="e in orderInfo.iteams">
+	             <div  class="weui-cell__bd border_bottom" v-for="e in orderInfo.iteams">
 	                  <div class="weui-cell__bd">
 	                      <div class="height_30">
 	                      	<span v-text="e.brandNameDesc+' '+e.textureDesc+' '+e.specification+' '+e.placeSteelDesc"></span>
-	                      	<span style='position:absolute;right:0px;color:red;' v-text="'¥'+e.buyPrice+'/吨'"></span>
+	                      	<span style='position:absolute;right:15px;color:red;' v-text="'¥'+e.buyPrice+'/吨'"></span>
 	                      </div>
 	                      <div class="height_30">
 	                      	<span class="info" v-text="e.warehouseDesc"></span>
 	                      	<span style="position:relative;left:15%;color:red;" v-text="e.buyQuantity+'件/'+e.buyWeight+'吨'"></span>
-	                      	<span style="position:absolute;right:0px;color:red;" v-text="'运费：+¥'+e.freightExtra+'/吨'"></span>
+	                      	<span style="position:absolute;right:15px;color:red;" v-text="'运费：+¥'+e.freightExtra+'/吨'"></span>
 	                      </div>
 	                  </div>
 	              </div>
-                  <div class="weui-cell__bd">
-	                  <div class="height_30" style="margin-top:10px;">
-	                  	<div style='height:30px;'>订单量合计：<span style='color:red;' v-text="orderInfo.totalBuyQuantity+'件/'+orderInfo.totalBuyWeight+'吨   	¥'+orderInfo.totalBuyMoney"></span></div>
-	                  	<div style='height:30px;'>开单量：<span style='color:red;' v-text="orderInfo.orderLadingQuanity+'件/'+orderInfo.orderLadingWeight+'吨'"></span></div>
-	                  	<div style='height:30px;'>实提量：<span style='color:red;' v-text="orderInfo.totalReallyQuantity+'件/'+orderInfo.totalReallyWeight+'吨'"></span></div>
-	                  	<div v-cloak style="float: right;position: relative;top: -50px;right: 10px;">
+                  <div   class="weui-cell__bd">
+	                  <div class="height_30" style="margin:10px 0px;">
+	                  	<div style='height:30px; margin-left:15px;'>订单量合计：<span style='color:red;' v-text="orderInfo.totalBuyQuantity+'件/'+orderInfo.totalBuyWeight+'吨   	¥'+orderInfo.totalBuyMoney"></span></div>
+	                  	<div style='height:30px; margin-left:15px;'>开单量：<span style='color:red;' v-text="orderInfo.orderLadingQuanity+'件/'+orderInfo.orderLadingWeight+'吨'"></span></div>
+	                  	<div style='height:30px; margin-left:15px;'>实提量：<span style='color:red;' v-text="orderInfo.totalReallyQuantity+'件/'+orderInfo.totalReallyWeight+'吨'"></span></div>
+	                  	<div v-cloak style="float: right;position: relative;top: -40px;right: 10px;">
 	                  		<a href="javascript:;" v-if="orderInfo.preOrderContractId != 0 && orderInfo.preOrderContractId != ''" @click="toContractDetail(orderInfo.preOrderContractId)" class="weui-btn weui-btn_mini weui-btn_primary">查看合同</a>
 	                   		<a href="javascript:;"  v-if="orderInfo.totalReallyWeight > 0" @click="toLadeList(orderInfo.orderId)" class="weui-btn weui-btn_mini weui-btn_primary">查看提单</a>
 	                  	</div>
@@ -64,42 +61,47 @@
                       	<span class='lable_r' v-text='orderInfo.agentName'></span>
                       </div>
 	              </div>
-	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.agentName != 14">
+	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.deliveryBeginDate != null">
                       <div class="height_30">
                       	<span class="lable_l">交货期</span>
-                      	<span class='lable_r' v-if="orderInfo.requiredBeginDatetime != null" v-text="new Date(orderInfo.requiredBeginDatetime).formatDate('yyyy-MM-dd')+'至'+new Date(orderInfo.requiredEndDatetime).formatDate('yyyy-MM-dd')"></span>
+                      	<span class='lable_r' v-if="orderInfo.deliveryBeginDate != null" v-text="new Date(orderInfo.deliveryBeginDate).formatDate('yyyy-MM-dd')+'至'+new Date(orderInfo.deliveryOverDate).formatDate('yyyy-MM-dd')"></span>
                       </div>
 	              </div>
 	              <div class="weui-cell__bd border_bottom">
-                      <div class="height_30" v-if="orderInfo.agentName != 15">
+                      <div class="height_30" v-if="orderInfo.deliveryType != null">
 		                	<span class="lable_l">交货方式</span>
-		                	<span class='lable_r' v-if="orderInfo.deliveryTypeDesc != null" v-text="orderInfo.deliveryTypeDesc"></span>
+		                	<span class='lable_r' v-text="orderInfo.deliveryTypeDesc"></span>
                       </div>
-                      <div class="height_30">
+                      <div class="height_30" v-if="orderInfo.deliveryType == 'bps'">
 		                	<span class="lable_l">收货地址</span>
-		                	<span class='lable_r' v-text="orderInfo.provinceName==null?'':orderInfo.provinceName+orderInfo.areaName+orderInfo.districtName+orderInfo.address"></span>
+		                	<span class='lable_r' v-text="orderInfo.provinceName+orderInfo.areaName+orderInfo.districtName+orderInfo.address"></span>
 		               </div>
-		               <div class="height_30">
-		                	<span class="lable_l">收货单位</span>
+		               <div class="height_30" v-if="orderInfo.deliveryType == 'bps'">
+		                	<span class="lable_l" >收货单位</span>
 		                	<span class='lable_r' v-text="orderInfo.consigneeCompany"></span>
 		                </div>
-		                <div class="height_30">
+		                <div class="height_30" v-if="orderInfo.deliveryType == 'bps'">
 		                	<span class="lable_l">收货人1</span>
-		                	<span class='lable_r' v-if="orderInfo.name!=null" v-text="orderInfo.name1+','+orderInfo.phone1"></span>
+		                	<span class='lable_r' v-text="orderInfo.name1+','+orderInfo.phone1"></span>
 		                </div>
 	              </div>
-	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.agentName != 15">
+	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.transportFeeType != null">
                       <div class="height_30" style="height:30px;">
                       	<span class="lable_l">运费承担</span>
-                      	<span class='lable_r' v-text="orderInfo.transportFeeType=='1'?'供方运输,一票':'供方代办,两票'"></span>
+                      	<span class='lable_r' v-if="orderInfo.transportFeeType==1" v-text="'供方运输,一票结算'"></span>
+                      	<span class='lable_r' v-if="orderInfo.transportFeeType==2" v-text="'供方代办,两票结算'"></span>
                       </div>
 	              </div>
-	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.agentName != 15">
-                      <div class="height_30" style="height:50px;">
-                      	结算方式:<br/>
-                      	<ol>
-                      		<li v-text="orderInfo.balanceType=='1'?'先款后货':'先货后款'"></li>
-                      	</ol>
+	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.balanceType != null">
+                      <div style="margin-left: 15px;line-height: 30px; height:30px;" >
+                      <span class="lable_l">结算方式:</span>
+                      <span class='lable_r'>
+	                      	<ol class="jie-shuan">
+	                      	    <li v-if="orderInfo.isCashDeposit === 1"  v-text="'需要支付保证金，保证金金额'+orderInfo.cashDeposit+'万元'"></li>
+	                      		<li v-if="orderInfo.balanceType === 1" v-text="'先款后货'"></li>
+	                      		<li v-if="orderInfo.balanceType === 2" v-text="'先货后款'"></li>
+	                      	</ol>
+                      </span>	
                       </div>
 	              </div>
 	               <div class="weui-cell__bd border_bottom">
@@ -108,14 +110,14 @@
                       	<span class='lable_r' v-text='orderInfo.sellerName'></span>
                       </div>
 	              </div>
-	              <div class="weui-cell__bd border_bottom">
+	              <div class="weui-cell__bd border_bottom" v-if="orderInfo.projectName != null && orderInfo.projectName != ''">
                       <div class="height_30">
                       	<span class="lable_l">项目</span>
                       	<span class='lable_r' v-text="orderInfo.projectName"></span>
                       </div>
 	              </div>
 	               <div class="weui-cell__bd border_bottom">
-                      <div class="height_30">
+                      <div class="height_30" v-if='orderInfo.createdDatetime != null'>
                       	<span class="lable_l">下单时间</span>
                       	<span class='lable_r' v-text="new Date(orderInfo.createdDatetime).formatDate('yyyy-MM-dd HH:mm')"></span>
 	                  </div>
@@ -127,7 +129,7 @@
                       	<span class="lable_l">卖家业务员</span>
                       	<span class='lable_r' v-if="orderInfo.salesman != null && orderInfo.salesman != ''" v-text="orderInfo.salesman+','+orderInfo.salemanPhone"></span>
                       </div>
-                      <div class="height_30">
+                      <div class="height_30" v-if="orderInfo.buyerComment != null && orderInfo.buyerComment != ''">
                       	<span class="lable_l">买家留言</span>
                       	<span class='lable_r' v-text='orderInfo.buyerComment'></span>
                       </div>
@@ -159,17 +161,6 @@
 <script type="text/javascript">
     //加载主模板块
     seajs.use("module/ec/order/order-detail");
-    
-  /*   window.onload = function(){
-    	var mySwiper = new Swiper ('.swiper-container', {
-		    direction: 'horizontal',
-		    loop: false,
-		    // 如果需要分页器
-		    pagination: '.swiper-pagination',
-		    // 如果需要前进后退按钮
-		     nextButton: '.swiper-button-next',
-		    prevButton: '.swiper-button-prev'
-		  }) 
-    } */
+
 </script>
 </html>

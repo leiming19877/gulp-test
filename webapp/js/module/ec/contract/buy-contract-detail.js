@@ -132,7 +132,9 @@ define(function(require, exports, module) {
 					    var data = rs.data;
 			
 					    if(data.success){
-					    	window.location.reload();
+					    	weui.alert("确认成功",function(){
+					    		window.location.reload();
+					    	});
 					    }else{
 					    	weui.alert(data.msg);
 					    }
