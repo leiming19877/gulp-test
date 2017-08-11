@@ -13,7 +13,8 @@ var
     autoprefixer = require('autoprefixer'),
     cssbeautify = require('gulp-cssbeautify'),
     csscomb = require('gulp-csscomb'),
-    babel = require('gulp-babel');
+    babel = require('gulp-babel')
+    csslint = require('gulp-csslint');
  
 
 var jsModules = [];
@@ -59,7 +60,15 @@ gulp.task('build:js-check', function(){
 	        filename: __dirname + '/jshint-output.log'
 	      }));*/
 });
-
+//对模块css进行验证
+gulp.task('build:css-check', function(){
+	 //return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp/css/module'})
+	return gulp.src(["webapp/css/module/ec/quote/quoteList.css","!webapp/css/module/**/*.all*.css"],{base:'webapp/css/module'})
+   .pipe(csslint())
+   .pipe(csslint.formatter());
+   //.pipe(csslint.formatter('fail')); // Fail on error (or csslint.failFormatter()) 
+   //.pipe(csslint.formatter('junit-xml'));
+});
 //打包js主模块
 gulp.task( 'build:cmd-moudle', function(){
     return gulp.src(jsModules ,{base:'webapp/js/module'})

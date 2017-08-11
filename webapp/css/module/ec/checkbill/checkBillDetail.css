@@ -26,7 +26,7 @@ html,body,.g-pages{ height: 100%; overflow:hidden; background-color: #fbf9fe;}
 .detail_copy{vertical-align:middle;margin-left:6px;}
 .height_30{line-height:30px;height:30px;margin-left:15px;}
 .height_90{line-height:90px;height:90px;margin-left:15px;}
-.lable_l{float:left;width:30%;}
+.lable_l{float:left;width:30%; color:#777; }
 .lable_r{ float:right;width:70%;}
 .border_bottom{
 	border-bottom: 1px solid lightgray;
