@@ -48,7 +48,7 @@
        
 	<script type="text/javascript">
 		//加载主模板块
-		seajs.use("module/account/unbind-success-tip/unbind-success-tip");
+		seajs.use("module/account/unbind-success-tip/unbind-success-tip.js");
 	</script>
 </body>
 </html>

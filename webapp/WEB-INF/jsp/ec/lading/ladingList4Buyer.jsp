@@ -151,7 +151,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/lading-list");
+    seajs.use("module/ec/lading/lading-list.js");
 </script>
 
 </script>

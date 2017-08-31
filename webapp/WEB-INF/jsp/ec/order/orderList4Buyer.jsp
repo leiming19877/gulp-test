@@ -33,7 +33,7 @@
 	         				<span class="right" v-text="'¥'+d.buyPrice+'/吨'"></span>
 	         			</div>
          				<div class="m-order-info1">
-         					<span class="info" v-text="d.warehouseDesc"></span>
+         					<span class="info"  v-text="d.warehouseDesc"></span>
          					<span class="right" v-text="d.buyQuantity+'件/'+d.buyWeight+'吨'"></span>
          				</div>
          			</div>
@@ -47,8 +47,8 @@
 	         				<span class="right blue" v-text="e.orderStatusDesc"></span>
 	         			</div>
          				<div class="m-order-info1">
-         					<span class="info" v-text="e.orderBusiId"></span>
-         					<span class="right" v-text="new Date(e.createdDatetime).formatDate('yyyy-MM-dd HH:mm')"></span>
+         					<span class="info"  style="color:#ccc;" v-text="e.orderBusiId"></span>
+         					<span class="right" style="color:#ccc;" v-text="new Date(e.createdDatetime).formatDate('yyyy-MM-dd HH:mm')"></span>
          				</div>
          			</div>
          			<div class="blank"></div>
@@ -199,7 +199,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/order/order-list");
+    seajs.use("module/ec/order/order-list.js");
 </script>
 
 </script>

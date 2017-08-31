@@ -7,7 +7,7 @@
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>报价单</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/quote/quoteList.css" />
 <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
@@ -39,7 +39,6 @@
 							<div class="mt10" style="clear: both;">
 								<a v-if="addPrice[index].addPriceList.length >0" class="txt-a" @click=showAddPrice(futures[0].memberId) href="javascript:void(0);">查看厚度加价</a>
 								<a v-if="addPrice[index].freightQuoteList.length >0" class="txt-a" @click=showTransportFeeView(futures[0].memberId) href="javascript:void(0);">查看运费加价</a>
-								<a hidden class="txt-a" href="javascript:void(0);">查看仓储费报价</a>
 							</div>
 							<div class="info" style="clear: both;">
 								<span v-if="futures[0].cueWord" style="color:red;padding-left: 18px; display:block; margin:10px; padding:5px; border: 1px solid #ebebeb;" v-text="'提示：'+futures[0].cueWord"></span>
@@ -54,7 +53,7 @@
 													<span v-if="e.quoteLists.length > 0" v-text="'期货：'+e.brandName"></span>
 													<span v-if="e.spotgoods.length > 0" v-text="'现货：'+e.brandName"></span>
 												</label>
-												<span class="lab"><span v-text="e.cityName"></span><sapn v-text="e.areaName"></sapn>&emsp;<span v-if="e.priceType==1" v-text="'自提价'"></span><span v-if="e.priceType==2" v-text="'配送价'"></span><span v-if="e.priceType==3" v-text="'出厂价'"></span></span>
+												<span class="lab"><span v-text="e.cityName"></span><sapn v-if="e.areaName != '不限'" v-text="e.areaName"></sapn>&emsp;<span v-if="e.priceType==1" v-text="'自提价'"></span><span v-if="e.priceType==2" v-text="'配送价'"></span><span v-if="e.priceType==3" v-text="'出厂价'"></span></span>
 												<br><span class="lab"><span v-text="'钢厂：'+e.steelWorkName"></span></span>
 											</div>
 											<div class="right" v-text="e.sellerName"></div>
@@ -72,8 +71,9 @@
 												<td v-text="ee.deliveryDeadline"></td>
 												<td>
 													<label class="weui-cells_checkbox"> 
-							               				<input v-bind:value="ee.id" v-bind:price-type="e.priceType" v-bind:data-type="'qh'" v-bind:memberId="ee.memberId" type="checkbox" class="weui-check" />
-							               				<i class="weui-icon-checked"></i>
+							               				<input v-if="ee.quoteStatus == 2" v-bind:value="ee.id" v-bind:price-type="e.priceType" v-bind:data-type="'qh'" v-bind:memberId="ee.memberId" type="checkbox" class="weui-check" />
+							               				<i v-if="ee.quoteStatus == 2" class="weui-icon-checked"></i>
+							               				<span v-if="ee.quoteStatus == 1" v-text="'暂停交易'"></span>
 							               			</label>
 						               			</td>
 											</tr>
@@ -84,7 +84,7 @@
 												<td v-text="ee.weight"></td>
 												<td>
 													<label class="weui-cells_checkbox"> 
-							               				<input v-bind:value="ee.listingIds" v-bind:price-type="e.priceType" v-bind:data-type="'xh'" type="checkbox" v-bind:memberId="ee.sellerId" class="weui-check"/>
+							               				<input v-bind:value="ee.listingIds" v-bind:price-type="e.priceType" v-bind:areaSetId="ee.areaSetId" v-bind:cityName="ee.cityName" v-bind:data-type="'xh'" type="checkbox" v-bind:memberId="ee.sellerId" class="weui-check"/>
 							               				<i class="weui-icon-checked"></i>
 							               			</label>
 												</td>
@@ -110,9 +110,12 @@
 			
 			<div id="addprice" @click="closeAddPriceView" class="m-quote-addprice hide">
 				<div class="m-quote-price" @click="stopCloseAddPriceView" >
+				     <div class="f-cb">
+                        <i class="iconfont u-back-left" @click="closeAddPriceView" ></i>
+                        <h3 class="u-title">厚度加价</h3>
+                       </div>
 					<div class="weui-cell weui-cell_select weui-cell_select-after">
-					<div class="left" @click="closeAddPriceView"><</div>
-						<div class="weui-cell__hd">
+					    <div class="weui-cell__hd">
 							<label for="" class="weui-label">品名</label>
 						</div>
 						<div class="weui-cell__bd">
@@ -178,7 +181,10 @@
 			<!-- 查看运费报价 -->
 			<div id="transportFee" @click="closeTransportFeeView" class="m-quote-transportfee hide">
 				<div class="m-quote-fee" @click="stopCloseTransportFeeView" >
-					<div class="left" @click="closeTransportFeeView"><</div>
+				    <div class="f-cb">
+		                    <i class="iconfont u-back-left" @click="closeTransportFeeView" ></i>
+		                    <h3 class="u-title">运费报价</h3>
+		            </div>
 			       <ul>
 			       		<li v-for="e in freightQuoteList">
 							<div class="txt-line">
@@ -190,7 +196,7 @@
 					       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>含税报价</th></tr>
 					       	</thead>
 					       	<tbody>
-					       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
+					       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-if="!ee.memo" v-text="ee.endAddr"></td><td v-if="ee.memo" v-text="ee.endAddr+'('+ee.memo+')'"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
 					       	</tbody>
 					       </table>
 				       	</li>
@@ -202,19 +208,22 @@
 			<!-- 查询报价单 -->
 			<div id="searchQuoteList" @click="closeSaerchView" class="m-quote-transportfee hide">
 				<div class="m-quote-search" @click="stopCloseSaerchView" >
-				<div class="left" @click="closeSaerchView"><</div>
-			       <ul>
-			       	<li><div class="title">报价单查询</div>
+				 <div class="f-cb">
+                    <i class="iconfont u-back-left" @click="closeSaerchView" ></i>
+                    <h3 class="u-title">报价单查询</h3>
+                </div>
+				
+			      <ul>
+			       	
+			       	<li><div class="lab"><label>地区</label></div><div @click="chooseDistrict" id="chooseCity" class="txt"><span id="city" v-bind:province="queryData.provinceName" v-bind:city="queryData.city" v-text="currentCity" v-model="currentCity"></span><a class="u-right"></a></div>
 			       	</li>
-			       	<li><div class="lab"><label>地区</label></div><div @click="chooseDistrict" id="chooseCity" class="txt"><span id="city" v-bind:province="provinceName" v-bind:city="city" v-bind:areaName="areaName" v-text="currentCity" v-model="currentCity"></span><a class="u-right"></a></div>
+			       	<li><div class="lab"><label>卖家</label></div><div @click="chooseSeller" class="txt"><span id="seller" v-bind:sellerMemberId="queryData.memberId" v-text="queryData.sellerName"></span><a class="u-right"></a></div>
 			       	</li>
-			       	<li><div class="lab"><label>卖家</label></div><div @click="chooseSeller" class="txt"><span id="seller" v-bind:sellerMemberId="sellerMemberId" v-text="sellerMemberName"></span><a class="u-right"></a></div>
+			       	<li><div class="lab"><label>品名</label></div><div @click="chooseBrandName" class="txt"><span id="brandName" v-bind:data-brand-id="queryData.brandId" v-text="queryData.brandName"></span><a class="u-right"></a></div>
 			       	</li>
-			       	<li><div class="lab"><label>品名</label></div><div @click="chooseBrandName" class="txt"><span id="brandName" v-bind:data-brand-id="brandId" v-bind:data-brandId="saerchBrandId" v-text="brandName"></span><a class="u-right"></a></div>
+			       	<li><div class="lab"><label>报价方式</label></div><div @click="chooseQuoteType" class="txt"><span id="quoteType" v-bind:priceType="queryData.priceType" v-text="queryData.priceTypeStr"></span><a class="u-right"></a></div>
 			       	</li>
-			       	<li><div class="lab"><label>报价方式</label></div><div @click="chooseQuoteType" class="txt"><span id="quoteType" v-bind:priceType="priceType">不限</span><a class="u-right"></a></div>
-			       	</li>
-			       	<li hidden style="border-bottom: 0px;"><input style="margin-left: 5px;" type="checkbox">设为默认条件
+			       	<li style="border-bottom: 0px;"><input id="defaultCheck" style="margin-left: 5px;" type="checkbox" checked>设为默认条件
 			       	</li>
 			       </ul>
 			       	<a href="javascript:void(0)" class="search-btn weui-btn weui-btn_mini weui-btn_primary" @click="searchQuoteListData()">查&emsp;询</a>
@@ -252,20 +261,20 @@
         </div>
 </div>
 <div class="weui-skin_android" id="quoteTypeActionsheet" style="display: none">
-        <div class="weui-mask"></div>
+        <div class="weui-mask" @click="closeQuoteTypeActionsheet"></div>
         <div class="weui-actionsheet">
             <div class="weui-actionsheet__menu">
-                <div class="weui-actionsheet__cell" data-price-type="0">不限</div>
-                <div class="weui-actionsheet__cell" data-price-type="1">自提价</div>
-                <div class="weui-actionsheet__cell" data-price-type="2">配送价</div>
-                <div class="weui-actionsheet__cell" data-price-type="3">出厂价</div>
+                <div class="weui-actionsheet__cell" @click="chooseQuoteTypeActionsheet" data-price-type="0">不限</div>
+                <div class="weui-actionsheet__cell" @click="chooseQuoteTypeActionsheet" data-price-type="1">自提价</div>
+                <div class="weui-actionsheet__cell" @click="chooseQuoteTypeActionsheet" data-price-type="2">配送价</div>
+                <div class="weui-actionsheet__cell" @click="chooseQuoteTypeActionsheet" data-price-type="3">出厂价</div>
             </div>
         </div>
 </div>
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/quote/quote-list");
+    seajs.use("module/ec/quote/quote-list.js");
 </script>
 
 </script>

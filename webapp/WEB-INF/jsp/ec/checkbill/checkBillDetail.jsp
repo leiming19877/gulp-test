@@ -23,8 +23,8 @@
                   		<span v-text="'提货单位'+checkbill.deliveryUnitName"></span>
                   </div>
                   <div class="height_30" style="margin-left:5px; height:20px;">
-						<span v-text="'合计                   		'+checkbill.totalQuantity+'件/'+checkbill.totalWeight+'吨'"></span>
-						<span style="float:right;margin-right:15px;" v-text="'￥'+checkbill.totalMoney+'元'"></span>
+						<span v-text="'合计                   		'+checkbill.totalQuantity+'件/'+Number(checkbill.totalWeight).toFixed(3)+'吨'"></span>
+						<span style="float:right;margin-right:15px;" v-text="'￥'+Number(checkbill.totalMoney).toFixed(2)+'元'"></span>
                   </div>
               </div>
          </div>
@@ -33,77 +33,77 @@
 	         <div class="weui-cells page__category-content" style='font-size:14px;'>
 	              <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
 	                  <div class="weui-cell__bd border_bottom">
-	                      <p style='float:left;'>货物明细</p>
+	                      <p style='float:left;color:#777;'>货物明细</p>
 	                  </div>
 	              </a>
-                  <div class="weui-cell__bd" style='margin:10px; margin-left:10px;' v-if="checkbill.priceType==1 || (checkbill.priceType==0 && checkbill.hasOtherExpenses == 0)">
+                  <div class="weui-cell__bd" style='margin:10px; margin-left:10px;' v-if="checkbill.priceType==0 && checkbill.hasOtherExpenses == 1 && checkbill.chargingModel==1">
 	                  <div class="ml10" v-for="d in checkbill.iteams">
 	                  	<span style='font-weight:bold;' v-text="d.resDesc"></span>
 	                  	<table style='width:100%;'>
 	                  		<tr>
-	                  			<td>合同号</td>
+	                  			<td style="color:#777;">合同号</td>
 	                  			<td v-text="d.contractCode"></td>
-	                  			<td>货物单价</td>
-	                  			<td v-text="'￥'+d.goodsPrice+'/吨'"></td>
+	                  			<td style="color:#777;">货物单价</td>
+	                  			<td v-text="'￥'+Number(d.goodsPrice).toFixed(2)+'/吨'"></td>
 	                  		</tr>
 	                  		<tr>
-	                  			<td>提单号</td>
+	                  			<td style="color:#777;">提单号</td>
 	                  			<td v-text="d.ladingCode"></td>
-	                  			<td>其他费用</td>
-	                  			<td v-text="'￥'+d.otherExpenses+'/吨'"></td>
+	                  			<td style="color:#777;">其他费用</td>
+	                  			<td v-text="'￥'+Number(d.otherExpenses).toFixed(2)+'/吨'"></td>
 	                  		</tr>
 	                  		<tr>
-	                  			<td>结算重量</td>
-	                  			<td v-text="d.settlementWeight+'吨'"></td>
-	                  			<td>结算单价</td>
-	                  			<td v-text="'￥'+d.settlementPrice+'/吨'"></td>
+	                  			<td style="color:#777;">结算重量</td>
+	                  			<td v-text="Number(d.settlementWeight).toFixed(3)+'吨'"></td>
+	                  			<td style="color:#777;">结算单价</td>
+	                  			<td v-text="'￥'+Number(d.settlementPrice).toFixed(2)+'/吨'"></td>
 	                  		</tr>
 	                  	</table>
 	                  </div>
-                  	<span style="float:right;margin-right:15px;" v-text="'合计：'+checkbill.totalQuantity+'吨/'+checkbill.totalMoney+'元'"></span>
+                  	<span style="float:right;margin-right:15px;" v-text="'合计：'+Number(checkbill.totalWeight).toFixed(3)+'吨/'+Number(checkbill.totalMoney).toFixed(2)+'元'"></span>
                   </div>
-                  <div class="weui-cell__bd" style='margin-left:20px;' v-if="checkbill.priceType==0 && checkbill.hasOtherExpenses == 1 && checkbill.chargingModel==1 ">
+                  <div class="weui-cell__bd" style='margin-left:20px;' v-if="checkbill.priceType==1 || (checkbill.priceType==0 && checkbill.hasOtherExpenses == 0)">
 	                  <div class="ml10"  v-for="d in checkbill.iteams">
-	                  	<span style='font-weight:bold;' v-text="d.brandNameDesc+'		'+d.textureDesc+'		'+d.specificationDesc+'		'+d.placeSteelDesc"></span>
+	                  	<span style='font-weight:bold;' v-text="d.resDesc"></span>
 	                  	<table style='width:100%;'>
 	                  		<tr>
-	                  			<td>合同号</td>
+	                  			<td style="color:#777;">合同号</td>
 	                  			<td v-text="d.contractCode"></td>
-	                  			<td>结算重量</td>
-	                  			<td v-text="d.settlementWeight+'吨'"></td>
+	                  			<td style="color:#777;">结算重量</td>
+	                  			<td v-text="Number(d.settlementWeight).toFixed(3)+'吨'"></td>
 	                  			
 	                  		</tr>
 	                  		<tr>
-	                  			<td>提单号</td>
+	                  			<td style="color:#777;">提单号</td>
 	                  			<td v-text="d.ladingCode"></td>
-	                  			<td>结算单价</td>
-	                  			<td v-text="'￥'+d.settlementPrice+'/吨'"></td>
+	                  			<td style="color:#777;">结算单价</td>
+	                  			<td v-text="'￥'+Number(d.settlementPrice).toFixed(2)+'/吨'"></td>
 	                  		</tr>
 	                  	</table>
 	                  </div>
-                  	<span style="float:right;padding-bottom:10px;" v-text="'合计：'+checkbill.totalQuantity+'吨/'+checkbill.totalMoney+'元'"></span>
+                  	<span style="float:right;padding-bottom:10px;" v-text="'合计：'+Number(checkbill.totalWeight).toFixed(3)+'吨/'+Number(checkbill.totalMoney).toFixed(2)+'元'"></span>
                   </div>
                   <div class="weui-cell__bd" style='margin-left:20px;' v-if="checkbill.priceType==0 && checkbill.hasOtherExpenses == 1 && checkbill.chargingModel==2 ">
 	                  <div v-for="d in checkbill.iteams">
-	                  	<span style='font-weight:bold;' v-text="d.brandNameDesc+'		'+d.textureDesc+'		'+d.specificationDesc+'		'+d.placeSteelDesc"></span>
+	                  	<span style='font-weight:bold;' v-text="d.resDesc"></span>
 	                  	<table style='width:100%;'>
 	                  		<tr>
-	                  			<td>合同号</td>
+	                  			<td style="color:#777;">合同号</td>
 	                  			<td v-text="d.contractCode"></td>
-	                  			<td>结算重量</td>
-	                  			<td v-text="d.settlementWeight+'吨'"></td>
+	                  			<td style="color:#777;">结算重量</td>
+	                  			<td v-text="Number(d.settlementWeight).toFixed(3)+'吨'"></td>
 	                  			
 	                  		</tr>
 	                  		<tr>
-	                  			<td>提单号</td>
+	                  			<td style="color:#777;">提单号</td>
 	                  			<td v-text="d.ladingCode"></td>
-	                  			<td>货物单价</td>
-	                  			<td v-text="'￥'+d.goodsPrice+'/吨'"></td>
+	                  			<td style="color:#777;">货物单价</td>
+	                  			<td v-text="'￥'+Number(d.goodsPrice).toFixed(2)+'/吨'"></td>
 	                  		</tr>
 	                  	</table>
 	                  </div>
-                  	<span style="float:right;" v-text="'其他费用：'+checkbill.totalOtherExpenses+'元'"></span><br/>
-                  	<span style="float:right;" v-text="'合计：'+checkbill.totalQuantity+'吨/'+checkbill.totalMoney+'元'"></span>
+                  	<span style="float:right;" v-text="'其他费用：'+Number(checkbill.totalOtherExpenses).toFixed(2)+'元'"></span><br/>
+                  	<span style="float:right;" v-text="'合计：'+Number(checkbill.totalWeight).toFixed(3)+'吨/'+Number(checkbill.totalMoney).toFixed(2)+'元'"></span>
                   </div>
 	          </div>
 	          <div class="page__category-content" style='font-size:14px;padding-bottom:18px;'>
@@ -139,6 +139,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/checkbill/checkbill-detail");
+    seajs.use("module/ec/checkbill/checkbill-detail.js");
 </script>
 </html>

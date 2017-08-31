@@ -105,7 +105,8 @@ define(function(require, exports, module) {
 						specificationList.forEach(function(e){
 							list.push({
 								  'specificationId':e.specificationId,
-								  'specificationName':e.specificationName  
+								  'specificationName':e.specificationName,
+								  'baseThickness':e.baseThickness
 							 });
 						 });
 					
@@ -122,7 +123,8 @@ define(function(require, exports, module) {
 						specificationList.forEach(function(e){
 							list.push({
 								  'specificationId':e.specificationId,
-								  'specificationName':e.specificationName  
+								  'specificationName':e.specificationName,
+								  'baseThickness':e.baseThickness
 							 });
 						 });
 					}

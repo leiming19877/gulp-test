@@ -177,4 +177,13 @@ define(function(require, exports, module) {
 		}
 	});
 
+	var ua = window.navigator.userAgent;
+	var  android = ua.indexOf('Android') > -1 ;
+	if(android){//android 机型，会有伸缩
+		window.addEventListener("resize", function(e) {
+			//var height = window.innerHeight;
+			var footer = document.getElementById('g-footer')
+			footer.classList.toggle("hide");
+		}, false);
+	}
 });

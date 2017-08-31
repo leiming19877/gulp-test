@@ -17,6 +17,6 @@
 
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/indexSeting");
+    seajs.use("module/ec/lading/indexSeting.js");
 </script>
 </html>

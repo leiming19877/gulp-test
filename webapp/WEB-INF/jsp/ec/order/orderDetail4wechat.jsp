@@ -44,9 +44,9 @@
 	              </div>
                   <div   class="weui-cell__bd">
 	                  <div class="height_30" style="margin:10px 0px;">
-	                  	<div style='height:30px; margin-left:15px;'>订单量合计：<span style='color:red;' v-text="orderInfo.totalBuyQuantity+'件/'+orderInfo.totalBuyWeight+'吨   	¥'+orderInfo.totalBuyMoney"></span></div>
-	                  	<div style='height:30px; margin-left:15px;'>开单量：<span style='color:red;' v-text="orderInfo.orderLadingQuanity+'件/'+orderInfo.orderLadingWeight+'吨'"></span></div>
-	                  	<div style='height:30px; margin-left:15px;'>实提量：<span style='color:red;' v-text="orderInfo.totalReallyQuantity+'件/'+orderInfo.totalReallyWeight+'吨'"></span></div>
+	                  	<div style='height:30px; margin-left:15px;color:#777;'>订单量合计：<span style='color:red;' v-text="orderInfo.totalBuyQuantity+'件/'+orderInfo.totalBuyWeight+'吨   	¥'+orderInfo.totalBuyMoney"></span></div>
+	                  	<div style='height:30px; margin-left:15px;color:#777;'>开单量：<span style='color:red;' v-text="orderInfo.orderLadingQuanity+'件/'+orderInfo.orderLadingWeight+'吨'"></span></div>
+	                  	<div style='height:30px; margin-left:15px;color:#777;'>实提量：<span style='color:red;' v-text="orderInfo.totalReallyQuantity+'件/'+orderInfo.totalReallyWeight+'吨'"></span></div>
 	                  	<div v-cloak style="float: right;position: relative;top: -40px;right: 10px;">
 	                  		<a href="javascript:;" v-if="orderInfo.preOrderContractId != 0 && orderInfo.preOrderContractId != ''" @click="toContractDetail(orderInfo.preOrderContractId)" class="weui-btn weui-btn_mini weui-btn_primary">查看合同</a>
 	                   		<a href="javascript:;"  v-if="orderInfo.totalReallyWeight > 0" @click="toLadeList(orderInfo.orderId)" class="weui-btn weui-btn_mini weui-btn_primary">查看提单</a>
@@ -160,7 +160,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/order/order-detail");
+    seajs.use("module/ec/order/order-detail.js");
 
 </script>
 </html>

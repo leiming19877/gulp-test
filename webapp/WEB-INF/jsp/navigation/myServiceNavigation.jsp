@@ -60,6 +60,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/navigation/myServiceNavigation");
+    seajs.use("module/navigation/myServiceNavigation.js");
 </script>
 </html>

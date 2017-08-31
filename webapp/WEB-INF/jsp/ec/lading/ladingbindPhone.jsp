@@ -130,6 +130,6 @@ if (useragent.match(/MicroMessenger/i) != 'MicroMessenger') {
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/ladingbindPhone");
+    seajs.use("module/ec/lading/ladingbindPhone.js");
 </script>
 </html>

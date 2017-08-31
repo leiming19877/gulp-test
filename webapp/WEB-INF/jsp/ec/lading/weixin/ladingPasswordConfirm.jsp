@@ -25,6 +25,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/ladingPasswordConfirm");
+    seajs.use("module/ec/lading/ladingPasswordConfirm.js");
 </script>
 </html>

@@ -102,6 +102,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/favorite/favoritePage");
+    seajs.use("module/purchase/favorite/favoritePage.js");
 </script>
 </html>

@@ -8,6 +8,14 @@
     "build-js-check": "gulp build:js-check",
     "build-css-check": "gulp build:css-check",
     "build-cmd": "gulp build:cmd-moudle",
+    "build-cmd-d": "node  --inspect --debug-brk ./node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js build:cmd-moudle",
+    "build-module-css": "gulp build:module:css",
+    "build-css": "gulp revreplace-css",
+    "build-css-d": "node  --inspect --debug-brk ./node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js revreplace-css",
+    "build-vue": "gulp build-vue",
+    "copy-static": "gulp copy:static",
+    "build-clean": "gulp clean:static",
+    "build-jsp": "gulp build:jsp2",
     "test-run": "node   --inspect --debug-brk test.js",
     "test-run-gulp": "node  --inspect --debug-brk ./node_modules/gulp/bin/gulp.js --gulpfile ./gulpfile.js",
     "test-run2": "node --debug-brk test.js",
@@ -34,6 +42,7 @@
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-preset-es2015": "^6.24.1",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
@@ -50,11 +59,18 @@
     "gulp-less": "^3.0.5",
     "gulp-minify-css": "^1.2.4",
     "gulp-postcss": "^6.1.0",
+    "gulp-prefix": "0.0.15",
     "gulp-remember": "^0.3.1",
     "gulp-rename": "^1.2.2",
+    "gulp-rev": "^8.0.0",
+    "gulp-rev-replace": "^0.4.3",
+    "gulp-run-sequence": "^0.3.2",
     "gulp-tap": "^1.0.1",
     "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.8",
     "jshint": "^2.9.1",
-    "through2": "^0.6.5"
+    "stream-combiner2": "^1.1.1",
+    "through2": "^0.6.5",
+    "vinyl-paths": "^2.1.0"
   }
 }

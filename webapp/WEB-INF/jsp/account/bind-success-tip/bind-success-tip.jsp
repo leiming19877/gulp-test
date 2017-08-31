@@ -51,7 +51,7 @@
        
 	<script type="text/javascript">
 		//加载主模板块
-		seajs.use("module/account/bind-success-tip/bind-success-tip");
+		seajs.use("module/account/bind-success-tip/bind-success-tip.js");
 	</script>
 </body>
 </html>

@@ -8,12 +8,8 @@
 <title>下单</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.min.css" />
-
+<link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/shopcart/shopcart.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
-<script type="text/javascript">
-    //加载本模块样式
-    seajs.use("${ctx}/css/module/ec/shopcart/shopcart.css");
-</script>
 
 <body>
 	<div id="g-page" class="g-page">
@@ -32,7 +28,8 @@
 								<span v-if="e.thickness!='0' && e.width!='0'" v-text="e.steelWorkName+' '+e.brandName+e.textureName+' '+e.width+'*'+e.thickness"></span>
 							</td>
 							<td class="td2">
-								<input @tap="inputFutureWeight" class="u-ipt-min u-ipt-mmin" name="futureWeight" v-bind:value="e.buyWeight" v-bind:data-id="e.id"/>吨
+								<!-- <input @click="inputFutureWeight" class="u-ipt-min u-ipt-mmin" name="futureWeight" v-bind:value="e.buyWeight" v-bind:data-id="e.id"/>吨 -->
+								<input @input="changeTotalWeight" class="u-ipt-min u-ipt-mmin" name="futureWeight" v-model="e.buyWeight=='0'?'':e.buyWeight" v-bind:data-id="e.id"/>吨
 							</td>
 							<td class="td3">
 								<a href="javascript:;" class="weui-icon-cancel" @tap="deleteRowResource($event,e.id)"></a>
@@ -100,7 +97,11 @@
 		<!-- 查看运费报价 -->
 		<div id="transportFee" @click="closeTransportFeeView" class="m-quote-transportfee hide">
 			<div class="m-quote-fee" @click="stopCloseTransportFeeView" >
-			<div class="left" @click="closeTransportFeeView"><</div>
+			
+			  <div class="f-cb">
+                     <i class="iconfont u-back-left" @click="closeTransportFeeView" ></i>
+                     <h3 class="u-title">运费报价</h3>
+               </div>
 		       <ul>
 		       	<li v-for="e in freightQuoteList">
 					<div class="txt-line">
@@ -112,7 +113,7 @@
 			       		<tr style="border-top: 1px solid darkgray;background: #DEDBDB;"><th>起始点</th><th>目的地</th><th>不含税报价</th><th>含税报价</th></tr>
 			       	</thead>
 			       	<tbody>
-			       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-text="ee.endAddr"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
+			       		<tr v-for="ee in e.freightQuoteList"><td v-text="ee.beginAddr"></td><td v-if="!ee.memo" v-text="ee.endAddr"></td><td v-if="ee.memo" v-text="ee.endAddr+'('+ee.memo+')'"></td><td v-text="ee.unTaxFee"></td><td v-text="ee.taxFee"></td></tr>
 			       	</tbody>
 			       </table>
 		       	</li>
@@ -232,7 +233,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/shopcart/shopcart2");
+    seajs.use("module/ec/shopcart/shopcart2.js");
 </script>
 
 </script>

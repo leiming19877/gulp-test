@@ -29,14 +29,14 @@
          </div>
          
          <div style="margin-top:70px;">
-	         <div class="weui-cells page__category-content" style='font-size:14px;margin-right:10px;'>
+	         <div class="weui-cells page__category-content" style='font-size:14px;'>
 	              <a class="weui-cell weui-cell_access js_item" data-id="button" href="javascript:;">
 	                  <div class="weui-cell__bd border_bottom">
-	                      <p style='float:left;'>货物明细</p>
+	                      <p style='float:left;color:#777;'>货物明细</p>
 	                  </div>
 	              </a>
 	              <div class="m-order" v-for="(d,index) in ladingInfo.ladingDetailList">
-       				<div class="height_30 lading-deatail-list">
+       				<div class="height_30 lading-deatail-list" style='line-height: 20px;'>
 						<span v-text="d.brandNameDesc+''+d.calculateTypeDesc+'	'+d.placeSteelDesc+' '+d.textureDesc+' '+d.specification+'		￥'+d.buyPrice+'/吨'"></span><br/>
         				<span class="right" v-text="'开单量/金额：	'+d.buyQuantity+'件/'+d.buyWeight+'吨/￥'+d.staticBuyMoney"></span><br/>
         				<span class="right" v-text="'实提量/金额：	'+d.reallyQuantity+'件/'+d.reallyWeight+'吨/￥'+d.staticReallyMoney"></span>
@@ -44,15 +44,15 @@
 	       		  </div>
                   <div class="weui-cell__bd">
 	                  <div class="height_30" style="margin-top:10px;height:70px;">
-	                  	<div style='height:30px;'>开单量合计：<span v-text="ladingInfo.totalQuantity+'件/'+ladingInfo.totalWeight+'吨		￥'+ladingInfo.totalMoney"></span></div>
-	                  	<div style='height:30px;'>实提量：<span v-text="ladingInfo.totalRealQuantity+'件/'+ladingInfo.totalRealWeight+'吨		￥'+ladingInfo.totalRealMoney"></span></div>
+	                  	<div style='height:30px;color:#777;'>开单量合计：<span style="color:#000;" v-text="ladingInfo.totalQuantity+'件/'+ladingInfo.totalWeight+'吨		￥'+ladingInfo.totalMoney"></span></div>
+	                  	<div style='height:30px;color:#777;'>实提量：<span style="color:#000;" v-text="ladingInfo.totalRealQuantity+'件/'+ladingInfo.totalRealWeight+'吨		￥'+ladingInfo.totalRealMoney"></span></div>
 	                  </div>
                   </div>
 	          </div>
 	          <div class="page__category-content" style='font-size:14px;'>
 	             <div class="weui-cell__bd border_bottom" v-if="ladingInfo.ladingComment != null && ladingInfo.ladingComment != ''">
                       <div class="height_30">
-                      	<span class='lable_l'>提单备注</span>
+                      	<span class='lable_l'>提单 备注</span>
                       	<span class='lable_r' v-text='ladingInfo.ladingComment'></span>
                       </div>
 	              </div>
@@ -131,6 +131,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/lading-detail");
+    seajs.use("module/ec/lading/lading-detail.js");
 </script>
 </html>

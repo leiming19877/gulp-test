@@ -7,7 +7,7 @@
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>我要买</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/futures/buyNav.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/zmd.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
@@ -26,6 +26,6 @@
 </body>
 <script type="text/javascript">
 	//加载主模块
-	seajs.use("module/ec/futures/buyNav");
+	seajs.use("module/ec/futures/buyNav.js");
 </script>
 

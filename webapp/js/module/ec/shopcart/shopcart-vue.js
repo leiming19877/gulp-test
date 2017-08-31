@@ -9,7 +9,9 @@ define(function(require, module, exports) {
 	var memberId = getParams("memberId");// 卖家会员id
 	var areaSetId = getParams("areaSetId");// 资源区域id
 	var listingIds = getParams("listingIds");// 现货资源id串
-	var loading = weui.loading('正在加载...', {className: 'custom-classname'});
+	var type = getParams("type");// 选择的现货资源类型，zt或者bps
+	var cityName = getParams("cityName");// 包到时包到的城市
+	
 	var dataVue = new Vue({
 		el: "#g-page",
 		data: {
@@ -17,8 +19,13 @@ define(function(require, module, exports) {
 			memberName:"",// 业务单位名称
 			steelPlace:"",//货物产地
 			quoteList:[],
-			addPriceList:[],
+			specificationList:[],//当前报价单规格列表
 			showThickness:true,
+			specification:{
+				specificationId:null,
+				specificationName:null,
+				baseThickness:0
+			},//当前规格
 			thicknessList:[],
 			freightQuoteList:[],
 			resListingList:[],
@@ -41,18 +48,20 @@ define(function(require, module, exports) {
 					$("#dialog1").attr("type",type);
 					$("#dialog1").show();
 			 	} else if ('thickness'==type) {
+			 		
 				 	var d = $("#dialog3")[0]; 
 					d["currentInput"] = currentInput;
 					var specificationId = $(e.target).attr("specificationId");
-					if (self.addPriceList) {
-						self.addPriceList.forEach(function(obj,index){
+					if (this.specificationList) {
+						this.specificationList.forEach(function(obj,index){
 							if (obj.specificationId == specificationId) {
+								
+								self.specification.specificationId = obj.specificationId;
+								self.specification.specificationName = obj.specificationName;
+								self.specification.baseThickness = obj.baseThickness;
 								self.thicknessList = [];
-								self.thicknessList = JSON.parse(JSON.stringify(obj.addPriceList));
-								var other = {};
-								other['thickness'] = '其他';
-								other['thicknessPrice'] = 'other';
-								self.thicknessList.push(other);
+								self.thicknessList = JSON.parse(JSON.stringify(obj.listAddPrice));
+								
 							}
 						});
 					}
@@ -66,6 +75,9 @@ define(function(require, module, exports) {
 					$("#dialog4").show();
 			 	}
 			 },
+			 changeTotalWeight:function(e){
+			 	this.refreshTotalNum();
+			 },
 			 chooseThickness:function(e){
 			 	var value = $(e.target).val();
 			 	if ("其他" == value) {
@@ -75,11 +87,12 @@ define(function(require, module, exports) {
 			 	}
 			 },
 			 cancleWeight:function(type){
+				
 			 	var selectValue = $("#chooseThickness").val();
 			 	if (type == "thickness" && selectValue == "其他") {
 			 		this.showThickness = true;
-			 		$("#chooseThickness option").removeAttr("selceted");
-			 		$("#chooseThickness option").eq($("#chooseThickness option").length-1).attr("selected","selected");
+			 		$("#chooseThickness").get(0).selectedIndex = 0;
+			 		//$("#chooseThickness option").eq(0).attr("selected","selected");
 			 	}
 			 	if ('width' == type) {
 				 	$("#dialog1").hide();
@@ -105,6 +118,7 @@ define(function(require, module, exports) {
 					//要映射的输入框dom对象
 					input =$($('#dialog1')[0].currentInput);
 				} else if ('thickness' == type) {
+
 					var value1 = $("#thickness").find("select").val();
 					var value2 = $("#thickness").find("input").val();
 					if (value1 == "其他") {
@@ -149,18 +163,22 @@ define(function(require, module, exports) {
 			 		var quotePrice = input.attr("quotePrice");
 			 		var flag = false;
 			 		var d = input.closest("li").index();
-			 		self.addPriceList.forEach(function(obj,index){
+			 		var quote = this.getQuote(quoteId,d);
+			 		self.specificationList.forEach(function(obj,index){
 			 			if (obj.specificationId == specificationId) {
-			 				obj.addPriceList.forEach(function(p,i){
-			 					if (val == p.thickness) {
-			 						flag = true;
-					 				self.quoteList.forEach(function(quote,index){
-					 					if (quote.id == quoteId && index == d) {
-					 						quote.quotePrice = Number(quotePrice) + Number(p.thicknessPrice);
-					 					}
-					 				});
-			 					}
-			 				});
+			 				//当前厚度等于基准价格
+			 			    if(val == obj.baseThickness ){
+			 			    	flag = true;
+			 			    	quote.quotePrice = Number(quotePrice);
+			 			    }else{
+			 			    	obj.listAddPrice.forEach(function(p,i){
+				 					if (val == p.thickness) {
+				 						flag = true;
+				 						quote.quotePrice = Number(quotePrice) + Number(p.thicknessPrice);
+				 					}
+				 				});
+			 			    }
+			 				
 			 			}
 			 		});
 			 		if (!flag) {
@@ -196,6 +214,41 @@ define(function(require, module, exports) {
 				} else if ('weight' == type) {
 					$('#dialog4').hide();
 				}
+			 },
+			 checkNumber:function(e,type){
+			 	var value = $(e.target).val();
+			 	if ("width" == type) {
+			 		var widths = $(e.target).attr("width");
+			 		if (widths.indexOf("-") != -1) {
+			 			var wd = widths.split("-");
+			 			if (Number(wd[0]) > Number(value) || Number(value) > Number(wd[1])) {
+			 				window.alert("宽度超出范围");
+			 				$(e.target).val("")
+			 			}
+			 		} else {
+			 			if (Number(value) != Number(widths)) {
+			 				window.alert("宽度超出范围");
+			 				$(e.target).val("")
+			 			}
+			 		}
+			 	} else if ("weight" == type) {
+			 		var availableQuantity = $(e.target).attr("availableQuantity");
+			 		if (Number(value) > Number(availableQuantity)) {
+		 				window.alert("超出可购买量");
+		 				$(e.target).val("")
+			 		}
+			 	}
+			 },
+			 //获取报价单数据
+			 getQuote:function(quoteId,index){
+				 var  q = null;
+				 for(var i=0;i<this.quoteList.length;i++){
+					 if(this.quoteList[i].id == quoteId && i == index){
+						 q = this.quoteList[i];
+						 break;
+					 }
+				 }
+				 return q;
 			 },
 			 deleteRowResource:function(e,id,index){//删除期货资源
 				$("#dialog2").attr("data-index",index);
@@ -410,7 +463,7 @@ define(function(require, module, exports) {
 			 	var self = this;
 			 	var checkInfo = self.checkInfo();
 			 	if (checkInfo) {
-			 		window.alert("请确保数据填写完整！");
+			 		//window.alert("请确保数据填写完整！");
 			 		return;
 			 	}
 			 	var loading = weui.loading('请稍后...', {className: 'custom-classname'});
@@ -430,7 +483,10 @@ define(function(require, module, exports) {
 			 		'spotgoodList':JSON.stringify(params['spotgoodList']),
 			 		'shoppingCartList':JSON.stringify(params['shoppingCartList']),
 			 		'transportFeeType':transportFeeType,
-			 		'cureWord':cureWord
+			 		'cureWord':cureWord,
+			 		'areaSetId':areaSetId,
+			 		'type':type,
+			 		'cityName':cityName
 			 		
 			 	},{emulateJSON:true}).then(function(data){
 			 		var orderIds = [];
@@ -460,13 +516,60 @@ define(function(require, module, exports) {
 				});
 			 },
 			 checkInfo:function(){
-			 	var result = false;
 				var reg = /^[0-9]+(.[0-9]{1,3})?$/;
+			 	var result = false;
 				$("#futures input").each(function(index,obj){
 					if ($(obj).val() == "" || !reg.test($(obj).val())) {
 						result = true;
 					}
 				});
+				if (result) {
+					window.alert("请完成期货资源数据填写！");
+					return true;
+				}
+				var isDeliver = 0;
+				$("#spotgoods li").each(function(index,obj){
+					isDeliver = $(obj).attr("is-deliver");//查询现货资源是配送还是自提，0自提1配送
+				});
+				var deliveryType = "ckzt"
+				$("#deliveryType a").each(function(index,obj){
+					if ($(obj).hasClass("weui-btn_primary")) {
+			 			deliveryType = $(obj).attr("data-type");//交货方式选择为ckzt，gczt，bd
+					}
+				});
+				if (isDeliver == 1 && deliveryType != 'bd') {
+					window.alert("现货配送资源不能选择自提！");
+					return true;
+				}
+				if (isDeliver == 0) {
+					var addrId = "";
+				 	$("#deliveryType a").each(function(index,obj){
+				 		if ($(obj).hasClass("weui-btn_primary")) {
+				 			var type = $(obj).attr("data-type");
+				 			if ("bd" == type) {
+				 				addrId = $("#bd").attr("addrId");
+				 			}
+				 		}
+				 	});
+				 	if (addrId == 0) {
+				 		window.alert("自提资源选择配送时，收货地址不能为空！");
+						return true;
+				 	}
+				} else {
+					var addrId = "";
+				 	$("#deliveryType a").each(function(index,obj){
+				 		if ($(obj).hasClass("weui-btn_primary")) {
+				 			var type = $(obj).attr("data-type");
+				 			if ("bd" == type) {
+				 				addrId = $("#bd").attr("addrId");
+				 			}
+				 		}
+				 	});
+				 	if (addrId == 0) {
+				 		window.alert("选择配送资源时，收货地址不能为空！");
+						return true;
+				 	}
+				}
 				$("#spotgoods input").each(function(index,obj){
 					if ($(obj).attr("name") == "futureWeight") {
 						if ($(obj).val() == "" || !reg.test($(obj).val())) {
@@ -474,6 +577,10 @@ define(function(require, module, exports) {
 						}
 					}
 				});
+				if (result) {
+					window.alert("请完成现货资源数据填写！");
+					return true;
+				}
 				if ($("#transFee").hasClass("show")) {
 					var flag = false;
 					$("#transFee input").each(function(index,obj){
@@ -481,11 +588,11 @@ define(function(require, module, exports) {
 							flag = true;
 						}
 					});
-					if (!flag) {
-						result = true;
+					if (result) {
+						window.alert("请选择运费承担方式！");
+						return true;
 					}
 				}
-				return result;
 			 },
 			 getOrderData:function(){
 			 	var data = {};
@@ -509,7 +616,8 @@ define(function(require, module, exports) {
 			 		var texture = "";
 			 		$(obj).find("a[name='textures']").each(function(index,obj){
 			 			if ($(obj).hasClass("weui-btn_warn")) {
-			 				texture = $(obj).attr("data-texture");
+			 				
+			 				texture = $(obj).attr("data-texture-id");
 			 			}
 			 		});
 			 		var quote = {};
@@ -522,17 +630,21 @@ define(function(require, module, exports) {
 				});
 			 	$("#spotgoods li").each(function(index,obj){
 			 		var type = $(obj).find("input[name='futureWeight']").attr("delist-type");
+			 		var price = $(obj).attr("listing-price");
 			 		var weight = 0,count = 0;
 			 		if (type == 1) { // 按数量
 				 		count = $(obj).find("input[name='futureWeight']").val();
 			 		} else if (type == 2) {// 按重量
 				 		weight = $(obj).find("input[name='futureWeight']").val();
+			 		} else if (type == 3) { //按重量/数量
+				 		count = $(obj).find("input[name='futureWeight']").val();
 			 		}
 			 		var listingId = $(obj).find("input[name='futureWeight']").attr("listingId");
 			 		var quote = {};
 			 		quote['buyQuantity'] = count;
 			 		quote['buyWeight'] = weight;
 			 		quote['listing_id'] = listingId;
+			 		quote['price'] = price;
 			 		quote['areaSetId'] = areaSetId;
 			 		spotgoodList.push(quote);
 				});
@@ -554,22 +666,29 @@ define(function(require, module, exports) {
 				  });
 			},
 			addNumber:function(limit,unitWeight,e){
-				var number = $(e.target).parent().find("input[type='text']");
+			    
+				var number = $(e.target).parent().find("input[name='futureWeight']");
 				var value = Number(number.val());
 				value = value + 1;
 				if (value > limit) {
 					value = value - 1;
 					number.val(value);
-					window.alert("超出购买数量限制！");
+					window.alert("超出购买数量限制,购买限制为"+limit+"件！");
 				} else {
 					number.val(value);
 				}
-				$(e.target).parent().find("p").html((value * unitWeight).toFixed(3));
+//				$(e.target).parent().find("p").html((value * unitWeight).toFixed(3));
+				$(e.target).parent().find("input[name='futureWeight3']").val((value * unitWeight).toFixed(3));
 				this.refreshTotalNum();
 			},
 			subNumber:function(unitWeight,e){
-				var number = $(e.target).parent().find("input[type='text']");
+		
+				var number = $(e.target).parent().find("input[name='futureWeight']");
 				var value = number.val();
+				//如果没有值，就什么都不做
+				if(value === "" || value ==="0"){
+					return ;
+				}
 				value = value - 1;
 				if (value == 0) {
 					value = value + 1;
@@ -578,7 +697,8 @@ define(function(require, module, exports) {
 				} else {
 					number.val(value);
 				}
-				$(e.target).parent().find("p").html((value * unitWeight).toFixed(3));
+//				$(e.target).parent().find("p").html((value * unitWeight).toFixed(3));
+				$(e.target).parent().find("input[name='futureWeight3']").val((value * unitWeight).toFixed(3));
 				this.refreshTotalNum();
 			},
 			refreshTotalNum:function(type,number,weight){
@@ -590,6 +710,9 @@ define(function(require, module, exports) {
 						totalWeight += Number($(obj).val())*Number($(obj).attr("unit-weight"));
 					} else if ($(obj).attr("delist-type") == 2) {
 						totalWeight += Number($(obj).val()==""?0:$(obj).val());
+					} else if ($(obj).attr("delist-type") == 3) {
+						totalCount += Number($(obj).val()==""?0:$(obj).val());
+						totalWeight += Number($(obj).val())*Number($(obj).attr("unit-weight"));
 					}
 				});
 				if (type == 1 && number && weight) {//按数量扣减
@@ -600,15 +723,32 @@ define(function(require, module, exports) {
 				}
 				$("#totalCount").html(totalCount)
 				$("#totalWeight").html(totalWeight.toFixed(3))
+			},
+			changeWeight:function(limitWeight,unitWeight,e){
+				var value = $(e.target).val();
+				if (Number(value) > Number(limitWeight)) {
+					window.alert("超出可购买量！");
+					$(e.target).val('');
+					return;
+				}
+				var num = Math.round(Number(value)/Number(unitWeight));
+				var number = $(e.target).parent().find("input[name='futureWeight']");
+				number.val(num);
+				//$(e.target).parent().find("p").html((num * unitWeight).toFixed(3));
+				this.refreshTotalNum();
+				$(e.target).parent().find("input[name='futureWeight3']").val(Number((num * unitWeight).toFixed(3)))
 			}
 		},
 		created:function(){
 			var self = this;
-			this.$http.post("getShopcartData",{'quoteIds':quoteIds,'memberId':memberId,'listingIds':listingIds},{emulateJSON:true}).then(function(data){
-				self.quoteList = data.data.quoteList;//期货报价资源
-				self.resListingList = data.data.resListingList;//现货报价资源
-				self.wavehouses = data.data.wavehouses;
-				data.data.quoteList.forEach(function(obj,index){
+			var loading = weui.loading('正在加载...',{});
+
+			this.$http.post("getShopcartData",{'quoteIds':quoteIds,'memberId':memberId,'listingIds':listingIds,'type':type,'cityName':cityName},{emulateJSON:true}).then(function(rs){
+				var data = rs.data;
+				self.quoteList = data.quoteList;//期货报价资源
+				self.resListingList = data.resListingList;//现货报价资源
+				self.wavehouses = data.wavehouses;
+				data.quoteList.forEach(function(obj,index){
 					var texture = obj.texNames;
 					var widthAndThickness = obj.specificationName.split("*");
 					self.quoteList[index].texNames = texture.split(",");
@@ -621,11 +761,15 @@ define(function(require, module, exports) {
 						self.steelPlace = "";
 					}
 				});
-				self.addPriceList = data.data.addPriceList;
-				self.freightQuoteList = data.data.freightQuoteList;
-				self.userConsignee = data.data.userConsignee;
-				self.userConsigneeList = data.data.userConsigneeList;
-				self.memberName = data.data.memberName;
+				self.specificationList = data.specificationList;
+				self.freightQuoteList = data.freightQuoteList;
+				if (data.userConsignee) {
+					self.userConsignee = data.userConsignee;
+				} else {
+					self.userConsignee = {};
+				}
+				self.userConsigneeList = data.userConsigneeList;
+				self.memberName = data.memberName;
 				var id = "ckzt";
 				$("#deliveryType a").each(function(obj,index){
 					if ($(obj).hasClass("weui-btn_primary")) {
@@ -670,7 +814,13 @@ define(function(require, module, exports) {
 		var l = q.substring(q.indexOf("=")+1);
 		var listingIds = l.substring(0,l.indexOf("&"));
 		
-		var areaSetId = l.substring(l.indexOf("=")+1);
+		var a = l.substring(l.indexOf("=")+1);
+		var areaSetId = a.substring(0,a.indexOf("&"))
+		
+		var c = a.substring(a.indexOf("=")+1);
+		var cityName = decodeURIComponent(c.substring(0,c.indexOf("&")));
+		
+		var typeClass = c.substring(c.indexOf("=")+1);
 		
 		if (type == "quoteIds") {
 			return quoteIds
@@ -680,6 +830,10 @@ define(function(require, module, exports) {
 			return listingIds;
 		} else if (type == "areaSetId") {
 			return areaSetId;
+		} else if (type == "cityName") {
+			return cityName;
+		} else if (type == "type") {
+			return typeClass;
 		}
 	}
 });

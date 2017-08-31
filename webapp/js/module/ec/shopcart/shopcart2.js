@@ -39,6 +39,9 @@ define(function(require, module, exports) {
 			 cancleWeight:function(e){
 			 	$("#dialog1").hide();
 			 },
+			 changeTotalWeight:function(e){
+			 	this.refreshTotalNum();
+			 },
 			 chooseDeliveryType:function(e,id){
 			 	$(e.target).removeClass("weui-btn_default").addClass("weui-btn_primary");
 			 	$(e.target).siblings().removeClass("weui-btn_primary").addClass("weui-btn_default");
@@ -148,6 +151,21 @@ define(function(require, module, exports) {
 			 	this.closeManagerAddrView();
 			 	
 			 },
+			 refreshTotalNum:function(type,number,weight){
+				var totalCount = 0;
+				var totalWeight = 0;
+				$("input[name='futureWeight']").each(function(index,obj){
+					totalWeight += Number($(obj).val()==""?0:$(obj).val());
+				});
+				if (type == 1 && number && weight) {//按数量扣减
+					totalCount -= number;
+					totalWeight -= weight;
+				} else if (type == 2) {
+					totalWeight -= weight;
+				}
+				$("#totalCount").html(totalCount)
+				$("#totalWeight").html(totalWeight.toFixed(3))
+			},
 			 setDefaultAddr:function(id,e){
 			 	var self = this;
 			 	var loading = weui.loading('请稍后...', {className: 'custom-classname'});
@@ -248,7 +266,6 @@ define(function(require, module, exports) {
 			 	var self = this;
 			 	var checkInfo = self.checkInfo();
 			 	if (checkInfo) {
-			 		window.alert("请确保数据填写完整！");
 			 		return;
 			 	}
 			 	var transportFeeType = "";
@@ -289,9 +306,28 @@ define(function(require, module, exports) {
 						result = true;
 					}
 				});
-				if ($("#startDate").val() == "" || $("#endDate").val() == "") {
-					result = true;
+				if (result) {
+					window.alert("请输入正确的下单量！");
+					return true;
 				}
+				if ($("#startDate").val() == "" || $("#endDate").val() == "") {
+					window.alert("交货期不能为空！");
+					return true;
+				}
+				var addrId = "";
+				var deliveryType = "ckzt";
+			 	$("#deliveryType a").each(function(index,obj){
+			 		if ($(obj).hasClass("weui-btn_primary")) {
+			 			deliveryType = $(obj).attr("data-type");
+			 			if ("bd" == deliveryType) {
+			 				addrId = $("#bd").attr("addrId");
+			 			}
+			 		}
+			 	});
+			 	if ("bd" == deliveryType && addrId == 0) {
+			 		window.alert("包配送资源收货地址不能为空！");
+					return true;
+			 	}
 				if ($("#transFee").hasClass("show")) {
 					var flag = false;
 					$("#transFee input").each(function(index,obj){
@@ -300,12 +336,13 @@ define(function(require, module, exports) {
 						}
 					});
 					if (!flag) {
-						result = true;
+				 		window.alert("请选择运费承担方式！");
+						return true;
 					}
 				}
-				return result;
 			 },
 			 getOrderData:function(){
+			 	var self = this;
 			 	var data = {};
 			 	var addrId = "";
 			 	var deliveryType = "";
@@ -317,7 +354,16 @@ define(function(require, module, exports) {
 			 			}
 			 		}
 			 	});
-				data['shoppingCartList'] = this.shoppingCartList;
+			 	$("input[name='futureWeight']").each(function(index,obj){
+			 		var id = $(obj).attr("data-id");
+			 		self.shoppingCartList.forEach(function(o,index){
+			 			if (o.id == id) {
+			 				o.buyWeight = $(obj).val();
+			 			}
+			 		});
+			 	});
+			 	
+				data['shoppingCartList'] = self.shoppingCartList;
 				data['futureQuoteList'] = [];//购物车接入需要这两个空字符串
 				data['spotgoodList'] = [];//购物车接入需要这两个空字符串
 				data['startDate'] = $("#startDate").val();
@@ -426,7 +472,11 @@ define(function(require, module, exports) {
 					self.totalWeight += obj.buyWeight;
 				});
 				self.freightQuoteList = data.data.freightQuoteList;
-				self.userConsignee = data.data.userConsignee;
+				if (data.data.userConsignee) {
+					self.userConsignee = data.data.userConsignee;
+				} else {
+					self.userConsignee = {};
+				}
 				self.userConsigneeList = data.data.userConsigneeList;
 				self.memberName = data.data.memberName;
 				

@@ -117,7 +117,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/allocation/allocationList");
+    seajs.use("module/purchase/allocation/allocationList.js");
 </script>
 
 </script>

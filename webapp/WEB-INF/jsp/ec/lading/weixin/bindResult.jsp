@@ -16,6 +16,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/bindResult");
+    seajs.use("module/ec/lading/bindResult.js");
 </script>
 </html>

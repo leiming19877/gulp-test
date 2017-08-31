@@ -249,11 +249,11 @@ var modules =[
 			"main-js":"webapp/js/module/purchase/order/allocationOrderListPage.js",
 			"jsp":"webapp/WEB-INF/jsp/purchase/order/allocationOrderList.jsp",
 			"css":"webapp/css/module/purchase/order/order-list.css"
-		},{
+		},*/{
 			"main-js":"webapp/js/module/ec/futures/publishDemand.js",
 			"jsp":"webapp/WEB-INF/jsp/ec/futures/publishDemand.jsp",
 			"css":"webapp/css/module/ec/futures/publishDemand.css"
-		},*/{
+		},{
 			"main-js":"webapp/js/module/ec/contract/buy-contract-list.js",
 			"jsp":"webapp/WEB-INF/jsp/ec/contract/buyContractList4Buyer.jsp",
 			"css":"webapp/css/module/ec/contract/contractList.css"

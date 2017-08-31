@@ -65,7 +65,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/quoteForWuHan/quoteDetail");
+    seajs.use("module/purchase/quoteForWuHan/quoteDetail.js");
 </script>
 
 </script>

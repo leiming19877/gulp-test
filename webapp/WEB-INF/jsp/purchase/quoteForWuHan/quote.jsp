@@ -100,7 +100,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/quoteForWuHan/quote");
+    seajs.use("module/purchase/quoteForWuHan/quote.js");
 </script>
 
 </script>

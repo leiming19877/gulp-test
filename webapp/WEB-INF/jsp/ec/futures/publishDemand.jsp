@@ -7,9 +7,8 @@
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 <title>发布需求</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/js/swiper/swiper.min.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/js/swiper/zmd.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/futures/publishDemand.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 
@@ -156,7 +155,7 @@
                     <div class="weui-cell__bd">
                         <input class="weui-input" v-model.number="buyWeight"
                         type="number" pattern="[0-9]*[\.][0-9]{0,2}" 
-                        @blur="checkNumberVal('buyWeight',2);"
+                        @blur="checkNumberVal('buyWeight',3);"
                          placeholder="请输入下单重量" />
                     </div>
                     <div class="weui-cell__ft">
@@ -297,7 +296,8 @@
 				</div>
 				<div class="weui-dialog__bd">
 				        <select class="u-dialog-money-ipt" v-if="thicknessInputDialog.selectedVal != -1" v-model="thicknessInputDialog.selectedVal">
-				             <option value="" >请选择</option>
+				            <option value="" >请选择</option>
+				            <option v-bind:value="specification?specification.baseThickness:0" v-text="(specification?specification.baseThickness:'')+'(基准厚度)'" ></option>
 				            <option v-for="e in currentListThicknessAddPrices" :key="e.id" v-bind:value="e.thickness" v-text="e.thickness+'(加价'+e.thicknessPrice+'元)'" ></option>
 				            <option value="-1" >其他</option>
 				        </select>
@@ -307,8 +307,8 @@
 				</div>
 				<div class="weui-dialog__ft">
 					<a href="javascript:;" @click="hideThicknessInputDialog();"
-						class="weui-dialog__btn weui-dialog__btn_default">取消</a> <a
-						href="javascript:;" @click="thicknessInputDialogOkBtn();"
+						class="weui-dialog__btn weui-dialog__btn_default" >取消</a> 
+					<a href="javascript:;" @click="thicknessInputDialogOkBtn();"
 						class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
 				</div>
 			</div>
@@ -319,6 +319,6 @@
 </body>
 <script type="text/javascript">
 	//加载主模板块
-	seajs.use("module/ec/futures/publishDemand");
+	seajs.use("module/ec/futures/publishDemand.js");
 </script>
 

@@ -31,6 +31,6 @@ SignPackage signPackage = (SignPackage)request.getAttribute("signPackage");
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/ladingPasswordSetting");
+    seajs.use("module/ec/lading/ladingPasswordSetting.js");
 </script>
 </html>

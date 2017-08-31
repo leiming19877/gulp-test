@@ -85,7 +85,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/quote/quote");
+    seajs.use("module/purchase/quote/quote.js");
 </script>
 
 </script>

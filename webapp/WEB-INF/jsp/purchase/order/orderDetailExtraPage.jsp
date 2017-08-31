@@ -56,6 +56,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/order/orderDetailExtraPage");
+    seajs.use("module/purchase/order/orderDetailExtraPage.js");
 </script>
 </html>

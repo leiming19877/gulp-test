@@ -46,7 +46,7 @@
        
 	<script type="text/javascript">
 		//加载主模板块
-		seajs.use("module/account/no-bind-tip/no-bind-tip");
+		seajs.use("module/account/no-bind-tip/no-bind-tip.js");
 	</script>
 </body>
 </html>

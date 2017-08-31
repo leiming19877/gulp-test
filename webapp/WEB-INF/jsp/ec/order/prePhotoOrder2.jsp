@@ -15,7 +15,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 <title>照片下单</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.12.css" />
+<link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/order/pre-photo-order2.css" />
 <script type="text/javascript" id="seajsnode" src="${ctx}/js/seajs/sea-all.min.js"></script>
 <style type="text/css">
@@ -61,7 +61,7 @@
 				            </div>
 				        </div>
 	               </div>
-	               <footer class="g-footer">
+	               <footer id="g-footer" class="g-footer">
 	                          <a class="weui-btn weui-btn_primary u-picker-seller-btn" @click="showGpSellers();" >
 	                               <span>选择卖家：</span>
 	                               <span v-text="sellerMemberName"></span>
@@ -108,6 +108,6 @@
 
 <script type="text/javascript">
     //加载主模块
-    seajs.use("module/ec/order/pre-photo-order2");
+    seajs.use("module/ec/order/pre-photo-order2.js");
 </script>
 </html>

@@ -345,7 +345,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/contract/buy-contract-detail");
+    seajs.use("module/ec/contract/buy-contract-detail.js");
 </script>
 
 </script>

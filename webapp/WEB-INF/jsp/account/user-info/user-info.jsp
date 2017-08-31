@@ -60,6 +60,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/account/user-info/user-info");
+    seajs.use("module/account/user-info/user-info.js");
 </script>
 </html>

@@ -73,7 +73,7 @@
        
 	<script type="text/javascript">
 		//加载主模块js
-		seajs.use("module/account/forget-password/forget-password");
+		seajs.use("module/account/forget-password/forget-password.js");
 	</script>
 </body>
 </html>

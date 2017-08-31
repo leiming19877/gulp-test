@@ -54,7 +54,7 @@
         </div>
 	 <script type="text/javascript">
 	    //加载主模板块
-	    seajs.use("module/account/check-error/check-error");
+	    seajs.use("module/account/check-error/check-error.js");
 	</script>
 </body>
 </html>

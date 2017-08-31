@@ -61,7 +61,7 @@
        
 	<script type="text/javascript">
 		//加载主模块js
-		seajs.use("module/account/driver-phone-bind/driver-phone-bind");
+		seajs.use("module/account/driver-phone-bind/driver-phone-bind.js");
 	</script>
 </body>
 </html>

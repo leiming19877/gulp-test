@@ -55,7 +55,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/bid/bidDetailExtra");
+    seajs.use("module/purchase/bid/bidDetailExtra.js");
 </script>
 
 </script>

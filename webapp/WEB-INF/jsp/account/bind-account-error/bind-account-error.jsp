@@ -33,7 +33,7 @@
        
 	<script type="text/javascript">
 		//加载主模块js
-		seajs.use("module/account/bind-account-error/bind-account-error");
+		seajs.use("module/account/bind-account-error/bind-account-error.js");
 	</script>
 </body>
 </html>

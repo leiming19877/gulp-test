@@ -38,6 +38,7 @@ html,body{width: 100%;height: 100%; background-color: #fbf9fe;}
 
 .g-content{-webkit-box-flex:1;flex:auto; overflow: auto;}
 .g-footer{-webkit-box-flex:0;flex:none; width:100%;height:120px; border-top:0px solid #ddd;background: rgba(0,0,0,0.2);  position: absolute; bottom: 0px;}
+.g-footer.hide{display: none;}
 
 [v-cloak]{
 	display: none;

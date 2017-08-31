@@ -5,24 +5,27 @@ define(function(require, module, exports) {
 	var $ = require("zepto");
 	var VueResource = require("vue-resource");
 	Vue.use(VueResource);
-	var queryData = {};
-	var jq = require("jquery");
 	var wx = require("jweixin");
-	var loading = weui.loading('正在加载...', {className: 'custom-classname'});
-	var sellerId = getParam();
+	var sellerId = getParam();//获取卖家id，判断是否通过微信推送链接进入
 	var queryVue = new Vue({
 		el: "#g-page",
 		data: {
+			queryData:{
+				memberId:0,
+				brandId:0,
+				brandName:"不限",
+				priceType:0,
+				priceTypeStr:'不限',
+				provinceName:"",
+				cityName:"",
+				memberId:0,//卖家会员号
+				sellerName:'不限'//卖家会员号
+			},
+			internetAddress:null,
 			disTricts:[],
 			futuresList:[],
-			queryForm:null,
 			areaList:[],
 			currentCity:null,
-			sellerMemberId:0,//卖家会员号
-			sellerMemberName:null,//卖家会员号
-			brandId:0,//初始化时品名id
-			saerchBrandId:null,//查询时用的品名id
-			brandName:null,//当前选择的品名
 			brandList:[],
 			bigSteelWorkList:[],
 			steelWorkList:[],
@@ -31,12 +34,8 @@ define(function(require, module, exports) {
 			freightQuoteList:[],//运费报价
 			steelWorkId:null,//当前选择的钢厂
 			steelWork:null,//当前选择的钢厂
-			provinceName:null,
-			city:null,
-			areaName:null,
 			chooseAreaSetId:"",//选择地区时保存的地区id
 			areaSetId:"",//查询资源时的地区id，用于查询资源用的
-			priceType:0,
 			addPirce:[],
 			bigAddPriceList:[],//厚度加价规则
 			addPriceList:[],//厚度加价
@@ -52,131 +51,6 @@ define(function(require, module, exports) {
 				pageSize: 10,
 				pageNo: 1,
 				list: []
-			}
-		},
-		computed:{
-			//品名列表
-			listBrands:function(){
-					var list = [];
-					this.listBigBrands.forEach(function(e){
-						  list.push({
-							  'id':e.id,
-							  'brandId':e.brandId,
-							  'brandName':e.brandName
-						  });
-					  });
-					 return list;
-			},
-			//钢厂
-			listSteelWorks:function(){
-					var list = [];
-					if(this.brand){
-						var steelList = this.getListSteelWorksByBrandId(this.brand.id);
-						 steelList.forEach(function(e){
-							 list.push({
-								 'id':e.id,
-								 'steelWorkId':e.steelWorkId,
-								 'steelWorkName':e.steelWorkName
-							 });
-						 });
-						 list.push({
-							 'id':null,
-							 'steelWorkId':null,
-							 'steelWorkName':'其他'
-						 });
-					}
-					return list;
-			},
-			//硬度加价钢厂
-			listThicknessSteelWorks:function(){
-					var list = [];
-					if(this.thicknessBrand){
-						var steelList = this.getListSteelWorksByBrandId(this.thicknessBrand.id);
-						 steelList.forEach(function(e){
-							 list.push({
-								 'id':e.id,
-								 'steelWorkId':e.steelWorkId,
-								 'steelWorkName':e.steelWorkName
-							 });
-						 });
-					}
-					return list;
-			},
-			//规格列表
-			listSpecifications:function(){
-					var list = [];
-					if(this.brand && this.steelWork){
-						var steelList = this.getListSteelWorksByBrandId(this.brand.id);
-						var specificationList = this.getListSpecificationsBySteelWorkId(this.steelWork.id,steelList);
-						specificationList.forEach(function(e){
-							list.push({
-								  'specificationId':e.specificationId,
-								  'specificationName':e.specificationName  
-							 });
-						 });
-						list.push({
-							  'specificationId':null,
-							  'specificationName':'其他'  
-						 });
-					}
-					return list;	
-			},
-			//规格列表
-			listThicknessSpecifications:function(){
-					var list = [];
-					if(this.thicknessBrand && this.thicknessSteelWork){
-						var steelList = this.getListSteelWorksByBrandId(this.thicknessBrand.id);
-						var specificationList = this.getListSpecificationsBySteelWorkId(this.thicknessSteelWork.id,steelList);
-						specificationList.forEach(function(e){
-							list.push({
-								  'specificationId':e.specificationId,
-								  'specificationName':e.specificationName  
-							 });
-						 });
-					}
-					return list;	
-			},
-			//材质
-			listTextures:function(){
-					var list = [];
-					if(this.brand && this.steelWork && this.specification){
-						var steelList = this.getListSteelWorksByBrandId(this.brand.id);
-						var specificationList = this.getListSpecificationsBySteelWorkId(this.steelWork.id,steelList);
-						var textureList = this.getListTexturesBySpecificationId(this.specification.specificationId,specificationList);
-						textureList.forEach(function(e){
-							 list.push({
-								  'id':e.id,
-								  'textureId':e.textureId,
-								  'textureName':e.textureName,
-								  'specificationId':e.specificationId
-							 });
-						 });
-						list.push({
-							  'id':null,
-							  'textureId':null,
-							  'textureName':'其他',
-							  'specificationId':null
-						 });
-					}
-					return list;
-			},
-			//材质
-			listThicknessAddPrices:function(){
-					var list = [];
-					if(this.thicknessBrand && this.thicknessSteelWork && this.thicknessSpecification){
-						var steelList = this.getListSteelWorksByBrandId(this.thicknessBrand.id);
-						var specificationList = this.getListSpecificationsBySteelWorkId(this.thicknessSteelWork.id,steelList);
-						var addPriceList = this.getListAddPriceBySpecificationId(this.thicknessSpecification.specificationId,specificationList);
-						addPriceList.forEach(function(e){
-							 list.push({
-								  'id':e.id,
-								  'thickness':e.thickness,
-								  'thicknessPrice':e.thicknessPrice
-							 });
-						 });
-						
-					}
-					return list;
 			}
 		},
 		methods: {
@@ -211,6 +85,10 @@ define(function(require, module, exports) {
 				e.stopPropagation();
 			},
 			searchQuoteList:function(e){
+				var storage = window.localStorage;
+				if(storage.getItem('_default_check_query_storage') != null && storage.getItem('_default_check_query_storage') != 'null'){ 
+					this.queryData = JSON.parse(storage.getItem('_default_check_query_storage')); 
+				}
 				$("#searchQuoteList").removeClass("hide");
 				setTimeout(function(){$("#searchQuoteList").children().addClass("m-quote-transportfee-show").removeClass("m-quote-transportfee-close")},10);
 			},
@@ -229,7 +107,8 @@ define(function(require, module, exports) {
 			},
 			brandNamePick:function(e){
 				//$("#brandName").html($(e.target).html())
-				this.brandName = $(e.target).html();
+				this.queryData.brandName = $(e.target).html();
+				this.queryData.brandId = $(e.target).attr("data-brand-id");
 				$("#brandName").attr("data-brand-id",$(e.target).attr("data-brand-id"));
 				$('#brandNameActionsheet').animate({opacity: 0,display:'none'}, 200,'');
 			},
@@ -240,8 +119,8 @@ define(function(require, module, exports) {
 	            $('#quoteTypeActionsheet').animate({opacity: 1,display:''}, 200,'');
 			},
 			sellerPick:function(e){
-				this.sellerMemberName = $(e.target).html();
-				this.sellerMemberId = $(e.target).attr("data-sell-id");
+				this.queryData.memberId = $(e.target).attr("data-sell-id");
+				this.queryData.sellerName = $(e.target).html();
 				$('#sellerActionsheet').animate({opacity: 0,display:'none'}, 200,'');
 			},
 			closeSellerPick:function(e){
@@ -309,9 +188,12 @@ define(function(require, module, exports) {
 					  var data = rs.data;
 					  if(data.length>0){
 						  //选择第一个作为显示
-						  self.sellerMemberId = 0;
-						  self.sellerMemberName = "不限";
+						  if (self.queryData.memberId == 0) {
+							  self.queryData.memberId = 0;
+							  self.queryData.sellerName = "不限";
+						  }
 					  }
+					  self.listSellers = [];
 					  data.forEach(function(t){
 						  self.listSellers.push({
 							  'sellerId':t.sellerId,
@@ -325,7 +207,7 @@ define(function(require, module, exports) {
 			},
 			getAreaList:function(){
 			   var self = this;
-			   this.$http.post("../../preorder/address/getAreaData").then(function(rs){
+			   this.$http.post("../../preorder/address/getCityData").then(function(rs){
 					  var data = rs.data.data;
 					  self.disTricts = data;
 					  return ;
@@ -338,43 +220,46 @@ define(function(require, module, exports) {
 			   this.$http.post("../../ec/quote/getBrandData").then(function(rs){
 					  var data = rs.data;
 					  self.brandList = data.brandList;
-					  self.brandName = '不限';
-//					  self.brandName = data.brandList[0].brandName;
-					  self.brandId = 0;
 					  return ;
 				  }).catch(function(rs){
 					  weui.toast('网络异常!', 3000);
 				  });
 			},
-			searchQuoteListData:function(){
+			searchQuoteListData:function(type){
 				var self = this;
-				var sellerId = $("#seller").attr("sellerMemberId");
-				var brandId = $("#brandName").attr("data-brand-id");
-				var brandName = $("#brandName").html();
-				var priceType = $("#quoteType").attr("priceType");
-				var loading = weui.loading('正在加载...', {className: 'custom-classname'});
-				var provinceName = $("#city").attr("province");
-				var cityName = $("#city").attr("city");
-				var areaName = $("#city").attr("areaName");
-				var address = "";
-				if (provinceName == cityName && cityName == areaName) {//
-		        	address = provinceName;
-		        } else if (provinceName == cityName && cityName != areaName) {
-		        	address = provinceName + areaName;
-		        } else if (provinceName != cityName) {
-		        	address = provinceName + cityName + areaName;
-		        }
+				var storage = window.localStorage;
+				var storageStr = JSON.stringify(self.queryData);
+				if ($("#defaultCheck").prop("checked")) {
+			         storage.setItem('_default_check_query_storage', storageStr);   
+				} else {
+					storage.setItem('_default_check_query_storage',null);
+				}
+				var data = self.queryData;
+				//var loading = weui.loading('正在加载...', {className: 'custom-classname'});
 				self.closeSaerchView();
-				self.areaSetId = self.chooseAreaSetId;
-				this.$http.post("getQuoteListData",{'memberId':sellerId,'priceType':priceType,'provinceName':provinceName,'cityName':cityName,'areaName':areaName,'brandId':brandId,'brandName':brandName},{emulateJSON:true}).then(function(data){
-					queryVue.futuresList = data.data.futuresList;
-					queryVue.futuresList.forEach(function(obj,index){//遍历卖家是否设置运费报价
-		        		debugger
-		        	});
-		        	queryVue.queryForm = data.data.queryForm;
-		        	queryVue.brandNme = queryVue.queryForm.brandName;
-		        	queryVue.addPrice = data.data.addPrice;
-		        	queryVue.currentCity = address;
+				self.query(data);
+			},
+			query:function(data){
+				var self = this;
+				data.spotgoods = [];
+				data.quoteLists = [];
+				self.getListSellers();
+				self.getAreaList();
+				self.getBrandList();
+				var loading = weui.loading('正在加载...', {className: 'custom-classname'});
+				self.$http.post("getQuoteListData",data,{emulateJSON:true}).then(function(data){
+					self.futuresList = data.data.futuresList;
+		        	self.queryData = data.data.queryForm;
+		        	if (self.queryData.priceType == 0) {
+		        		self.queryData.priceTypeStr = '不限';
+		        	} else if (self.queryData.priceType == 1) {
+		        		self.queryData.priceTypeStr = '自提价';
+		        	}else if (self.queryData.priceType == 2) {
+		        		self.queryData.priceTypeStr = '配送价';
+		        	}else if (self.queryData.priceType == 3) {
+		        		self.queryData.priceTypeStr = '出厂价';
+		        	}
+		        	self.addPrice = data.data.addPrice;
 		        	loading.hide();
 			  }).catch(function(rs){
 				  weui.toast('网络异常!', 3000);
@@ -409,8 +294,9 @@ define(function(require, module, exports) {
 				var listingIds = [];
 				var memberIds = [];
 				var priceTypes = [];
+				var cityNames = [];
+				var areaSetIds = [];
 				var memberId = null;
-				var areaSetId = this.areaSetId;
 				var flag = true;
 				$("#g-content tbody tr").each(function(index,obj){
 					if ($(obj).find("input").prop("checked")) {
@@ -420,6 +306,8 @@ define(function(require, module, exports) {
 						} else if ("xh" == $(obj).find("input").attr("data-type")) {
 							listingIds.push($(obj).find("input").val());
 							priceTypes.push($(obj).find("input").attr("price-type"));
+							cityNames.push($(obj).find("input").attr("cityName"));
+							areaSetIds.push($(obj).find("input").attr("areaSetId"));
 						}
 					}
 				});
@@ -440,216 +328,273 @@ define(function(require, module, exports) {
 						flag = false;
 					}
 				});
+				var areaSetId = null;
+				areaSetIds.forEach(function(obj,index){
+					if (index == 0){
+						areaSetId = obj;
+					}
+					if (areaSetId != obj) {
+						flag = false;
+					}
+				});
 				if (flag && (quoteIds.length > 0 || listingIds.length > 0)) {
-					window.location.href="../shopcart/toOrderPage?quoteIds=" + quoteIds + "&memberId=" + memberId +"&listingIds="+listingIds+"&areaSetId="+areaSetId;
+					var loading = weui.loading('请稍后...');
+					var params = {
+							'quoteIds':quoteIds,
+							'listingIds':listingIds
+					};
+					
+					this.$http.post("checkRes",params,{emulateJSON:true}).then(function(rs){
+						var data = rs.data;
+						if(data.success){
+							var type = priceTypes[0] == "2"?"bps":"zt";
+							window.location.href="../shopcart/toOrderPage?quoteIds=" + quoteIds + "&memberId=" + memberId +"&listingIds="+listingIds+"&areaSetId="+areaSetId+"&cityName="+cityNames[0]+"&type="+type;
+						}else{
+							weui.alert(data.msg);
+						}
+						return ;
+					},function(error){
+					  weui.toast('网络异常!', 3000);
+				  }).catch(function(rs){
+				  }).finally(function(){
+					loading.hide();
+				  });
 				} else {
-					alert("请选择同一卖家的资源下单！现货资源报价类型须相同！")
+					alert("请选择同一卖家的资源下单！现货资源报价类型、配送地须相同！")
 				}
 			},
 			chooseDistrict:function(){
 				var self = this;
 				var data = self.disTricts;
 				var defaultValue = [];
-				var provinceName = self.provinceName;
-				var city = self.city;
-				var areaName = self.areaName;
+				var provinceName = self.queryData.provinceName;
+				var city = self.queryData.cityName;
+				//var areaName = self.areaName;
 				self.disTricts.forEach(function(obj,index){
 					if(obj.label == provinceName) {
 						defaultValue.push(obj.value);
 						obj.children.forEach(function(child,index1){
 							if (child.label == city) {
 								defaultValue.push(child.value);
-								child.children.forEach(function(cc,index2){
-									if (cc.label == areaName) {
-										defaultValue.push(cc.value);
-									}
-								});
+//								child.children.forEach(function(cc,index2){
+//									if (cc.label == areaName) {
+//										defaultValue.push(cc.value);
+//									}
+//								});
 							}
 						});
 					}
 				});
-				self.chooseAreaSetId = defaultValue[2];
 				weui.picker(data, {
 				     className: 'custom-classname',
 				     defaultValue: defaultValue,
 				     onChange: function (result) {
 				     },
 				     onConfirm: function (result) {
-				     	if (result.length == 3) {
-				     		self.currentCity = result[0].label+result[1].label+result[2].label;
-				     		self.provinceName = result[0].label;
-				     		self.city = result[1].label;
-				     		self.areaName = result[2].label;
-				     		self.chooseAreaSetId = result[2].value;
-				     		var address = "";
-				     		if (self.provinceName == self.city && self.city == self.areaName) {
-				     			address = self.provinceName;
-				     		} else if (self.provinceName == self.city && self.city == self.areaName) {
-				     			address = self.provinceName + self.city;
+				     	if (result.length == 2) {
+				     		self.queryData.provinceName = result[0].label;
+				     		self.queryData.cityName = result[1].label;
+				     		if (result[0].label == result[1].label) {
+				     			self.currentCity = result[0].label;
 				     		} else {
-				     			address = self.provinceName + self.city + self.areaName;
+				     			self.currentCity = result[0].label + result[1].label;
 				     		}
-				     		self.currentCity = address;
-				     	} else {
-				     		$("#city").html(result[0].label+result[1].label);
 				     	}
 				     },
 				     id: 'doubleLinePicker'
 				 });
+			},
+			closeQuoteTypeActionsheet:function(e){
+				$('#quoteTypeActionsheet').animate({opacity: 0,display:'none'}, 200,'');
+			},
+			chooseQuoteTypeActionsheet:function(e){
+				//$("#quoteType").html($(e.target).html())
+				this.queryData.priceType = $(e.target).attr("data-price-type");
+				this.queryData.priceTypeStr = $(e.target).html();
+				$('#quoteTypeActionsheet').animate({opacity: 0,display:'none'}, 200,'');
 			}
 		},
 		created:function(){
-			this.sellerMemberId = sellerId;
-			this.getListSellers();
-			this.getAreaList();
-			this.getBrandList();
+			this.queryData.memberId = sellerId;
+			var self = this;
+				var geocoder = new qq.maps.Geocoder({
+			        complete : function(result){
+				        var obj = result.detail.addressComponents;
+//				        var brandId = 0;
+//				        var priceType = 0;
+				        var province = "";
+				        if (obj.province.indexOf("省") > 0) {
+				           province = obj.province.substring(0,obj.province.indexOf("省"));
+				        } else if (obj.province.indexOf("市") > 0) {
+				           province = obj.province.substring(0,obj.province.indexOf("市"));
+				        } else {
+				        	if (obj.province.indexOf("内蒙古") > 0) {
+					         province = obj.province.substring(0,3);
+				        	} else {
+					         province = obj.province.substring(0,2);
+				        	}
+				        }
+				        var city = obj.city.substring(0,obj.city.indexOf("市"));
+				        //self.queryData.priceType = priceType;
+				        //self.queryData.priceTypeStr = '不限';
+				        self.queryData.provinceName = province;
+				        self.queryData.cityName = city;
+				        //self.queryData.brandId = brandId;
+				        //self.queryData.brandName = '不限';
+				        if (province == city) {
+				        	self.currentCity = province;
+				        } else {
+				        	self.currentCity = province + city;
+				        }
+				        if (self.queryData.memberId == 0) {
+				        	var storage = window.localStorage;
+							if (storage.getItem('_default_check_query_storage') != null && storage.getItem('_default_check_query_storage') != "null") {
+						        var data = JSON.parse(storage.getItem('_default_check_query_storage'));   
+						        self.queryData = data;
+						        if (self.queryData.provinceName == self.queryData.cityName) {
+						        	self.currentCity = self.queryData.provinceName;
+						        } else {
+						        	self.currentCity = self.queryData.provinceName + self.queryData.cityName;
+						        }
+						        self.query(data);
+							} else {
+								var data = self.queryData;
+								self.query(data);
+							}
+				        } else {
+					        self.queryData.provinceName = province;
+					        self.queryData.cityName = city;
+					       // self.currentCity = '全部';
+					        var data = self.queryData;
+							self.query(data);
+						}
+			        }
+			    });
+				var url = window.location.href;
+				$.ajax({url:"../../../getSignUrl",
+						  data:{"url":url},
+						  success:function(data, status, xhr){
+							var data = JSON.parse(data);
+							self.internetAddress = JSON.parse(data.internetAddress);
+							wx.config({
+							    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+							    appId: data.appId, // 必填，公众号的唯一标识
+							    timestamp: data.timestamp , // 必填，生成签名的时间戳
+							    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+							    signature: data.signature,// 必填，签名
+							    jsApiList: ['getLocation','hideAllNonBaseMenuItem','openLocation'] // 必填，需要使用的JS接口列表
+							});
+							wx.checkJsApi({
+							    jsApiList: ['getLocation','openLocation'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+							    success: function(res) {
+							        // 以键值对的形式返回，可用的api值true，不可用为false
+							        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+							    	if (res.checkResult.getLocation =="no") {//pc版微信不支持获取地理位置接口，暂定不查询报价信息，改查询基础数据，后续有时间研究根据ip获取用户所在城市
+							    		var province = self.internetAddress.data.region;
+								        if (province.indexOf("省") > 0) {
+								           province = province.substring(0,province.indexOf("省"));
+								        } else if (province.indexOf("市") > 0) {
+								           province = province.substring(0,province.indexOf("市"));
+								        } else {
+								        	if (province.indexOf("内蒙古") > 0) {
+									         province = province.substring(0,3);
+								        	} else {
+									         province = province.substring(0,2);
+								        	}
+								        }
+								        var city = self.internetAddress.data.city;
+								        city = city.substring(0,city.indexOf("市"));
+							    		self.queryData.provinceName = province;
+								        self.queryData.cityName = city;
+								        if (province == city) {
+								        	self.currentCity = province;
+								        } else {
+								        	self.currentCity = province + city;
+								        }
+							    		self.query(self.queryData);
+//							    		self.getListSellers();
+//										self.getAreaList();
+//										self.getBrandList();
+							    	}
+							    }
+							});
+							wx.ready(function(){
+								wx.getLocation({
+								    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+								    success: function (res) {
+								        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+								        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+								        var speed = res.speed; // 速度，以米/每秒计
+								        var accuracy = res.accuracy; // 位置精度
+						             	var lat = parseFloat(latitude);
+								    	var lng = parseFloat(longitude);
+								    	var latLng = new qq.maps.LatLng(lat, lng);
+								   	 	geocoder.getAddress(latLng);
+								    },
+								    cancel: function (res) {  
+								        alert('用户拒绝授权获取地理位置');
+								    }
+								});
+		//						loading.hide();
+								wx.error(function (res) {  
+									  alert("调用微信jsapi返回的状态:"+res.errMsg);  
+								}); 
+							});
+						}
+				});
 		},
 		watched:{
-			brand:function(newBrand){
-				this.steelWork = null;
-				this.specification = null;
-				this.texture = null;
-				var list = this.listSteelWorks;
-				if(list.length >0){
-					this.steelWork = list[0];
-				}
-				list = this.listSpecifications;
-				if(list.length > 0){
-					this.specification = list[0];
-				}
-				list = this.listTextures;
-				if(list.length > 0){
-					this.texture = list[0];
-				}
-				//厚度加价
-				this.thicknessSteelWork = null;
-				this.thicknessSpecification = null;
-				list = this.listThicknessSteelWorks;
-				if(list.length > 0){
-					this.thicknessSteelWork = list[0];
-				}
-				list = this.listThicknessSpecifications;
-				if(list.length > 0){
-					this.thicknessSpecification = list[0];
-				}
-				
-			},
-			thicknessBrand:function(){
-				//厚度加价
-				this.thicknessSteelWork = null;
-				this.thicknessSpecification = null;
-				var list = this.listThicknessSteelWorks;
-				if(list.length > 0){
-					this.thicknessSteelWork = list[0];
-				}
-				list = this.listThicknessSpecifications;
-				if(list.length > 0){
-					this.thicknessSpecification = list[0];
-				}
-			},
-			thicknessSteelWork:function(newSteelWork){
-				this.thicknessSpecification = null;
-				var list = this.listThicknessSpecifications;
-				if(list.length > 0){
-					this.thicknessSpecification = list[0];
-				}
-			},
+//			brand:function(newBrand){
+//				this.steelWork = null;
+//				this.specification = null;
+//				this.texture = null;
+//				var list = this.listSteelWorks;
+//				if(list.length >0){
+//					this.steelWork = list[0];
+//				}
+//				list = this.listSpecifications;
+//				if(list.length > 0){
+//					this.specification = list[0];
+//				}
+//				list = this.listTextures;
+//				if(list.length > 0){
+//					this.texture = list[0];
+//				}
+//				//厚度加价
+//				this.thicknessSteelWork = null;
+//				this.thicknessSpecification = null;
+//				list = this.listThicknessSteelWorks;
+//				if(list.length > 0){
+//					this.thicknessSteelWork = list[0];
+//				}
+//				list = this.listThicknessSpecifications;
+//				if(list.length > 0){
+//					this.thicknessSpecification = list[0];
+//				}
+//				
+//			},
+//			thicknessBrand:function(){
+//				//厚度加价
+//				this.thicknessSteelWork = null;
+//				this.thicknessSpecification = null;
+//				var list = this.listThicknessSteelWorks;
+//				if(list.length > 0){
+//					this.thicknessSteelWork = list[0];
+//				}
+//				list = this.listThicknessSpecifications;
+//				if(list.length > 0){
+//					this.thicknessSpecification = list[0];
+//				}
+//			},
+//			thicknessSteelWork:function(newSteelWork){
+//				this.thicknessSpecification = null;
+//				var list = this.listThicknessSpecifications;
+//				if(list.length > 0){
+//					this.thicknessSpecification = list[0];
+//				}
+//			},
 			
 		}
-	});
-	
-	
-	$('#quoteTypeActionsheet').find('.weui-mask').on("click",function(e){
-		$('#quoteTypeActionsheet').animate({opacity: 0,display:'none'}, 200,'');
-	});
-	$('#quoteTypeActionsheet').find('.weui-actionsheet__cell').on("click",function(e){
-	    $("#quoteType").html($(e.target).html())
-	    $("#quoteType").attr("priceType",$(e.target).attr("data-price-type"));
-		$('#quoteTypeActionsheet').animate({opacity: 0,display:'none'}, 200,'');
-	});
-	var geocoder = new qq.maps.Geocoder({
-        complete : function(result){
-	        var obj = result.detail.addressComponents;
-	        var brandId = 0;
-	        var priceType = 0;
-	        var province = "";
-	        if (obj.province.indexOf("省") > 0) {
-	         province = obj.province.substring(0,obj.province.indexOf("省"));
-	        } else if (obj.province.indexOf("市") > 0) {
-	         province = obj.province.substring(0,obj.province.indexOf("市"));
-	        } else {
-	        	if (obj.province.indexOf("内蒙古") > 0) {
-		         province = obj.province.substring(0,3);
-	        	} else {
-		         province = obj.province.substring(0,2);
-	        	}
-	        }
-	        var city = obj.city.substring(0,obj.city.indexOf("市"));
-	        var district = obj.district;
-	        queryData.priceType = priceType;
-	        queryData.provinceName = province;
-	        queryVue.provinceName = province;
-	        queryVue.city = city;
-	        queryVue.areaName = district;
-	        queryData.cityName = city;
-	        queryData.areaName = district;
-	        queryData.brandId = brandId;
-	        var address = "";
-	        if (province == city && city == district) {
-	        	address = province;
-	        } else if (province == city && city != district) {//
-	        	address = province + district;
-	        } else {
-	        	address = province + city + district;
-	        }
-	        var loading = weui.loading('正在加载...', {className: 'custom-classname'});
-	        /* 首次根据自动获取地区查询报价单*/
-	        queryVue.$http.post("getQuoteListData",{'memberId':sellerId,'priceType':queryData.priceType,'provinceName':queryData.provinceName,'cityName':queryData.cityName,'areaName':queryData.areaName,'brandId':queryData.brandId},{emulateJSON:true}).then(function(data){
-	        	queryVue.futuresList = data.data.futuresList;
-	        	queryVue.addPrice = data.data.addPrice;
-	        	queryVue.queryForm = data.data.queryForm;
-	        	queryVue.currentCity = address;
-	        	loading.hide();
-			}).catch(function(rs){
-				weui.toast('网络异常!', 3000);
-			});
-        }
-    });
-	var url = window.location.href;
-	jq.getJSON("../../../getSignUrl",{"url":url},function(data, status, xhr){
-		wx.config({
-		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-		    appId: data.appId, // 必填，公众号的唯一标识
-		    timestamp: data.timestamp , // 必填，生成签名的时间戳
-		    nonceStr: data.nonceStr, // 必填，生成签名的随机串
-		    signature: data.signature,// 必填，签名
-		    jsApiList: ['getLocation','hideAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
-		});
-		wx.ready(function(){
-			wx.getLocation({
-			    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-			    success: function (res) {
-			        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-			        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-			        var speed = res.speed; // 速度，以米/每秒计
-			        var accuracy = res.accuracy; // 位置精度
-	             	var lat = parseFloat(latitude);
-			    	var lng = parseFloat(longitude);
-			    	var latLng = new qq.maps.LatLng(lat, lng);
-			    	//var latLng = new qq.maps.LatLng(39.0851, 117.19937);//天津河西区
-			    	//var latLng = new qq.maps.LatLng(39.1282700000,117.2522800000);//天津河东区
-			    	//var latLng = new qq.maps.LatLng(38.4711700000,106.2586700000);//宁夏回族自治区
-			   	 	geocoder.getAddress(latLng);
-			    },
-			    cancel: function (res) {  
-			        alert('用户拒绝授权获取地理位置');
-			    }
-			});
-			loading.hide();
-			wx.error(function (res) {  
-				  alert("调用微信jsapi返回的状态:"+res.errMsg);  
-			}); 
-		});
 	});
 	function getParam() {
 		var url = window.location.href;

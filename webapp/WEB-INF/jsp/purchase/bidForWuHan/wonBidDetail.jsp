@@ -55,7 +55,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/bidForWuHan/wonBidDetail");
+    seajs.use("module/purchase/bidForWuHan/wonBidDetail.js");
 </script>
 
 </script>

@@ -207,7 +207,8 @@ $(document).ready(function(){
 			window.location.href="${ctx}/ec/preorder/iWantBuy";
 		} */
 		//window.history.back();
-		wx.closeWindow();
+		//wx.closeWindow();
+		window.location.href="${ctx}/navigation/toBuyNavigationPage";
 	});
 });
 </script>

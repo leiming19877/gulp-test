@@ -60,6 +60,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/purchase/shipping/shippingDetailPage");
+    seajs.use("module/purchase/shipping/shippingDetailPage.js");
 </script>
 </html>

@@ -171,6 +171,6 @@
 	</div>
 </body>
 <script type="text/javascript">
-    seajs.use("module/ec/lading/tianjin/ladingSetting4wechat");
+    seajs.use("module/ec/lading/tianjin/ladingSetting4wechat.js");
 </script>
 </html>

@@ -197,6 +197,6 @@
 <script type="text/javascript">
 
 	//加载主模板块
-	seajs.use("module/ec/preorder/wantBuy");
+	seajs.use("module/ec/preorder/wantBuy.js");
 </script>
 

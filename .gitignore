@@ -38,7 +38,7 @@ node_modules
 
 #ingore jsp2
 webapp/WEB-INF/jsp2
-
+webapp/static
 #ingore *.all,*.min css
 *.all.css
 *.all.min.css

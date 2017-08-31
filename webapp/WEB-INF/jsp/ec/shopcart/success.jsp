@@ -30,7 +30,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/shopcart/success");
+    seajs.use("module/ec/shopcart/success.js");
 </script>
 
 </script>

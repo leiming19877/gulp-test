@@ -55,7 +55,7 @@
        
 	<script type="text/javascript">
 		//加载主模块js
-		seajs.use("module/account/modify-password/modify-password");
+		seajs.use("module/account/modify-password/modify-password.js");
 	</script>
 </body>
 </html>

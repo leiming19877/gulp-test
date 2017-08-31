@@ -33,6 +33,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/transCompanyLogin");
+    seajs.use("module/ec/lading/transCompanyLogin.js");
 </script>
 </html>

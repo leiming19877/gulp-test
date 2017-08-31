@@ -110,6 +110,6 @@
 <script type="text/javascript">
 
     //加载主模板块
-    seajs.use("module/purchase/order/allocationOrderListPage");
+    seajs.use("module/purchase/order/allocationOrderListPage.js");
 </script>
 </html>

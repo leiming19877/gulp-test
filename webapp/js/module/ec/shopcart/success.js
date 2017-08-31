@@ -16,11 +16,12 @@ define(function(require, module, exports) {
 		},
 		methods: {
 			backToFirstPage:function(e){
-				if (this.type == "quote") {
+				/*if (this.type == "quote") {
 					window.location.href = "../quote/list";
 				} else {
 					window.location.href = "../futures/publishDemand";
-				}
+				}*/
+				window.location.href = "../../navigation/toBuyNavigationPage";
 			},
 			viewOrderDetail:function(orderIds){
 				if (orderIds.length > 1) {

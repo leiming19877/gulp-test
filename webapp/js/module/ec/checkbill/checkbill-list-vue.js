@@ -54,7 +54,7 @@ define(function(require, module, exports) {
 						rowsize:5,
 						chkBillCode:chkBillCode,
 						deliveryUnitName:deliveryUnitName,
-						beginDate:orderBeginDate,
+						startDate:orderBeginDate,
 						endDate:orderEndDate,
 						billType:billType,
 						billStatus:'2',
@@ -101,7 +101,7 @@ define(function(require, module, exports) {
 						rowsize:5,
 						chkBillCode:chkBillCode,
 						deliveryUnitName:deliveryUnitName,
-						beginDate:orderBeginDate,
+						startDate:orderBeginDate,
 						endDate:orderEndDate,
 						billType:billType,
 						billStatus:'2',
@@ -280,10 +280,10 @@ define(function(require, module, exports) {
         }], {
         	defaultValue:[-1],
             onChange: function (result) {
-            	$('#deliveryType').val(result[0].value);
+            	$('#billType').val(result[0].value);
             },
             onConfirm: function (result) {
-            	$('#showPicker_jhfs').text(result[0].label);
+            	$('#showPicker_billType').text(result[0].label);
             }
         });
     });

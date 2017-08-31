@@ -136,5 +136,5 @@
 </html>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/lading/ladingWeixinDetail");
+    seajs.use("module/ec/lading/ladingWeixinDetail.js");
 </script>

@@ -280,7 +280,7 @@ define(function(require, exports, module) {
 					var  self = this;
 					this.loadNextPage(function(data){
 						self.donePage.isReq = false;
-						self.setPageData(self.pendingPage,data);
+						self.setPageData(self.donePage,data);
 					});
 				},
 				startDateChoice:function(){

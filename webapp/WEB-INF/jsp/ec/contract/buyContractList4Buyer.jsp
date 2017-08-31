@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-<title>现货合同列表</title>
+<title>合同列表</title>
 <link type="text/css" rel="stylesheet" href="${ctx}/css/global/global-1.0.1.all.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/weui/weui-1.1.2.min.css" />
 <link type="text/css" rel="stylesheet" href="${ctx}/css/module/ec/contract/contractList.css" />
@@ -239,7 +239,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/contract/buy-contract-list");
+    seajs.use("module/ec/contract/buy-contract-list.js");
 </script>
 
 </script>

@@ -26,7 +26,7 @@
          		<li v-for="e in dataList" @click="toCHKBillDetail(e.id)" class='border-bottom'>
          			<div class="m-order">
          				<div class="m-order-info1">
-         					<span class="info" v-text="e.buyerMbrName"></span>
+         					<span class="info" v-text="e.deliveryUnitName"></span>
 	         				<span class="right" v-text="e.warehouseDesc"></span>
 	         			</div>
          				<div class="m-order-info1">
@@ -37,10 +37,10 @@
          			</div>
          			<div class="m-order">
          				<div class="m-order-info1">
-         					<span class="info" v-text="'结算重量:'+e.totalQuantity+'件/'+e.totalWeight+'吨'"></span>
+         					<span class="info" v-text="'结算重量:'+e.totalQuantity+'件/'+e.totalWeight.toFixed(3)+'吨'"></span>
 	         			</div>
 	         			<div class="m-order-info1">
-	         				<span class=info v-text="'结算金额:'+e.totalMoney+'元'"></span>
+	         				<span class=info v-text="'结算金额:'+e.totalMoney.toFixed(2)+'元'"></span>
 	         			</div>
          			</div>
          			<div class="blank"></div>
@@ -135,7 +135,7 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/ec/checkbill/checkbill-list");
+    seajs.use("module/ec/checkbill/checkbill-list.js");
 </script>
 
 </script>

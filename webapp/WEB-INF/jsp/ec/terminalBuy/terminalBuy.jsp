@@ -197,6 +197,6 @@
 <script type="text/javascript">
 
 	//加载主模板块
-	seajs.use("module/ec/terminalBuy/terminalBuy");
+	seajs.use("module/ec/terminalBuy/terminalBuy.js");
 </script>
 

@@ -1,5 +1,4 @@
 var 
-    config  = require("./module-config"),
     path = require('path'),
     gulp = require( 'gulp' ),
     concat = require('gulp-concat'), // 合并文件
@@ -13,27 +12,39 @@ var
     autoprefixer = require('autoprefixer'),
     cssbeautify = require('gulp-cssbeautify'),
     csscomb = require('gulp-csscomb'),
-    babel = require('gulp-babel')
-    csslint = require('gulp-csslint');
+    babel = require('gulp-babel'),
+    csslint = require('gulp-csslint'),
+    rev = require('gulp-rev'),
+    revReplace = require('gulp-rev-replace'),
+    prefix = require('gulp-prefix'),
+    gutil = require('gulp-util'),
+    del = require('del'),
+    vinylPaths = require('vinyl-paths'),
+    combiner = require('stream-combiner2');
  
 
 var jsModules = [];
-var cssModules = [];
-var jspModules =[];
-for(var i=0;i<config.modules.length;i++){
-	console.log("对"+config.modules[i]['main-js']+"进行cmd打包。");
-	console.log("对"+config.modules[i]['css']+"进行css打包。");
-	console.log("对"+config.modules[i]['jsp']+"进行jsp复制替换打包。");
-	jsModules.push(config.modules[i]['main-js']);
-    cssModules.push(config.modules[i]['css']);
-    jspModules.push(config.modules[i]['jsp']);
-}
+
 var globalCss = ['webapp/css/global/reset.css',
                  'webapp/css/global/media.css',
                  'webapp/css/global/function.css',
                  'webapp/css/global/page-unit.css',
                  'webapp/css/global/iconfont.css',
                  ];
+
+gulp.task("clean:static",function(cb){
+    return del([
+        
+        // 这里我们使用一个通配模式来匹配 `mobile` 文件夹中的所有东西
+        'webapp/static',
+        "webapp/WEB-INF/jsp2"
+        // 我们不希望删掉这个文件，所以我们取反这个匹配模式
+        //'!dist/mobile/deploy.json'
+      ], cb);
+});
+
+
+
 //打包全局样式
 gulp.task("build:global-css",function(){
 	 return gulp.src(globalCss,
@@ -46,8 +57,73 @@ gulp.task("build:global-css",function(){
     .pipe(nano())
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest("webapp/css/global"));
+});
+
+gulp.task("copy:static",['clean:static'],function(){
+
+  var dist = [
+        "webapp/css/global/*",
+        //"webapp/js/**",
+        "webapp/images/**"
+        ,"!webapp/css/global/*.css",
+        //"!webapp/js/module/**",
+        ];
+    /*var unGlobalCss = globalCss.map(function(item) { 
+        return "!"+item; 
+    });
+    dist = dist.concat(unGlobalCss);*/
+    return gulp.src(dist,{base:'webapp'})
+    .pipe(gulp.dest("webapp/static"));
+});
+
+//打包样式
+gulp.task("build:module:css",
+    ['copy:static'],
+    function(){
+ 
+return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp'})
+    .pipe(cssbeautify())
+    .pipe(csscomb())
+    .pipe(postcss([autoprefixer]))
+    //.pipe(rename({ suffix: '.all' }))
+    //.pipe(gulp.dest("webapp/static/css/module"))
+    .pipe(nano())
+    //.pipe(rename({ suffix: '.min' }))
+    //.pipe(gulp.dest("webapp/static/css/module"))
+    .pipe(rev())
+    .pipe(gulp.dest("webapp/static"))
+    .pipe(rev.manifest({
+      'merge':true,
+      'path':'css-moudle-rev-manifest.json',
+      'originalPrefix':'',
+      'revisionedPrefix':'static/'
+    }))
+    .pipe(gulp.dest("webapp/static"));
 }
 );
+
+//打包样式
+gulp.task("build:css",
+    ['copy:static','build:global-css','build:module:css'],
+    function(){
+ return gulp.src(['webapp/css/**/*.css','!webapp/css/module/**/*'] ,{base:'webapp'})   
+    //.pipe(cssbeautify())
+    //.pipe(csscomb())
+    //.pipe(postcss([autoprefixer]))
+    //.pipe(nano())
+   
+    //.pipe(rename({ suffix: '.min' }))
+    //.pipe(gulp.dest("webapp/static/css"))
+    .pipe(rev())
+    .pipe(gulp.dest("webapp/static"))
+    .pipe(rev.manifest({
+      'merge':true,
+      'path':'css-rev-manifest.json',
+      'originalPrefix':'',
+      'revisionedPrefix':'static/'
+    }))
+    .pipe(gulp.dest("webapp/static"));
+});
 //对模块js进行验证
 gulp.task('build:js-check', function(){
     return gulp.src(['webapp/js/module/**/*.js','!webapp/js/module/**/*.all*.js','!webapp/js/module/**/*.min.js'] ,{base:'webapp'})   
@@ -69,9 +145,40 @@ gulp.task('build:css-check', function(){
    //.pipe(csslint.formatter('fail')); // Fail on error (or csslint.failFormatter()) 
    //.pipe(csslint.formatter('junit-xml'));
 });
+
+//复制所有jsp文件到jsp2目录下
+gulp.task("build:copy-jsp",['clean:static'],function(cb){
+    return gulp.src("webapp/WEB-INF/jsp/**/*.jsp",{base:'webapp/WEB-INF/jsp'})
+    .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
+    //cb(); // 如果 err 不是 null 或 undefined，则会停止执行，且注意，这样代表执行失败了
+});
+//对要替换的jsp进行替换
+gulp.task("build:parase:jsp",['build:copy-jsp'],function(){
+    return gulp.src("webapp/WEB-INF/jsp2/**/*.jsp",{base:'webapp/WEB-INF/jsp'})
+    .pipe(tap(function (file){
+            var contents = file.contents.toString();
+            var reg = /(\/\*[\s\S]*?)?(\/\/.*)?seajs\.use\(\s*["'](.*)["']\s*\)/g;
+            contents.replace(reg,function(m,coment1,coment2,moduleId){
+                //如果是注释
+                if(coment1 || coment2){
+                    return ;
+                }
+                if(path.extname(moduleId) === '.js'){
+                    jsModules.push("webapp/js/"+moduleId);
+                }
+                return ;
+            });
+     }));
+});
 //打包js主模块
-gulp.task( 'build:cmd-moudle', function(){
-    return gulp.src(jsModules ,{base:'webapp/js/module'})
+gulp.task('build:cmd-moudle',
+    ['copy:static','build:parase:jsp'],
+    function(){
+        for(var i=0;i<jsModules.length;i++){
+            console.log("对"+jsModules[i]+"进行cmd打包。");
+          
+        }
+    return gulp.src(jsModules ,{base:'webapp/js'})
         .pipe( cmdPack({
 
             base : 'webapp/js/',
@@ -85,11 +192,12 @@ gulp.task( 'build:cmd-moudle', function(){
 	            'jweixin':'weixin/jweixin-1.2.0.js',
 	            'director':'director/director.js',
 	            'echo':'echo/echo.min.js',
-	            'vue':'vue/vue-2.0.7.js',
-	            'vue-router':'vue/vue-router-2.5.3.js',
-	            'vue-resource':'vue/vue-resource-1.3.1.js',
+	            'vue':'vue/vue-2.4.2.min.js',
+	            'vue-router':'vue/vue-router-2.5.3.min.js',
+	            'vue-resource':'vue/vue-resource-1.3.1.min.js',
 	            'moment': 'moment/moment.min.js',
-	            'clipboard':'clipboard/clipboard.min.js',
+	            'fastclick': 'fastclick/fastclick.js',
+                'clipboard':'clipboard/clipboard.min.js',
 	            'swiper': 'swiper/swiper.min.js',
 	            'weui':'weui/weui.min.js',
 	            'touch':'touch/touch.min.js',
@@ -103,43 +211,66 @@ gulp.task( 'build:cmd-moudle', function(){
 	            'params':'common/params.js'
             },
             ignore :[
-                'weui' 
+                //'weui' 
                 ]
         }))
        /*.pipe(babel({
             presets: ['es2015']
         }))*/
-        .pipe(rename({ suffix: '.all' }))
+        //.pipe(rename({ suffix: '.all' }))
         //.pipe(jshint())
         //.pipe(jshint.reporter('default'))
-        .pipe(gulp.dest('webapp/js/module2'))
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(uglify())
-        .pipe(gulp.dest("webapp/js/module2"));
+        //.pipe(gulp.dest('webapp/static'))
+        //.pipe(rename({ suffix: '.min' }))
+        .pipe(uglify().on('error', function(err){
+            gutil.log(err);
+            this.emit('end');
+        }))
+        .pipe(rev())
+        .pipe(gulp.dest("webapp/static/js"))
+        .pipe(rev.manifest({
+          'merge':true,
+          'path':'js-module-rev-manifest.json',
+          'originalPrefix':'',
+          'revisionedPrefix':''
+        }))
+        .pipe(gulp.dest("webapp/static"));
 });
-//打包样式
-gulp.task("build:css",function(){
-    return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"],{base:'webapp/css/module'})
-    .pipe(cssbeautify())
-    .pipe(csscomb())
-    .pipe(postcss([autoprefixer]))
-    .pipe(rename({ suffix: '.all' }))
-    .pipe(gulp.dest("webapp/css/module2"))
-    .pipe(nano())
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest("webapp/css/module2"));
-}
-);
 
-//复制所有jsp文件到jsp2目录下
-gulp.task("build:copy-jsp",function(cb){
-    return gulp.src("webapp/WEB-INF/jsp/**/*.jsp",{base:'webapp/WEB-INF/jsp'})
-    .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
-    //cb(); // 如果 err 不是 null 或 undefined，则会停止执行，且注意，这样代表执行失败了
+//打包js
+gulp.task("build:js",
+    ['build:cmd-moudle'],
+    function(){
+ return gulp.src(['webapp/js/**/*.js','!webapp/js/module/**/*'] ,{base:'webapp'})   
+    //.pipe(cssbeautify())
+    //.pipe(csscomb())
+    //.pipe(postcss([autoprefixer]))
+    //.pipe(nano())
+   
+    //.pipe(rename({ suffix: '.min' }))
+    //.pipe(gulp.dest("webapp/static/css"))
+    .pipe(rev())
+    .pipe(gulp.dest("webapp/static"))
+    .pipe(rev.manifest({
+      'merge':true,
+      'path':'js-rev-manifest.json',
+      'originalPrefix':'',
+      'revisionedPrefix':'static/'
+    }))
+    .pipe(gulp.dest("webapp/static"));
 });
+
+function replaceJsIfMap(filename) {
+    console.log("fileName:"+filename);
+    if (filename.indexOf('publishDemand') > -1) {
+        return filename.replace('publishDemand', 'publishDemand2');
+    }
+    return filename;
+}
+
 //对要替换的jsp进行替换
-gulp.task("build:jsp",['build:copy-jsp'],function(){
-    return gulp.src(jspModules,{base:'webapp/WEB-INF/jsp'})
+gulp.task("build:jsp2",['build:copy-jsp'],function(){
+    return gulp.src([],{base:'webapp/WEB-INF/jsp'})
     .pipe(tap(function (file){
             var jspFilePath = file.base+path.sep+file.relative;
             jspFilePath = path.normalize(jspFilePath);
@@ -162,6 +293,23 @@ gulp.task("build:jsp",['build:copy-jsp'],function(){
     .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
 });
 
+gulp.task("build:jsp", [
+    "clean:static","copy:static","build:copy-jsp",
+    "build:global-css","build:module:css","build:css",
+    "build:cmd-moudle",
+    "build:js"
+    ], function(){
+  var manifest = gulp.src("webapp/static/*manifest.json");
+  return gulp.src("webapp/WEB-INF/jsp2/**/*.jsp",{base:'webapp/WEB-INF/jsp2'})
+    .pipe(revReplace({
+        replaceInExtensions:['.jsp'],
+        manifest: manifest
+        //,
+        //modifyUnreved: replaceJsIfMap,
+        //modifyReved: replaceJsIfMap
+    }))
+    .pipe(gulp.dest("webapp/WEB-INF/jsp2"));
+});
 gulp.task('build:babel', function(){
     return gulp.src(['webapp/js/vue/*.js','!webapp/js/vue/*.min.js','!webapp/js/vue/*.babel.js'],{base:'webapp'})
         .pipe(babel({
@@ -199,6 +347,18 @@ gulp.task('build:babel', function(){
     .pipe(uglify())
     .pipe(gulp.dest('webapp/js/seajs'));
 });*/
+gulp.task('build-vue', function(){
+    return gulp.src(['webapp/js/module2/ec/futures/publishDemand.all.js'],{base:'webapp'})
+         .pipe(rename({ suffix: '.min' }))
+        //.pipe(jshint())
+        //.pipe(jshint.reporter('default'))
+        //.pipe(rename({ suffix: '.min' }))
+        .pipe(uglify().on('error', function(err){
+            gutil.log(err);
+            this.emit('end');
+        }))
+        .pipe(gulp.dest("webapp"));
+});
 //执行全局打包
-gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp'] );
-//gulp.task( 'default', ['build:global-css'] );
+//gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp'] );
+gulp.task( 'default', ['build:jsp'] );

@@ -46,7 +46,7 @@
        
 	<script type="text/javascript">
 		//加载主模板块
-		seajs.use("module/account/unbind-account/unbind-account");
+		seajs.use("module/account/unbind-account/unbind-account.js");
 	</script>
 </body>
 </html>

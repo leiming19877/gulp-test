@@ -48,6 +48,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/account/bindAccountRemind");
+    seajs.use("module/account/bindAccountRemind.js");
 </script>
 </html>

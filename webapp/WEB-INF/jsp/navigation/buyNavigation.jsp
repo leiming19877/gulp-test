@@ -61,6 +61,6 @@
 </body>
 <script type="text/javascript">
     //加载主模板块
-    seajs.use("module/navigation/buyNavigation");
+    seajs.use("module/navigation/buyNavigation.js");
 </script>
 </html>
