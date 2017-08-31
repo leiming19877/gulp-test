@@ -46,6 +46,7 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.7.0",
     "gulp-cmd-pack": "^1.0.7",
     "gulp-concat": "^2.6.0",
     "gulp-css-combo": "^0.0.1",

@@ -8,6 +8,7 @@ var
     jshint = require('gulp-jshint'),//js语法检查
     cmdPack = require('gulp-cmd-pack'),
     nano = require('gulp-cssnano'),
+    cleanCSS = require('gulp-clean-css'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
     cssbeautify = require('gulp-cssbeautify'),
@@ -18,9 +19,8 @@ var
     revReplace = require('gulp-rev-replace'),
     prefix = require('gulp-prefix'),
     gutil = require('gulp-util'),
-    del = require('del'),
-    vinylPaths = require('vinyl-paths'),
-    combiner = require('stream-combiner2');
+    del = require('del');
+    //vinylPaths = require('vinyl-paths');
  
 
 var jsModules = [];
@@ -85,11 +85,18 @@ return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"
     .pipe(cssbeautify())
     .pipe(csscomb())
     .pipe(postcss([autoprefixer]))
+    
     //.pipe(rename({ suffix: '.all' }))
     //.pipe(gulp.dest("webapp/static/css/module"))
-    .pipe(nano())
+    // .pipe(nano( {
+    //         preset: ['default', {
+    //             svgo: false
+    //         }]
+    //     }))
+    .pipe(cleanCSS())     
     //.pipe(rename({ suffix: '.min' }))
     //.pipe(gulp.dest("webapp/static/css/module"))
+    .pipe(gulp.dest("webapp/static"))
     .pipe(rev())
     .pipe(gulp.dest("webapp/static"))
     .pipe(rev.manifest({
@@ -361,4 +368,4 @@ gulp.task('build-vue', function(){
 });
 //执行全局打包
 //gulp.task( 'default', ['build:cmd-moudle','build:css','build:jsp'] );
-gulp.task( 'default', ['build:jsp'] );
+gulp.task('default', ['build:jsp'] );
