@@ -88,15 +88,11 @@ return gulp.src(["webapp/css/module/**/*.css","!webapp/css/module/**/*.all*.css"
     
     //.pipe(rename({ suffix: '.all' }))
     //.pipe(gulp.dest("webapp/static/css/module"))
-    // .pipe(nano( {
-    //         preset: ['default', {
-    //             svgo: false
-    //         }]
-    //     }))
-    .pipe(cleanCSS())     
+   .pipe(nano({ zindex: false }))
+    //.pipe(cleanCSS())     
     //.pipe(rename({ suffix: '.min' }))
     //.pipe(gulp.dest("webapp/static/css/module"))
-    .pipe(gulp.dest("webapp/static"))
+    //.pipe(gulp.dest("webapp/static"))
     .pipe(rev())
     .pipe(gulp.dest("webapp/static"))
     .pipe(rev.manifest({
