@@ -160,10 +160,13 @@ gulp.task("build:parase:jsp",['build:copy-jsp'],function(){
     return gulp.src("webapp/WEB-INF/jsp2/**/*.jsp",{base:'webapp/WEB-INF/jsp'})
     .pipe(tap(function (file){
             var contents = file.contents.toString();
-            var reg = /(\/\*[\s\S]*?)?(\/\/.*)?seajs\.use\(\s*["'](.*)["']\s*\)/g;
-            contents.replace(reg,function(m,coment1,coment2,moduleId){
+            var reg = /(\/\*[\s\S]*?)?(\/\/.*)?seajs\.use\(\s*["'](.*)["']\s*\)([\s\S]*?\*\/)?/g;
+            contents.replace(reg,function(m,coment1,coment2,moduleId,coment3){
                 //如果是注释
-                if(coment1 || coment2){
+                if(coment1 && coment3){
+                    return ;
+                }
+                if(coment2){
                     return ;
                 }
                 if(path.extname(moduleId) === '.js'){
@@ -177,6 +180,7 @@ gulp.task("build:parase:jsp",['build:copy-jsp'],function(){
 gulp.task('build:cmd-moudle',
     ['copy:static','build:parase:jsp'],
     function(){
+        console.log("一共"+jsModules.length+"js模块。");
         for(var i=0;i<jsModules.length;i++){
             console.log("对"+jsModules[i]+"进行cmd打包。");
           
