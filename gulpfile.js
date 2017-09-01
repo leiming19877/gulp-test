@@ -160,15 +160,18 @@ gulp.task("build:parase:jsp",['build:copy-jsp'],function(){
     return gulp.src("webapp/WEB-INF/jsp2/**/*.jsp",{base:'webapp/WEB-INF/jsp'})
     .pipe(tap(function (file){
             var contents = file.contents.toString();
-            var reg = /(\/\*[\s\S]*?)?(\/\/.*)?seajs\.use\(\s*["'](.*)["']\s*\)([\s\S]*?\*\/)?/g;
-            contents.replace(reg,function(m,coment1,coment2,moduleId,coment3){
-                //如果是注释
-                if(coment1 && coment3){
-                    return ;
-                }
-                if(coment2){
-                    return ;
-                }
+            //匹配/* xxx */ 注释
+            var regC1 = /\/\*[\s\S]*?\*\//g;
+            //匹配//xxx单行注释
+            var regC2 =/\/\/.*?[\r\n]/g;
+            contents = contents.replace(regC1,function(m){
+                return '';
+            });
+             contents = contents.replace(regC2,function(m){
+                return '';
+            });
+            var reg = /seajs\.use\(\s*["'](.+?)["']\s*\)/g;
+            contents.replace(reg,function(m,moduleId){
                 if(path.extname(moduleId) === '.js'){
                     jsModules.push("webapp/js/"+moduleId);
                 }
