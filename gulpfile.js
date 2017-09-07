@@ -19,7 +19,8 @@ var
     revReplace = require('gulp-rev-replace'),
     prefix = require('gulp-prefix'),
     gutil = require('gulp-util'),
-    del = require('del');
+    del = require('del'),
+    _ = require('underscore');;
     //vinylPaths = require('vinyl-paths');
  
 
@@ -188,6 +189,8 @@ gulp.task('build:cmd-moudle',
             console.log("对"+jsModules[i]+"进行cmd打包。");
           
         }
+        //去除重复模块
+        jsModules = _.uniq(jsModules);
     return gulp.src(jsModules ,{base:'webapp/js'})
         .pipe( cmdPack({
 
